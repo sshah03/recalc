@@ -7,7 +7,10 @@ use crate::model::Actor;
 use anyhow::{bail, Context, Result};
 use std::path::Path;
 
-const DEFAULT_AGENT: &str = "claude -p {task} --mcp-config {mcp}";
+/// Headless `claude -p` refuses tools it would have to ask about, so the
+/// board's are pre-approved, and only recalc's server is connected.
+const DEFAULT_AGENT: &str =
+    "claude -p {task} --mcp-config {mcp} --strict-mcp-config --allowedTools mcp__recalc";
 
 pub async fn run(dir: &Path, task: Option<String>, agent: Option<String>) -> Result<()> {
     let mut engine = Engine::open(dir)?;
@@ -90,5 +93,33 @@ mod tests {
     async fn no_task_is_an_error() {
         let dir = tempfile::tempdir().unwrap();
         assert!(run(dir.path(), None, Some("true".into())).await.is_err());
+    }
+
+    /// Headless Claude refuses any tool it would have to ask about, so a
+    /// default run that didn't pre-approve the board's tools did nothing.
+    #[tokio::test]
+    async fn the_default_agent_may_use_the_boards_tools() {
+        let dir = tempfile::tempdir().unwrap();
+        let claude = dir.path().join("fake-claude.sh");
+        std::fs::write(&claude, "#!/bin/sh\nprintf '%s\\n' \"$@\" > args.txt\n").unwrap();
+        std::fs::set_permissions(&claude, std::os::unix::fs::PermissionsExt::from_mode(0o755))
+            .unwrap();
+        std::fs::create_dir_all(dir.path().join(".recalc")).unwrap();
+        std::fs::write(
+            dir.path().join(".recalc/config.toml"),
+            format!("[paths]\nclaude = \"{}\"\n", claude.display()),
+        )
+        .unwrap();
+        run(dir.path(), Some("fix the tests".into()), None)
+            .await
+            .unwrap();
+        let args = std::fs::read_to_string(dir.path().join("args.txt")).unwrap();
+        let args: Vec<&str> = args.lines().collect();
+        let at = args
+            .iter()
+            .position(|a| *a == "--allowedTools")
+            .expect("--allowedTools");
+        assert_eq!(args[at + 1], "mcp__recalc");
+        assert!(args.contains(&"--strict-mcp-config"));
     }
 }
