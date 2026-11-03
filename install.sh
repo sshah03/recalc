@@ -138,6 +138,6 @@ fi
 
 say ""
 say "Next:"
-say "  $open_hint                  # opens recalc"
-say "  claude mcp add recalc -- recalc mcp    # in a project, connects Claude Code to its board"
+say "$(printf '  %-36s # %s' "$open_hint" "opens recalc")"
+say "$(printf '  %-36s # %s' "claude mcp add recalc -- recalc mcp" "in a project, connects Claude Code to its board")"
 say "recalc checks for updates once a day and offers to restart into them."
