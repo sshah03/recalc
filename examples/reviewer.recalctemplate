@@ -1,0 +1,25 @@
+# The reviewer column: a second agent checks the first one's answers, and a
+# formula counts the disagreements. Column B answers each question from the
+# document; column C asks a different agent whether B's answer is supported
+# by the passage B cited, answering only agree or disagree; column D says
+# why, in one line, when they disagree. `disagreements` is the number to
+# watch. Fill B:D down over your documents, Run Selection, and read D first.
+#
+# Why two agents: a model checking its own answer tends to repeat its mistakes. A
+# reviewer on its own context, told only to agree or disagree, is the
+# cheapest independent check a table can carry, and its verdicts are cells
+# a formula can count.
+instructions = Answer from the document only. If the document is silent, answer Not found. Be terse: a value, a date, yes/no, or one sentence.
+A1 = document
+B1 = Can either party assign the agreement without the other's consent?
+C1 = Reviewer: is B's answer supported by the document? (agree / disagree)
+D1 = Reviewer: if you disagree, why, in one line
+A2 = contracts/acme-msa.md
+A3 = contracts/globex-services.md
+B2 = @claude('{instructions} Document: {$A2}. Question: {B$1}')
+C2 = @codex("You are reviewing another agent's answer. Document: {$A2}. Question: {B$1}. Their answer: {B2}. Read the document yourself and decide whether their answer is what the document supports. Answer with exactly one word: agree or disagree.")
+D2 = @codex('Another agent read document {$A2} and answered the question "{B$1}" with: {B2}. A reviewer said {C2}. If the reviewer disagreed, say in one line what the document actually supports and where; if it agreed, answer Not found.')
+disagreements = = countif({C2:C3}, 'disagree')
+reviewed = = count({C2:C3}) & ' of ' & count({A2:A3}) & ' reviewed'
+@answer_type B2 B3 = yesno
+@answer_type C2 C3 = choice:agree|disagree

@@ -1,0 +1,14 @@
+2024 FORM 1065 — RETURN SUMMARY (from the firm's prep software, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Partnership: Harbor Lane Properties LP     EIN XX-XXX3925
+Filed: 2025-03-12 (e-file accepted)
+
+Form 8825  Gross rents (two buildings) ......................   396,000.00
+Form 8825  Total expenses, including mortgage interest .....   298,450.00
+Schedule K, line 2  Net rental real estate income ..........    97,550.00
+Schedule K, line 5  Interest income ........................       910.00
+Line 23   Ordinary business income ..........................          0.00
+
+Section 199A information reported to partners (Schedule K-1, box 20, code Z): Yes
+Statement attached: rental real estate enterprise safe harbor (Rev. Proc. 2019-38)

@@ -1,0 +1,22 @@
+{
+  "name": "recalc-e2e",
+  "private": true,
+  "type": "module",
+  "description": "Drives the real app in a browser through bridge mode (see desktop/src-tauri/src/bridge.rs). edge.mjs runs the edge-case checks with a scripted stand-in agent (fake-agent.py).",
+  "scripts": {
+    "test": "node run.mjs && node mouse.mjs && node formulas.mjs",
+    "agents": "node agents-table.mjs",
+    "driver": "node agents-driver.mjs",
+    "driver:formulas": "node formulas-driver.mjs claude && node formulas-driver.mjs codex",
+    "recent": "node recent.mjs claude && node recent.mjs codex",
+    "edge": "node edge.mjs && node edge2.mjs && node edge3.mjs",
+    "boards": "node boards.mjs && node onboard.mjs && node named.mjs",
+    "update": "node update-install.mjs",
+    "install-script": "node install.mjs",
+    "examples": "node examples.mjs",
+    "examples:free": "node examples.mjs --free"
+  },
+  "devDependencies": {
+    "playwright": "^1.55.0"
+  }
+}

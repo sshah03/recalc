@@ -1,0 +1,24 @@
+2025 FORM 1040 — DRAFT RETURN SUMMARY (from the firm's prep software, not yet filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Taxpayer: Rosalind Kettering     SSN XXX-XX-6093     Filing status: Single
+Draft of 2026-04-24. Fairhaven Storage updated for the amended K-1 received 04/20/2026.
+
+Line 1z   Wages (W-2, Kettering Millwork Inc) ................ 120,000.00
+Line 2b   Taxable interest (incl. K-1 box 4) .................   2,310.00
+Line 8    Schedule 1, line 5: Schedule E total ............... 140,150.00
+Line 9    Total income ...................................... 262,460.00
+Line 11   Adjusted gross income ............................. 262,460.00
+
+SCHEDULE E, PART II — Income from partnerships and S corporations
+  Row  Name                               P/S   EIN           Nonpassive income
+  A    Kettering Millwork Inc             S     XX-XXX4471        78,450.00
+  B    Fairhaven Storage Partners LP      P     XX-XXX0938        46,000.00
+  Line 32  Total partnership and S corporation income             124,450.00
+
+SCHEDULE E, PART III — Income from estates and trusts
+  Row  Name                                     EIN           Nonpassive income
+  A    Kettering Family Trust                   XX-XXX6620        15,700.00
+  Line 37  Total estate and trust income                           15,700.00
+
+Line 41   Total Schedule E income (to Schedule 1, line 5) ... 140,150.00

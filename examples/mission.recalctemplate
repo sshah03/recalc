@@ -1,0 +1,33 @@
+# Mission control: supervise N agents from one grid, one row per task.
+# Each row is a task, the agent working it, its live session status, a
+# ground-truth check, and a verified cell: 'pending' until the agent
+# claims done, then green only if the check agrees. The agent's reply is
+# its claim (one word: done).
+#
+# F names the task a row waits for, and G says whether it's ready: when that
+# task's check holds, not when its agent says done. Start an agent on a
+# ready row.
+#
+# Start each agent with Run (headless) or Open Session (watchable);
+# session status lands in <cell>_status. Adapt tasks and checks.
+A1 = task
+B1 = agent (its reply is its claim)
+C1 = status
+D1 = check
+E1 = verified
+F1 = after
+G1 = ready
+A2 = make the tests pass
+B2 = @claude('do this task in the current repo: {A2}. reply with only the word done')
+C2 = = {B2_status}
+D2 = $ cargo test 2>&1 | grep -c 'test result: ok' # watch: src/**
+E2 = = if({B2} == 'done', {D2} > 0, 'pending')
+G2 = = if({F2} == '', 'ready', if(lookup({F2}, {$A$2:$A$20}, {$E$2:$E$20}) == 'true', 'ready', 'waiting'))
+A3 = write release notes for the next version
+B3 = @claude('do this task in the current repo: {A3}. create RELEASE_NOTES.md, then reply with only the word done')
+C3 = = {B3_status}
+D3 = $ test -s RELEASE_NOTES.md && echo 1 || echo 0 # watch: RELEASE_NOTES.md
+E3 = = if({B3} == 'done', {D3} > 0, 'pending')
+F3 = make the tests pass
+G3 = = if({F3} == '', 'ready', if(lookup({F3}, {$A$2:$A$20}, {$E$2:$E$20}) == 'true', 'ready', 'waiting'))
+human_hint =

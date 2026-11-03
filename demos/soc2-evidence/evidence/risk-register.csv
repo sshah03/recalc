@@ -1,0 +1,7 @@
+risk_id,title,type,related_finding,owner,approved_by,approved_on,expires_on,compensating_control,status
+RISK-2025-011,Single region deployment,Operational risk,,CTO,,,,Cross-region backups,Open
+RISK-2025-014,Key-person dependency on payroll tax engine,Operational risk,,VP Engineering,,,,Pairing rotation,Open
+RISK-2026-002,Weak TLS cipher on internal load balancer,Risk acceptance,VULN-2026-0157,Head of Infrastructure,Mira Moravec (CISO),2026-03-02,2026-04-30,Internal-only listener; no customer traffic,Closed
+RISK-2026-003,Legacy SOAP endpoint authentication bypass: remediation needs a customer migration,Risk acceptance,VULN-2026-0311,Head of Engineering,Mira Moravec (CISO),2026-03-18,2026-04-15,WAF rule blocks the vulnerable operation; endpoint restricted to 3 customer IP allowlists,Closed
+RISK-2026-005,Vendor concentration in payments processor,Operational risk,,CFO,,,,Secondary processor contract,Open
+RISK-2026-007,Phishing exposure for new hires in first week,Operational risk,,Head of Security,,,,Hardware keys issued on day one,Open

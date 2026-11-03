@@ -1,0 +1,5 @@
+#211 Add user search to the admin page
+#214 Log failed logins without the password
+#215 Cache profiles, cleared on rename
+#217 Bump requests to 2.32.3
+#218 Add an index on users.name for search

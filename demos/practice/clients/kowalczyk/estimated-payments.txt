@@ -1,0 +1,9 @@
+ESTIMATED TAX PAYMENTS — IRS DIRECT PAY CONFIRMATIONS
+(synthetic sample for demonstration; all names and numbers invented)
+Taxpayer: Nadia Kowalczyk
+
+Confirmation    Paid on       Tax year   Form / period          Amount
+PX7-20MB-6614   04/14/2025    2025       1040-ES, 1st quarter     900.00
+PX7-61DD-0093   06/13/2025    2025       1040-ES, 2nd quarter     900.00
+PX7-99KJ-4452   09/22/2025    2025       1040-ES, 3rd quarter     900.00
+PX8-03VF-7120   01/12/2026    2025       1040-ES, 4th quarter     900.00

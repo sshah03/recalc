@@ -1,0 +1,5 @@
+# restore-test runner, prod-postgres snapshots restored to an isolated account and verified
+2025-11-18T14:02:11Z RESTORE_TEST target=prod-postgres snapshot=rds:prod-2025-11-17-0300 result=PASS rows_verified=48211930 duration=41m
+2026-02-10T13:47:55Z RESTORE_TEST target=prod-postgres snapshot=rds:prod-2026-02-09-0300 result=FAIL error="checksum mismatch on restored volume vol-0a41" ticket=INC-2291
+2026-02-13T15:20:09Z RESTORE_TEST target=prod-postgres snapshot=rds:prod-2026-02-12-0300 result=PASS rows_verified=50877401 duration=44m note="retest after INC-2291; faulty restore host replaced"
+2026-05-12T14:11:38Z RESTORE_TEST target=prod-postgres snapshot=rds:prod-2026-05-11-0300 result=PASS rows_verified=53320768 duration=46m

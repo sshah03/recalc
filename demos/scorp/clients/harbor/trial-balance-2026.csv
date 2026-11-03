@@ -1,0 +1,25 @@
+Account,Debit,Credit
+"1000 Cash - operating",84620,0
+"1100 Accounts receivable",96300,0
+"1200 Inventory",142800,0
+"1500 Equipment and vehicles",412000,0
+"1510 Accumulated depreciation",0,196400
+"2000 Accounts payable",0,58900
+"2100 Accrued payroll",0,12600
+"2500 Bank loan",0,118000
+"3000 Capital stock",0,10000
+"3100 Retained earnings",0,322990
+"3200 Shareholder distributions",100000,0
+"4000 Sales - wholesale coffee",0,1284600
+"4100 Interest income - savings",0,2140
+"5000 Cost of goods sold - green coffee and packaging",611250,0
+"6000 Officer salaries",168000,0
+"6010 Staff wages",214400,0
+"6100 Payroll taxes",29480,0
+"6200 Rent - roastery",72000,0
+"6300 Repairs - roaster maintenance",11860,0
+"6410 Meals - client meetings",6320,0
+"6500 Depreciation expense",38400,0
+"6700 Professional fees",14750,0
+"6800 Charitable contributions",3000,0
+"6900 Penalties - late filing",450,0

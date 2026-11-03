@@ -1,0 +1,53 @@
+# A flaky-test hunt: which tests flake, why, and proof that a fix worked.
+# Each row is a suspect from a CI suite that fails about one run in three.
+# B runs the test 50 times on the code as it was and keeps the count; it
+# doesn't re-run. E runs the same loop whenever the code changes. C names the
+# likely cause (an agent, held to the choices). D is a fix session: Open
+# Session on it, and its Stop hook (.claude/settings.json) won't let it finish
+# until G reads true, the test having passed all 50 runs.
+#
+# F turns "it passed 50 times" into a number: with no failures in n runs, the
+# rule of three bounds the failure rate at about 3/n with 95% confidence.
+# Verify G once you've read the fix; `proven` counts what you've verified.
+# The library and its flakes are synthetic.
+instructions = You are fixing flaky tests in the shipit repository in the current directory (see README.md). A test is flaky when it passes and fails on the same code. Fix the cause in the code under shipit/, not the test: no retries, no longer timeouts, no skipped tests.
+runs = 50
+A1 = Test
+B1 = Failures before
+C1 = Likely cause
+D1 = Fix session (Open Session here)
+E1 = Failures now
+F1 = Failure rate now, at most
+G1 = Fixed?
+A2 = tests.test_tags
+A3 = tests.test_review
+A4 = tests.test_backoff
+A5 = tests.test_totals
+B2 = $ n=0; for i in $(seq {runs}); do python3 -m unittest -q {$A2} >/dev/null 2>&1 || n=$((n+1)); done; echo $n
+C2 = @claude('{instructions} The test {$A2} failed {$B2} of {runs} runs on unchanged code. Read the test and the code it calls, and name the most likely cause.')
+D2 = @claude('{instructions} Make {$A2} reliable. It failed {$B2} of {runs} runs; the likely cause is {$C2}. When you save, the board runs it {runs} times again; you are done when it fails none of them.')
+E2 = $ n=0; for i in $(seq {runs}); do python3 -m unittest -q {$A2} >/dev/null 2>&1 || n=$((n+1)); done; echo $n # watch: shipit/**
+F2 = = if({E2} == 0, concat('under ', round(300 / {runs}), '%'), concat(round({E2} * 100 / {runs}), '%'))
+G2 = = and({B2} > 0, {E2} == 0)
+B3 = $ n=0; for i in $(seq {runs}); do python3 -m unittest -q {$A3} >/dev/null 2>&1 || n=$((n+1)); done; echo $n
+C3 = @claude('{instructions} The test {$A3} failed {$B3} of {runs} runs on unchanged code. Read the test and the code it calls, and name the most likely cause.')
+D3 = @claude('{instructions} Make {$A3} reliable. It failed {$B3} of {runs} runs; the likely cause is {$C3}. When you save, the board runs it {runs} times again; you are done when it fails none of them.')
+E3 = $ n=0; for i in $(seq {runs}); do python3 -m unittest -q {$A3} >/dev/null 2>&1 || n=$((n+1)); done; echo $n # watch: shipit/**
+F3 = = if({E3} == 0, concat('under ', round(300 / {runs}), '%'), concat(round({E3} * 100 / {runs}), '%'))
+G3 = = and({B3} > 0, {E3} == 0)
+B4 = $ n=0; for i in $(seq {runs}); do python3 -m unittest -q {$A4} >/dev/null 2>&1 || n=$((n+1)); done; echo $n
+C4 = @claude('{instructions} The test {$A4} failed {$B4} of {runs} runs on unchanged code. Read the test and the code it calls, and name the most likely cause.')
+D4 = @claude('{instructions} Make {$A4} reliable. It failed {$B4} of {runs} runs; the likely cause is {$C4}. When you save, the board runs it {runs} times again; you are done when it fails none of them.')
+E4 = $ n=0; for i in $(seq {runs}); do python3 -m unittest -q {$A4} >/dev/null 2>&1 || n=$((n+1)); done; echo $n # watch: shipit/**
+F4 = = if({E4} == 0, concat('under ', round(300 / {runs}), '%'), concat(round({E4} * 100 / {runs}), '%'))
+G4 = = and({B4} > 0, {E4} == 0)
+B5 = $ n=0; for i in $(seq {runs}); do python3 -m unittest -q {$A5} >/dev/null 2>&1 || n=$((n+1)); done; echo $n
+C5 = @claude('{instructions} The test {$A5} failed {$B5} of {runs} runs on unchanged code. Read the test and the code it calls, and name the most likely cause.')
+D5 = @claude('{instructions} Make {$A5} reliable. It failed {$B5} of {runs} runs; the likely cause is {$C5}. When you save, the board runs it {runs} times again; you are done when it fails none of them.')
+E5 = $ n=0; for i in $(seq {runs}); do python3 -m unittest -q {$A5} >/dev/null 2>&1 || n=$((n+1)); done; echo $n # watch: shipit/**
+F5 = = if({E5} == 0, concat('under ', round(300 / {runs}), '%'), concat(round({E5} * 100 / {runs}), '%'))
+G5 = = and({B5} > 0, {E5} == 0)
+fixed = = countif({G2:G5}, 'true')
+proven = = countif({G2:G5.mark}, 'verified')
+spend = = sum({C2:C5.cost})
+@answer_type C2 C3 C4 C5 = choice:timing|test order|shared state|randomness|environment|not flaky

@@ -1,0 +1,17 @@
+2024 FORM 1040 — RETURN SUMMARY (from the firm's prep software, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Taxpayer: Nadia Kowalczyk        Filing status: Single
+Filed: 2025-04-02 (e-file accepted)
+
+Line 1z   Wages (W-2, Ostrander Transit Authority) ..........  92,300.00
+Line 2b   Taxable interest (Meridian Savings) ...............     860.00
+Line 9    Total income ......................................  93,160.00
+Line 11   Adjusted gross income .............................  93,160.00
+Line 12   Itemized deductions (Schedule A; mortgage interest
+          12,940.00, state and local taxes 4,000.00) ........  16,940.00
+Line 13   Qualified business income deduction ...............       0.00
+Line 15   Taxable income ....................................  76,220.00
+Line 24   Total tax .........................................  11,821.00
+Line 25a  Federal income tax withheld .......................   9,980.00
+Line 37   Amount owed .......................................   1,841.00

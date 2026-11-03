@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "recalc hook stop --gate G --pass holds --wait 75 || true",
+            "timeout": 90
+          }
+        ]
+      }
+    ]
+  }
+}

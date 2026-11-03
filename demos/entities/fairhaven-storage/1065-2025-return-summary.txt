@@ -1,0 +1,14 @@
+2025 FORM 1065 — RETURN SUMMARY (from the partnership's preparer, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Partnership: Fairhaven Storage Partners LP     EIN XX-XXX0938
+Filed: 2026-02-27 (e-file accepted)
+
+Line 1c   Gross receipts (self-storage rentals and fees) ...   612,400.00
+Line 21   Total deductions .................................   428,400.00
+Line 23   Ordinary business income .........................   184,000.00
+
+Partners (profit, loss, and capital, held all year):
+  Fairhaven Storage GP LLC (general partner) ................. 10.00%
+  Rosalind Kettering (limited partner) ....................... 25.00%
+  Calloway Holdings LLC (limited partner) .................... 65.00%

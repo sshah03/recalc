@@ -1,0 +1,98 @@
+# Due-diligence review, the way a document grid does it: the target's contracts
+# down column A, one field per header, an agent answer in every cell. Headers
+# name the answer type (a date, a classification, a currency phrase), so
+# formulas and people can both read the column.
+# Every answer carries the agent's citation: select a cell for the passage,
+# Show Source for the document. Row 2 is a file group: an agreement and its
+# amendment read together, later document controlling. Columns J and K are
+# conditional: they rate risk from the answers in F, G and I rather than
+# from the documents. Select B2:K7 and
+# Run Selection; verify (⌘Y) what you've checked, and flag (⇧⌘Y) with a note
+# ("deal-breaker", "negotiate", "standard") on what the deal team should see.
+instructions = You are assisting the acquirer's counsel in diligence on Northwind Analytics LLC, the target. Answer from the documents only. When a row lists more than one file, read all of them; a later amendment controls over the original. If the documents are silent, answer "Not found". Answer in exactly the form the question asks for, with no preamble.
+A1 = contract(s)
+B1 = Counterparty (the other party's name, verbatim)
+C1 = Effective date (YYYY-MM-DD)
+D1 = Governing law (jurisdiction only, e.g. Delaware)
+E1 = Term and renewal (one line: length, and whether it auto-renews)
+F1 = Change of control or assignment: classify as exactly one of: Consent required / Notice only / Unrestricted / Not found
+G1 = Liability cap (a formula like "12 months' fees", a currency amount, "uncapped", or "Not found")
+H1 = Termination for convenience by our side: "Yes, N days" or "No"
+I1 = Non-compete or exclusivity binding us or a key person: "None" or a one-line summary
+A2 = contracts/acme-master-services.md, contracts/acme-msa-amendment-1.md
+B2 = @claude('{instructions} Files: {$A2}. {B$1}')
+C2 = @claude('{instructions} Files: {$A2}. {C$1}')
+D2 = @claude('{instructions} Files: {$A2}. {D$1}')
+E2 = @claude('{instructions} Files: {$A2}. {E$1}')
+F2 = @claude('{instructions} Files: {$A2}. {F$1}')
+G2 = @claude('{instructions} Files: {$A2}. {G$1}')
+H2 = @claude('{instructions} Files: {$A2}. {H$1}')
+I2 = @claude('{instructions} Files: {$A2}. {I$1}')
+A3 = contracts/globex-services-agreement.md
+B3 = @claude('{instructions} Files: {$A3}. {B$1}')
+C3 = @claude('{instructions} Files: {$A3}. {C$1}')
+D3 = @claude('{instructions} Files: {$A3}. {D$1}')
+E3 = @claude('{instructions} Files: {$A3}. {E$1}')
+F3 = @claude('{instructions} Files: {$A3}. {F$1}')
+G3 = @claude('{instructions} Files: {$A3}. {G$1}')
+H3 = @claude('{instructions} Files: {$A3}. {H$1}')
+I3 = @claude('{instructions} Files: {$A3}. {I$1}')
+A4 = contracts/initech-mutual-nda.md
+B4 = @claude('{instructions} Files: {$A4}. {B$1}')
+C4 = @claude('{instructions} Files: {$A4}. {C$1}')
+D4 = @claude('{instructions} Files: {$A4}. {D$1}')
+E4 = @claude('{instructions} Files: {$A4}. {E$1}')
+F4 = @claude('{instructions} Files: {$A4}. {F$1}')
+G4 = @claude('{instructions} Files: {$A4}. {G$1}')
+H4 = @claude('{instructions} Files: {$A4}. {H$1}')
+I4 = @claude('{instructions} Files: {$A4}. {I$1}')
+A5 = contracts/umbrella-saas-subscription.md
+B5 = @claude('{instructions} Files: {$A5}. {B$1}')
+C5 = @claude('{instructions} Files: {$A5}. {C$1}')
+D5 = @claude('{instructions} Files: {$A5}. {D$1}')
+E5 = @claude('{instructions} Files: {$A5}. {E$1}')
+F5 = @claude('{instructions} Files: {$A5}. {F$1}')
+G5 = @claude('{instructions} Files: {$A5}. {G$1}')
+H5 = @claude('{instructions} Files: {$A5}. {H$1}')
+I5 = @claude('{instructions} Files: {$A5}. {I$1}')
+A6 = contracts/harborview-office-lease.md
+B6 = @claude('{instructions} Files: {$A6}. {B$1}')
+C6 = @claude('{instructions} Files: {$A6}. {C$1}')
+D6 = @claude('{instructions} Files: {$A6}. {D$1}')
+E6 = @claude('{instructions} Files: {$A6}. {E$1}')
+F6 = @claude('{instructions} Files: {$A6}. {F$1}')
+G6 = @claude('{instructions} Files: {$A6}. {G$1}')
+H6 = @claude('{instructions} Files: {$A6}. {H$1}')
+I6 = @claude('{instructions} Files: {$A6}. {I$1}')
+A7 = contracts/okafor-employment-agreement.md
+B7 = @claude('{instructions} Files: {$A7}. {B$1}')
+C7 = @claude('{instructions} Files: {$A7}. {C$1}')
+D7 = @claude('{instructions} Files: {$A7}. {D$1}')
+E7 = @claude('{instructions} Files: {$A7}. {E$1}')
+F7 = @claude('{instructions} Files: {$A7}. {F$1}')
+G7 = @claude('{instructions} Files: {$A7}. {G$1}')
+H7 = @claude('{instructions} Files: {$A7}. {H$1}')
+I7 = @claude('{instructions} Files: {$A7}. {I$1}')
+J1 = Change-of-control risk for the acquirer: exactly one of Low / Medium / High
+K1 = Why (one line), from the answers in F, G and I
+J2 = @claude('You are rating change-of-control risk for an acquirer of the counterparty to this contract. Consent/assignment: {F2}. Liability cap: {G2}. Non-compete/exclusivity: {I2}. Term: {E2}. Reply with exactly one word: Low, Medium, or High. Consent required with a short notice period or an uncapped exposure is High; notice-only or a capped exposure is Medium; unrestricted or not applicable is Low.')
+K2 = @claude('In one line, justify a change-of-control risk rating of {J2} given — consent/assignment: {F2}; liability cap: {G2}; non-compete or exclusivity: {I2}. No preamble.')
+J3 = @claude('You are rating change-of-control risk for an acquirer of the counterparty to this contract. Consent/assignment: {F3}. Liability cap: {G3}. Non-compete/exclusivity: {I3}. Term: {E3}. Reply with exactly one word: Low, Medium, or High. Consent required with a short notice period or an uncapped exposure is High; notice-only or a capped exposure is Medium; unrestricted or not applicable is Low.')
+K3 = @claude('In one line, justify a change-of-control risk rating of {J3} given — consent/assignment: {F3}; liability cap: {G3}; non-compete or exclusivity: {I3}. No preamble.')
+J4 = @claude('You are rating change-of-control risk for an acquirer of the counterparty to this contract. Consent/assignment: {F4}. Liability cap: {G4}. Non-compete/exclusivity: {I4}. Term: {E4}. Reply with exactly one word: Low, Medium, or High. Consent required with a short notice period or an uncapped exposure is High; notice-only or a capped exposure is Medium; unrestricted or not applicable is Low.')
+K4 = @claude('In one line, justify a change-of-control risk rating of {J4} given — consent/assignment: {F4}; liability cap: {G4}; non-compete or exclusivity: {I4}. No preamble.')
+J5 = @claude('You are rating change-of-control risk for an acquirer of the counterparty to this contract. Consent/assignment: {F5}. Liability cap: {G5}. Non-compete/exclusivity: {I5}. Term: {E5}. Reply with exactly one word: Low, Medium, or High. Consent required with a short notice period or an uncapped exposure is High; notice-only or a capped exposure is Medium; unrestricted or not applicable is Low.')
+K5 = @claude('In one line, justify a change-of-control risk rating of {J5} given — consent/assignment: {F5}; liability cap: {G5}; non-compete or exclusivity: {I5}. No preamble.')
+J6 = @claude('You are rating change-of-control risk for an acquirer of the counterparty to this contract. Consent/assignment: {F6}. Liability cap: {G6}. Non-compete/exclusivity: {I6}. Term: {E6}. Reply with exactly one word: Low, Medium, or High. Consent required with a short notice period or an uncapped exposure is High; notice-only or a capped exposure is Medium; unrestricted or not applicable is Low.')
+K6 = @claude('In one line, justify a change-of-control risk rating of {J6} given — consent/assignment: {F6}; liability cap: {G6}; non-compete or exclusivity: {I6}. No preamble.')
+J7 = @claude('You are rating change-of-control risk for an acquirer of the counterparty to this contract. Consent/assignment: {F7}. Liability cap: {G7}. Non-compete/exclusivity: {I7}. Term: {E7}. Reply with exactly one word: Low, Medium, or High. Consent required with a short notice period or an uncapped exposure is High; notice-only or a capped exposure is Medium; unrestricted or not applicable is Low.')
+K7 = @claude('In one line, justify a change-of-control risk rating of {J7} given — consent/assignment: {F7}; liability cap: {G7}; non-compete or exclusivity: {I7}. No preamble.')
+progress = = count({B2:K7}) & ' of 60 answered'
+consent_required = = countif({F2:F7}, 'Consent required')
+uncapped = = countif({G2:G7}, 'uncapped') + countif({G2:G7}, 'Not found')
+high_risk = = countif({J2:J7}, 'High')
+deal_summary = @claude('Write the change-of-control section of a diligence memo in five to eight sentences, using only the table in the grid context: which contracts need counterparty consent, which cap liability and how, where a key person is bound by a non-compete, and what to negotiate before signing. Name each contract by its file.', {A1:K7})
+# Typed columns: a date, a classification, a rating. A misfit is refused.
+@answer_type C2 C3 C4 C5 C6 C7 = date
+@answer_type F2 F3 F4 F5 F6 F7 = choice:Consent required|Notice only|Unrestricted|Not found
+@answer_type J2 J3 J4 J5 J6 J7 = choice:Low|Medium|High

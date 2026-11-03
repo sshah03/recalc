@@ -1,0 +1,16 @@
+2024 FORM 1040 — RETURN SUMMARY (from the firm's prep software, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Taxpayer: Grace Chen-Whitfield        Filing status: Single
+Filed: 2025-02-26 (e-file accepted)
+
+Line 1z   Wages (W-2, Halcyon County Library District) ......  71,900.00
+Line 3b   Ordinary dividends (Lantern) ......................   2,315.00
+Line 9    Total income ......................................  74,215.00
+Line 11   Adjusted gross income .............................  74,215.00
+Line 12   Standard deduction ................................  14,600.00
+Line 13   Qualified business income deduction ...............       0.00
+Line 15   Taxable income ....................................  59,615.00
+Line 24   Total tax .........................................   8,051.00
+Line 25a  Federal income tax withheld .......................   8,300.00
+Line 34   Overpaid (refunded) ...............................     249.00

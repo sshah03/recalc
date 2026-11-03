@@ -1,0 +1,11 @@
+ESTIMATED TAX PAYMENTS — EFTPS CONFIRMATIONS (Form 1041-ES)
+(synthetic sample for demonstration; all names and numbers invented)
+Taxpayer: The Ivers Family Trust (EIN XX-XXX5508)
+
+EFT number         Settled on    Tax year   Period                 Amount
+2709 1144 8812 0   04/15/2025    2025       1st quarter            1,500.00
+2709 1167 0234 5   06/16/2025    2025       2nd quarter            1,500.00
+2709 1190 4471 9   09/15/2025    2025       3rd quarter            1,500.00
+2709 1213 9906 2   01/15/2026    2025       4th quarter            1,500.00
+
+Note: the 528.00 overpayment credited from the 2024 return is not an EFTPS payment.

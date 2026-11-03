@@ -1,0 +1,10 @@
+#!/bin/sh
+# A stand-in for the GitHub CLI over the PRs in prs/, so the board runs
+# without an account. Delete `sh tools/` from the board's commands to use
+# the real gh on your repository.
+here=$(dirname "$0")/..
+case "$1 $2" in
+  "pr list") cat "$here/prs/list.json" ;;
+  "pr diff") cat "$here/prs/$3.diff" ;;
+  *) echo "tools/gh: only 'pr list' and 'pr diff N'" >&2; exit 2 ;;
+esac

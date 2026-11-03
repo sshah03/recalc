@@ -1,0 +1,37 @@
+[package]
+name = "recalc"
+version = "0.1.0"
+edition = "2021"
+description = "A whiteboard you and your coding agent can both write on — and the whiteboard can run commands."
+license = "Apache-2.0"
+
+[dependencies]
+anyhow = "1"
+clap = { version = "4", features = ["derive"] }
+globset = "0.4"
+ignore = "0.4"
+regex = "1"
+libc = "0.2"
+notify = "8"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+tokio = { version = "1", features = ["io-std", "io-util", "macros", "net", "process", "rt-multi-thread", "signal", "sync", "time"] }
+toml = "0.8"
+uuid = { version = "1", features = ["v4"] }
+pdf-extract = "0.12"
+zip = { version = "2", default-features = false, features = ["deflate"] }
+
+[dev-dependencies]
+tempfile = "3"
+
+[workspace]
+members = ["desktop/src-tauri"]
+
+# Debug builds keep line numbers for backtraces and drop the rest: on macOS each
+# build leaves its object files in target/debug/deps for the debugger, and with
+# full debug info those reached tens of gigabytes. `cargo clean` clears them.
+[profile.dev]
+debug = "line-tables-only"
+
+[profile.dev.package."*"]
+debug = false

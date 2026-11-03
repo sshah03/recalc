@@ -1,0 +1,20 @@
+FORM 1099-B  PROCEEDS FROM BROKER TRANSACTIONS — SUMMARY          TAX YEAR 2025
+(synthetic sample for demonstration; not a real form)
+
+PAYER'S name             SUMMIT BROKERAGE SERVICES
+PAYER'S TIN              23-2019411
+RECIPIENT'S name         DANA R OYELARAN
+Account number           88-4410-Z
+
+SHORT-TERM TRANSACTIONS (Box A — basis reported to IRS)
+  Total proceeds (1d)                       42,000.00
+  Total cost or other basis (1e)            38,500.00
+  Wash sale loss disallowed (1g)                 0.00
+  Net short-term gain/(loss)                 3,500.00
+
+LONG-TERM TRANSACTIONS (Box D — basis reported to IRS)
+  Total proceeds (1d)                            0.00
+  Total cost or other basis (1e)                 0.00
+  Net long-term gain/(loss)                      0.00
+
+Federal income tax withheld (4)                  0.00

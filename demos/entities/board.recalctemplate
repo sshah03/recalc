@@ -1,0 +1,69 @@
+# The entity grid: one client family's linked returns side by side. Rosalind
+# Kettering owns 60% of an S corporation, 25% of a partnership, and half the
+# income of a family trust; each row is one entity as a file group (its return
+# summary and the K-1s it issued, read together), and the last row is her own
+# draft 1040. B-E are read by an agent that cites the passage; F checks the
+# K-1 against the entity's income times her share; G reads what her 1040
+# actually reports for that entity, keyed by the EIN on the row's documents,
+# and re-runs when any return changes; H is the mismatch flag; I is a second
+# model (Codex) that re-reads the documents and agrees or disagrees with E.
+# Select B2:E5 and Run Selection, then I2:I4. The returns are synthetic; this
+# shows the board's structure and is not tax advice.
+instructions = You are a preparer's assistant reviewing the 2025 returns of Rosalind Kettering's family of entities. The row lists the files to read; read all of them. An Amended K-1 replaces the K-1 it amends in full. If the files are silent, answer "Not found". Answer in exactly the form the question asks for, with no preamble.
+A1 = files (return summary and K-1s issued)
+B1 = Return type: one of 1120-S, 1065, 1041, 1040
+C1 = Rosalind's share of this entity, percent (number only; her own 1040 is 100)
+D1 = Entity's income before it passes out: 1120-S line 21 or 1065 line 23 ordinary business income; 1041 distributable net income; for her own 1040, AGI (line 11)
+E1 = Income on Rosalind's K-1 from this entity: 1120-S or 1065 box 1, 1041 box 6 (her own 1040 issues no K-1: answer Not found)
+F1 = Share check: K-1 = income × share?
+G1 = Reported on her 1040 (Schedule E line for this EIN; her row: lines 32 + 37)
+H1 = 1040 vs K-1
+I1 = Reviewer (Codex): is the amount in E right? agree or disagree
+A2 = kettering-millwork/1120s-2025-return-summary.txt, kettering-millwork/k1-1120s-rosalind-kettering.txt
+A3 = fairhaven-storage/1065-2025-return-summary.txt, fairhaven-storage/k1-1065-rosalind-kettering.txt, fairhaven-storage/k1-1065-rosalind-kettering-amended.txt
+A4 = kettering-trust/1041-2025-return-summary.txt, kettering-trust/k1-1041-rosalind-kettering.txt
+A5 = rosalind-kettering/1040-2025-draft-summary.txt
+B2 = @claude('{instructions} Files: {$A2}. {B$1}')
+C2 = @claude('{instructions} Files: {$A2}. {C$1}')
+D2 = @claude('{instructions} Files: {$A2}. {D$1}')
+E2 = @claude('{instructions} Files: {$A2}. {E$1}')
+F2 = = if(or({C2} == '', {D2} == '', {E2} == ''), '', if(abs({E2} - {D2} * {C2} / 100) < 1, 'ok', 'check'))
+G2 = $ python3 tools/schedule_e.py {file:rosalind-kettering/1040-2025-draft-summary.txt} {$A2} # watch: **/*.txt
+H2 = = if({E2} == '', '', if({G2} == 'not on the 1040', 'OMITTED', if(abs({E2} - {G2}) < 0.5, 'ok', 'MISMATCH')))
+I2 = @codex('{instructions} Files: {$A2}. Another agent answered "{E2}" to: {E$1} Read the files yourself. Answer agree or disagree.')
+B3 = @claude('{instructions} Files: {$A3}. {B$1}')
+C3 = @claude('{instructions} Files: {$A3}. {C$1}')
+D3 = @claude('{instructions} Files: {$A3}. {D$1}')
+E3 = @claude('{instructions} Files: {$A3}. {E$1}')
+F3 = = if(or({C3} == '', {D3} == '', {E3} == ''), '', if(abs({E3} - {D3} * {C3} / 100) < 1, 'ok', 'check'))
+G3 = $ python3 tools/schedule_e.py {file:rosalind-kettering/1040-2025-draft-summary.txt} {$A3} # watch: **/*.txt
+H3 = = if({E3} == '', '', if({G3} == 'not on the 1040', 'OMITTED', if(abs({E3} - {G3}) < 0.5, 'ok', 'MISMATCH')))
+I3 = @codex('{instructions} Files: {$A3}. Another agent answered "{E3}" to: {E$1} Read the files yourself. Answer agree or disagree.')
+B4 = @claude('{instructions} Files: {$A4}. {B$1}')
+C4 = @claude('{instructions} Files: {$A4}. {C$1}')
+D4 = @claude('{instructions} Files: {$A4}. {D$1}')
+E4 = @claude('{instructions} Files: {$A4}. {E$1}')
+F4 = = if(or({C4} == '', {D4} == '', {E4} == ''), '', if(abs({E4} - {D4} * {C4} / 100) < 1, 'ok', 'check'))
+G4 = $ python3 tools/schedule_e.py {file:rosalind-kettering/1040-2025-draft-summary.txt} {$A4} # watch: **/*.txt
+H4 = = if({E4} == '', '', if({G4} == 'not on the 1040', 'OMITTED', if(abs({E4} - {G4}) < 0.5, 'ok', 'MISMATCH')))
+I4 = @codex('{instructions} Files: {$A4}. Another agent answered "{E4}" to: {E$1} Read the files yourself. Answer agree or disagree.')
+B5 = @claude('{instructions} Files: {$A5}. {B$1}')
+C5 = @claude('{instructions} Files: {$A5}. {C$1}')
+D5 = @claude('{instructions} Files: {$A5}. {D$1}')
+E5 = @claude('{instructions} Files: {$A5}. {E$1}')
+F5 = n/a
+G5 = $ python3 tools/schedule_e.py {file:rosalind-kettering/1040-2025-draft-summary.txt} {$A5} # watch: **/*.txt
+H5 = = if(count({E2:E4}) < 3, '', if(abs({total_k1_income} - {G5}) < 0.5, 'ok', 'MISMATCH'))
+# What flows to Rosalind, and whether her 1040 says so.
+progress = = count({B2:E5}) & ' of 16 answered'
+total_k1_income = = if(count({E2:E4}) < 3, 'waiting', sum({E2:E4}))
+reported_on_1040 = = {G5}
+gap = = if(count({E2:E4}) < 3, 'waiting', {total_k1_income} - {reported_on_1040})
+mismatches = = countif({H2:H4}, 'MISMATCH') + countif({H2:H4}, 'OMITTED')
+share_checks_failing = = countif({F2:F4}, 'check')
+disagreements = = countif({I2:I4}, 'disagree')
+note = mismatches should come back 1: the S corporation's K-1 says 87,450.00 and the draft 1040 carries 78,450.00, a transposition, so gap reads 9000. Fairhaven should read 46,000.00 from the amended K-1; an answer of 36,800.00 is the superseded one, and H3 turns red.
+@answer_type B2 B3 B4 B5 = choice:1120-S|1065|1041|1040
+@answer_type C2 C3 C4 C5 = number
+@answer_type D2 D3 D4 D5 E2 E3 E4 E5 = currency
+@answer_type I2 I3 I4 = choice:agree|disagree

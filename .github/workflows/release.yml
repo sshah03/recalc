@@ -1,0 +1,113 @@
+name: release
+on:
+  push:
+    tags: ["v*"]
+permissions:
+  contents: write
+jobs:
+  # A tag that doesn't match the version the app reports ships a build
+  # whose About box and update checks disagree with its release page.
+  version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: The tag matches every version in the repo
+        run: |
+          tag="${GITHUB_REF_NAME#v}"
+          core=$(grep -m1 '^version' Cargo.toml | cut -d'"' -f2)
+          desktop=$(grep -m1 '^version' desktop/src-tauri/Cargo.toml | cut -d'"' -f2)
+          tauri=$(grep -m1 '"version"' desktop/src-tauri/tauri.conf.json | cut -d'"' -f4)
+          frontend=$(grep -m1 '"version"' desktop/frontend/package.json | cut -d'"' -f4)
+          echo "tag $tag, Cargo.toml $core, desktop $desktop, tauri.conf.json $tauri, package.json $frontend"
+          for v in "$core" "$desktop" "$tauri" "$frontend"; do
+            [ "$v" = "$tag" ] || { echo "::error::tag v$tag doesn't match version $v"; exit 1; }
+          done
+
+  bundle:
+    needs: version
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { os: macos-latest, args: "--target aarch64-apple-darwin" }
+          - { os: macos-15-intel, args: "--target x86_64-apple-darwin" }
+          - { os: ubuntu-22.04, args: "" }
+    runs-on: ${{ matrix.os }}
+    # The signing secrets live in the release environment, which waits for
+    # the maintainer to approve each run (see docs/RELEASING.md).
+    environment: release
+    env:
+      # Updates: the app checks this feed, and installs only what the key
+      # behind tauri.conf.json's pubkey signed (docs/RELEASING.md).
+      RECALC_UPDATE_URL: https://github.com/${{ github.repository }}/releases/latest/download/latest.json
+      TAURI_SIGNING_PRIVATE_KEY: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY }}
+      TAURI_SIGNING_PRIVATE_KEY_PASSWORD: ${{ secrets.TAURI_SIGNING_PRIVATE_KEY_PASSWORD }}
+    steps:
+      - uses: actions/checkout@v4
+      - if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: rustup update stable
+      - if: runner.os == 'macOS'
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
+      # Signing and notarization run when these secrets exist (see
+      # docs/RELEASING.md). Without them, macOS builds are ad-hoc signed:
+      # they run, but Gatekeeper asks the user to allow them once. The
+      # secrets reach the build only when they're set: Tauri tries to import
+      # a certificate whenever APPLE_CERTIFICATE exists, even empty.
+      - name: Decide how macOS builds are signed
+        if: runner.os == 'macOS'
+        env:
+          CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE }}
+          CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+          SIGNING_IDENTITY: ${{ secrets.APPLE_SIGNING_IDENTITY }}
+          API_ISSUER: ${{ secrets.APPLE_API_ISSUER }}
+          API_KEY: ${{ secrets.APPLE_API_KEY }}
+          API_KEY_P8: ${{ secrets.APPLE_API_KEY_P8 }}
+        run: |
+          if [ -n "$CERTIFICATE" ] && [ -n "$API_KEY_P8" ]; then
+            key="$RUNNER_TEMP/AuthKey_$API_KEY.p8"
+            printf '%s' "$API_KEY_P8" > "$key"
+            {
+              echo "APPLE_CERTIFICATE=$CERTIFICATE"
+              echo "APPLE_CERTIFICATE_PASSWORD=$CERTIFICATE_PASSWORD"
+              echo "APPLE_SIGNING_IDENTITY=$SIGNING_IDENTITY"
+              echo "APPLE_API_ISSUER=$API_ISSUER"
+              echo "APPLE_API_KEY=$API_KEY"
+              echo "APPLE_API_KEY_PATH=$key"
+              echo "SIGNED=1"
+            } >> "$GITHUB_ENV"
+            echo "Signing with a Developer ID and notarizing."
+          else
+            # "-" is an ad-hoc signature: Apple silicon won't run an
+            # unsigned binary at all.
+            echo "APPLE_SIGNING_IDENTITY=-" >> "$GITHUB_ENV"
+            echo "::warning::No Apple signing secrets; this macOS build is ad-hoc signed and not notarized."
+          fi
+      - name: Decide whether this release carries updates
+        shell: bash
+        run: |
+          if [ -n "$TAURI_SIGNING_PRIVATE_KEY" ]; then
+            echo "UPDATER_ARGS=--config tauri.release.conf.json" >> "$GITHUB_ENV"
+          else
+            echo "::warning::No TAURI_SIGNING_PRIVATE_KEY; this release has no update bundles, so installed copies won't update to it."
+          fi
+      - uses: tauri-apps/tauri-action@v0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          projectPath: desktop/src-tauri
+          tagName: ${{ github.ref_name }}
+          releaseName: recalc ${{ github.ref_name }}
+          releaseDraft: true
+          args: ${{ matrix.args }} ${{ env.UPDATER_ARGS }}
+      - name: The notarization ticket is stapled
+        if: runner.os == 'macOS' && env.SIGNED == '1'
+        run: |
+          for dmg in $(find target -name '*.dmg' -path '*bundle*'); do
+            xcrun stapler validate "$dmg"
+          done

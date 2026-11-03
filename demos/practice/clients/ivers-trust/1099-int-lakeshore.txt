@@ -1,0 +1,11 @@
+FORM 1099-INT  INTEREST INCOME                                    TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           LAKESHORE COMMUNITY BANK
+PAYER'S TIN            XX-XXX7702
+RECIPIENT'S name       IVERS FAMILY TRUST
+Account number         ....5160 (certificates)
+
+1  Interest income                         3,207.81
+4  Federal income tax withheld                 0.00

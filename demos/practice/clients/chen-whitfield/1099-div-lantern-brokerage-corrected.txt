@@ -1,0 +1,21 @@
+FORM 1099-DIV  DIVIDENDS AND DISTRIBUTIONS                        TAX YEAR 2025
+[ ] VOID   [X] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           LANTERN BROKERAGE INC
+PAYER'S TIN            XX-XXX8164
+RECIPIENT'S name       GRACE CHEN-WHITFIELD
+Account number         ....W-3071
+Date issued            03/03/2026
+
+Notice: Fund companies issue final tax classifications after January. One
+real estate investment trust held in this account reclassified part of its
+2025 distributions as Section 199A (qualified REIT) dividends. This
+corrected form replaces the form dated 01/30/2026 and has been filed with
+the IRS.
+
+1a Total ordinary dividends                 2,860.40
+1b Qualified dividends                      1,692.00
+2a Total capital gain distr.                  188.00
+4  Federal income tax withheld                  0.00
+5  Section 199A dividends                     412.00

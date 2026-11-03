@@ -1,0 +1,18 @@
+FORM 1099-DIV  DIVIDENDS AND DISTRIBUTIONS                        TAX YEAR 2025
+(synthetic sample for demonstration; not a real form)
+
+PAYER'S name, street address, city, state, ZIP
+   SUMMIT BROKERAGE SERVICES
+   100 INVESTOR WAY
+   VALLEY FORGE PA 19482
+PAYER'S TIN            23-2019411
+RECIPIENT'S TIN        ***-**-4471
+RECIPIENT'S name       DANA R OYELARAN
+Account number         88-4410-Z
+
+1a Total ordinary dividends                 2,310.00
+1b Qualified dividends                      1,900.00
+2a Total capital gain distributions           415.20
+3  Nondividend distributions                    0.00
+4  Federal income tax withheld                  0.00
+7  Foreign tax paid                            38.10

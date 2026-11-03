@@ -1,0 +1,44 @@
+# Literature matrix: five abstracts down column A, one question per header,
+# an agent answer per cell, which replaces reading each paper yourself. The
+# synthesis cell at the bottom is given the full table as context and writes
+# the related-work paragraph from it; run it after the table fills.
+instructions = You are a research assistant extracting one field from one paper. Answer from the paper only, in one or two lines.
+A1 = paper
+B1 = Method, in one phrase
+C1 = Evaluation setup: model sizes and hardware
+D1 = Headline result, with its number
+E1 = Main limitation the authors admit
+F1 = Quote the sentence that contains the headline number.
+A2 = papers/01-speculative-decoding.md
+B2 = @claude('{instructions} Read the file {$A2}. {B$1}')
+C2 = @claude('{instructions} Read the file {$A2}. {C$1}')
+D2 = @claude('{instructions} Read the file {$A2}. {D$1}')
+E2 = @claude('{instructions} Read the file {$A2}. {E$1}')
+F2 = @claude('{instructions} Read the file {$A2}. {F$1}')
+A3 = papers/02-kv-cache-quantization.md
+B3 = @claude('{instructions} Read the file {$A3}. {B$1}')
+C3 = @claude('{instructions} Read the file {$A3}. {C$1}')
+D3 = @claude('{instructions} Read the file {$A3}. {D$1}')
+E3 = @claude('{instructions} Read the file {$A3}. {E$1}')
+F3 = @claude('{instructions} Read the file {$A3}. {F$1}')
+A4 = papers/03-continuous-batching.md
+B4 = @claude('{instructions} Read the file {$A4}. {B$1}')
+C4 = @claude('{instructions} Read the file {$A4}. {C$1}')
+D4 = @claude('{instructions} Read the file {$A4}. {D$1}')
+E4 = @claude('{instructions} Read the file {$A4}. {E$1}')
+F4 = @claude('{instructions} Read the file {$A4}. {F$1}')
+A5 = papers/04-early-exit-layers.md
+B5 = @claude('{instructions} Read the file {$A5}. {B$1}')
+C5 = @claude('{instructions} Read the file {$A5}. {C$1}')
+D5 = @claude('{instructions} Read the file {$A5}. {D$1}')
+E5 = @claude('{instructions} Read the file {$A5}. {E$1}')
+F5 = @claude('{instructions} Read the file {$A5}. {F$1}')
+A6 = papers/05-prompt-caching.md
+B6 = @claude('{instructions} Read the file {$A6}. {B$1}')
+C6 = @claude('{instructions} Read the file {$A6}. {C$1}')
+D6 = @claude('{instructions} Read the file {$A6}. {D$1}')
+E6 = @claude('{instructions} Read the file {$A6}. {E$1}')
+F6 = @claude('{instructions} Read the file {$A6}. {F$1}')
+progress = = count({B2:F6}) & ' of 25 answered'
+synthesis = @claude('Using only the table in the grid context below, write a related-work paragraph of five to seven sentences comparing these approaches to LLM inference latency, naming each by its file. Note where the results are not comparable.', {A1:F6})
+@answer_type F2 F3 F4 F5 F6 = quote

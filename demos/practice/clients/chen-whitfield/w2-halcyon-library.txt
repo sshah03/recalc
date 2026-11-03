@@ -1,0 +1,15 @@
+FORM W-2  WAGE AND TAX STATEMENT                                  TAX YEAR 2025
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+c  Employer's name, address, and ZIP code
+   HALCYON COUNTY LIBRARY DISTRICT
+   12 CIVIC PLAZA
+   BELVIDERE IL 61008
+b  Employer identification number (EIN)     XX-XXX0457
+a  Employee's SSN                           XXX-XX-9026
+e  Employee's name                          GRACE CHEN-WHITFIELD
+
+1  Wages, tips, other compensation           73,640.00
+2  Federal income tax withheld                7,215.00
+3  Social security wages                     73,640.00
+5  Medicare wages and tips                   73,640.00

@@ -1,0 +1,333 @@
+# S-corp returns for 2026, on the IRS's draft Form 1120-S. Fictional clients.
+@first Clients
+@sheet Form map
+@sheet Harbor
+A1 = Client
+B1 = Workpaper
+C1 = Status
+D1 = Ordinary income (line 22)
+E1 = Distributions (K16d)
+F1 = Owner pay (line 7)
+A2 = Harbor Coffee Roasters, Inc.
+B2 = Harbor
+C2 = = {Harbor!B3}
+D2 = = {Harbor!I29}
+E2 = = {Harbor!I34}
+F2 = = {Harbor!I17}
+A3 = Pinecrest Dental Studio, P.C.
+B3 = Pinecrest
+C3 = = {Pinecrest!B3}
+D3 = = {Pinecrest!I29}
+E3 = = {Pinecrest!I34}
+F3 = = {Pinecrest!I17}
+A4 = Lumen Design Co.
+B4 = Lumen
+C4 = = {Lumen!B3}
+D4 = = {Lumen!I29}
+E4 = = {Lumen!I34}
+F4 = = {Lumen!I17}
+A5 = Northside Plumbing & Heating, Inc.
+B5 = Northside
+C5 = = {Northside!B3}
+D5 = = {Northside!I29}
+E5 = = {Northside!I34}
+F5 = = {Northside!I17}
+A6 = Kestrel Software, Inc.
+B6 = Kestrel
+C6 = = {Kestrel!B3}
+D6 = = {Kestrel!I29}
+E6 = = {Kestrel!I34}
+F6 = = {Kestrel!I17}
+H1 = Run once first
+H2 = ! sh scripts/setup.sh
+I2 = Installs pypdf into .venv here, which the Form map and each workpaper's Return action use to read and fill the IRS's PDF.
+'Form map'!A1 = $ sh scripts/py.sh scripts/form_map.py irs/f1120s--dft.pdf # rows: A3 key=line cols=line,label,field # watch: irs/f1120s--dft.pdf .venv/ready
+'Form map'!B1 = The 2026 draft Form 1120-S, read from the IRS's PDF. Drop the final form into irs/ and these rows follow it. Empty until you run Setup on the Clients sheet.
+Harbor!A1 = Client
+Harbor!B1 = Harbor Coffee Roasters, Inc.
+Harbor!A2 = Documents
+Harbor!B2 = clients/harbor
+Harbor!A3 = Status
+Harbor!A4 = Return
+Harbor!A5 = Draft form; do not file. Fictional client.
+Harbor!A10 = Account
+Harbor!B10 = Debit
+Harbor!C10 = Credit
+Harbor!D10 = Net
+Harbor!E10 = Category
+Harbor!A11 = 1000 Cash - operating
+Harbor!B11 = 84620
+Harbor!C11 = 0
+Harbor!E11 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A11}. Debit: {$B11}. Credit: {$C11}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A12 = 1100 Accounts receivable
+Harbor!B12 = 96300
+Harbor!C12 = 0
+Harbor!E12 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A12}. Debit: {$B12}. Credit: {$C12}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A13 = 1200 Inventory
+Harbor!B13 = 142800
+Harbor!C13 = 0
+Harbor!E13 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A13}. Debit: {$B13}. Credit: {$C13}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A14 = 1500 Equipment and vehicles
+Harbor!B14 = 412000
+Harbor!C14 = 0
+Harbor!E14 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A14}. Debit: {$B14}. Credit: {$C14}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A15 = 1510 Accumulated depreciation
+Harbor!B15 = 0
+Harbor!C15 = 196400
+Harbor!E15 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A15}. Debit: {$B15}. Credit: {$C15}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A16 = 2000 Accounts payable
+Harbor!B16 = 0
+Harbor!C16 = 58900
+Harbor!E16 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A16}. Debit: {$B16}. Credit: {$C16}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A17 = 2100 Accrued payroll
+Harbor!B17 = 0
+Harbor!C17 = 12600
+Harbor!E17 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A17}. Debit: {$B17}. Credit: {$C17}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A18 = 2500 Bank loan
+Harbor!B18 = 0
+Harbor!C18 = 118000
+Harbor!E18 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A18}. Debit: {$B18}. Credit: {$C18}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A19 = 3000 Capital stock
+Harbor!B19 = 0
+Harbor!C19 = 10000
+Harbor!E19 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A19}. Debit: {$B19}. Credit: {$C19}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A20 = 3100 Retained earnings
+Harbor!B20 = 0
+Harbor!C20 = 322990
+Harbor!E20 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A20}. Debit: {$B20}. Credit: {$C20}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A21 = 3200 Shareholder distributions
+Harbor!B21 = 100000
+Harbor!C21 = 0
+Harbor!E21 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A21}. Debit: {$B21}. Credit: {$C21}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A22 = 4000 Sales - wholesale coffee
+Harbor!B22 = 0
+Harbor!C22 = 1284600
+Harbor!E22 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A22}. Debit: {$B22}. Credit: {$C22}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A23 = 4100 Interest income - savings
+Harbor!B23 = 0
+Harbor!C23 = 2140
+Harbor!E23 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A23}. Debit: {$B23}. Credit: {$C23}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A24 = 5000 Cost of goods sold - green coffee and packaging
+Harbor!B24 = 611250
+Harbor!C24 = 0
+Harbor!E24 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A24}. Debit: {$B24}. Credit: {$C24}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A25 = 6000 Officer salaries
+Harbor!B25 = 168000
+Harbor!C25 = 0
+Harbor!E25 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A25}. Debit: {$B25}. Credit: {$C25}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A26 = 6010 Staff wages
+Harbor!B26 = 214400
+Harbor!C26 = 0
+Harbor!E26 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A26}. Debit: {$B26}. Credit: {$C26}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A27 = 6100 Payroll taxes
+Harbor!B27 = 29480
+Harbor!C27 = 0
+Harbor!E27 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A27}. Debit: {$B27}. Credit: {$C27}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A28 = 6200 Rent - roastery
+Harbor!B28 = 72000
+Harbor!C28 = 0
+Harbor!E28 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A28}. Debit: {$B28}. Credit: {$C28}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A29 = 6300 Repairs - roaster maintenance
+Harbor!B29 = 11860
+Harbor!C29 = 0
+Harbor!E29 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A29}. Debit: {$B29}. Credit: {$C29}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A30 = 6410 Meals - client meetings
+Harbor!B30 = 6320
+Harbor!C30 = 0
+Harbor!E30 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A30}. Debit: {$B30}. Credit: {$C30}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A31 = 6500 Depreciation expense
+Harbor!B31 = 38400
+Harbor!C31 = 0
+Harbor!E31 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A31}. Debit: {$B31}. Credit: {$C31}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A32 = 6700 Professional fees
+Harbor!B32 = 14750
+Harbor!C32 = 0
+Harbor!E32 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A32}. Debit: {$B32}. Credit: {$C32}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A33 = 6800 Charitable contributions
+Harbor!B33 = 3000
+Harbor!C33 = 0
+Harbor!E33 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A33}. Debit: {$B33}. Credit: {$C33}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!A34 = 6900 Penalties - late filing
+Harbor!B34 = 450
+Harbor!C34 = 0
+Harbor!E34 = @claude('Classify this trial balance account for the 2026 Form 1120-S, following guide/mapping.md. Account: {$A34}. Debit: {$B34}. Credit: {$C34}. The client is {$B$1}; its documents are in {$B$2}. Read them when the account name alone does not settle it.')
+Harbor!D11 = = sum({B11}) - sum({C11})
+Harbor!D12 = = sum({B12}) - sum({C12})
+Harbor!D13 = = sum({B13}) - sum({C13})
+Harbor!D14 = = sum({B14}) - sum({C14})
+Harbor!D15 = = sum({B15}) - sum({C15})
+Harbor!D16 = = sum({B16}) - sum({C16})
+Harbor!D17 = = sum({B17}) - sum({C17})
+Harbor!D18 = = sum({B18}) - sum({C18})
+Harbor!D19 = = sum({B19}) - sum({C19})
+Harbor!D20 = = sum({B20}) - sum({C20})
+Harbor!D21 = = sum({B21}) - sum({C21})
+Harbor!D22 = = sum({B22}) - sum({C22})
+Harbor!D23 = = sum({B23}) - sum({C23})
+Harbor!D24 = = sum({B24}) - sum({C24})
+Harbor!D25 = = sum({B25}) - sum({C25})
+Harbor!D26 = = sum({B26}) - sum({C26})
+Harbor!D27 = = sum({B27}) - sum({C27})
+Harbor!D28 = = sum({B28}) - sum({C28})
+Harbor!D29 = = sum({B29}) - sum({C29})
+Harbor!D30 = = sum({B30}) - sum({C30})
+Harbor!D31 = = sum({B31}) - sum({C31})
+Harbor!D32 = = sum({B32}) - sum({C32})
+Harbor!D33 = = sum({B33}) - sum({C33})
+Harbor!D34 = = sum({B34}) - sum({C34})
+Harbor!D35 = = sum({B35}) - sum({C35})
+Harbor!D36 = = sum({B36}) - sum({C36})
+Harbor!A35 = Adjusting entries (preparer)
+Harbor!G10 = Line
+Harbor!H10 = 2026 Form 1120-S (draft)
+Harbor!I10 = Amount
+Harbor!G11 = 1a
+Harbor!H11 = Gross receipts or sales
+Harbor!I11 = = -sumif({$E$11:$E$36}, '1a Gross receipts', {$D$11:$D$36})
+Harbor!G12 = 1c
+Harbor!H12 = Balance
+Harbor!I12 = = {I11}
+Harbor!G13 = 2
+Harbor!H13 = Cost of goods sold
+Harbor!I13 = = sumif({$E$11:$E$36}, '2 Cost of goods sold', {$D$11:$D$36})
+Harbor!G14 = 3
+Harbor!H14 = Gross profit
+Harbor!I14 = = {I12} - {I13}
+Harbor!G15 = 5
+Harbor!H15 = Other income
+Harbor!I15 = = -sumif({$E$11:$E$36}, '5 Other income', {$D$11:$D$36})
+Harbor!G16 = 6
+Harbor!H16 = Total income
+Harbor!I16 = = {I14} + {I15}
+Harbor!G17 = 7
+Harbor!H17 = Compensation of officers
+Harbor!I17 = = sumif({$E$11:$E$36}, '7 Officer compensation', {$D$11:$D$36})
+Harbor!G18 = 8
+Harbor!H18 = Salaries and wages
+Harbor!I18 = = sumif({$E$11:$E$36}, '8 Salaries and wages', {$D$11:$D$36})
+Harbor!G19 = 9
+Harbor!H19 = Repairs and maintenance
+Harbor!I19 = = sumif({$E$11:$E$36}, '9 Repairs', {$D$11:$D$36})
+Harbor!G20 = 11
+Harbor!H20 = Rents
+Harbor!I20 = = sumif({$E$11:$E$36}, '11 Rents', {$D$11:$D$36})
+Harbor!G21 = 12
+Harbor!H21 = Taxes and licenses
+Harbor!I21 = = sumif({$E$11:$E$36}, '12 Taxes and licenses', {$D$11:$D$36})
+Harbor!G22 = 13
+Harbor!H22 = Interest
+Harbor!I22 = = sumif({$E$11:$E$36}, '13 Interest', {$D$11:$D$36})
+Harbor!G23 = 14
+Harbor!H23 = Depreciation (tax)
+Harbor!I23 = = {L14}
+Harbor!G24 = 16
+Harbor!H24 = Advertising
+Harbor!I24 = = sumif({$E$11:$E$36}, '16 Advertising', {$D$11:$D$36})
+Harbor!G25 = 17
+Harbor!H25 = Pension, profit-sharing plans
+Harbor!I25 = = sumif({$E$11:$E$36}, '17 Pension plans', {$D$11:$D$36})
+Harbor!G26 = 18
+Harbor!H26 = Employee benefit programs
+Harbor!I26 = = sumif({$E$11:$E$36}, '18 Employee benefits', {$D$11:$D$36})
+Harbor!G27 = 20
+Harbor!H27 = Other deductions
+Harbor!I27 = = sumif({$E$11:$E$36}, '20 Other deductions', {$D$11:$D$36}) + 0.5 * sumif({$E$11:$E$36}, 'Meals (50%)', {$D$11:$D$36})
+Harbor!G28 = 21
+Harbor!H28 = Total deductions
+Harbor!I28 = = sum({I17:I27})
+Harbor!G29 = 22
+Harbor!H29 = Ordinary business income
+Harbor!I29 = = {I16} - {I28}
+Harbor!G30 = K1
+Harbor!H30 = Ordinary business income
+Harbor!I30 = = {I29}
+Harbor!G31 = K4
+Harbor!H31 = Interest income
+Harbor!I31 = = -sumif({$E$11:$E$36}, 'K4 Interest income', {$D$11:$D$36})
+Harbor!G32 = K12a
+Harbor!H32 = Cash charitable contributions
+Harbor!I32 = = sumif({$E$11:$E$36}, 'K12a Charitable', {$D$11:$D$36})
+Harbor!G33 = K16c
+Harbor!H33 = Nondeductible expenses
+Harbor!I33 = = sumif({$E$11:$E$36}, 'K16c Nondeductible', {$D$11:$D$36}) + 0.5 * sumif({$E$11:$E$36}, 'Meals (50%)', {$D$11:$D$36})
+Harbor!G34 = K16d
+Harbor!H34 = Distributions
+Harbor!I34 = = sumif({$E$11:$E$36}, 'K16d Distributions', {$D$11:$D$36})
+Harbor!G35 = K18
+Harbor!H35 = Income reconciliation
+Harbor!I35 = = {I30} + {I31} - {I32}
+Harbor!H37 = Book net income
+Harbor!I37 = = -(sum({$D$11:$D$36}) - sumif({$E$11:$E$36}, 'Balance sheet', {$D$11:$D$36}) - sumif({$E$11:$E$36}, 'K16d Distributions', {$D$11:$D$36}))
+Harbor!H38 = Book depreciation
+Harbor!I38 = = sumif({$E$11:$E$36}, '14 Depreciation (book)', {$D$11:$D$36})
+Harbor!H39 = AAA before distributions
+Harbor!I39 = = {L11} + {I30} + {I31} - {I32} - {I33}
+Harbor!H40 = AAA at end of 2026
+Harbor!I40 = = if({I34} > {I39}, if({I39} > 0, 0, {I39}), {I39} - {I34})
+Harbor!G42 = Schedule K-1
+Harbor!H42 = Shareholder 1
+Harbor!I42 = Shareholder 2
+Harbor!G43 = Ownership
+Harbor!H43 = = {L17}
+Harbor!I43 = = {L18}
+Harbor!G44 = Ordinary business income
+Harbor!H44 = = round({I30} * {H43}, 0)
+Harbor!I44 = = round({I30} * {I43}, 0)
+Harbor!G45 = Interest income
+Harbor!H45 = = round({I31} * {H43}, 0)
+Harbor!I45 = = round({I31} * {I43}, 0)
+Harbor!G46 = Charitable contributions
+Harbor!H46 = = round({I32} * {H43}, 0)
+Harbor!I46 = = round({I32} * {I43}, 0)
+Harbor!G47 = Nondeductible expenses
+Harbor!H47 = = round({I33} * {H43}, 0)
+Harbor!I47 = = round({I33} * {I43}, 0)
+Harbor!G48 = Distributions
+Harbor!H48 = = {L19}
+Harbor!I48 = = {L20}
+Harbor!K10 = From the client's documents
+Harbor!L10 = Amount
+Harbor!K11 = The accumulated adjustments account (AAA) at the end of 2025, from the 2025 return's Schedule M-2
+Harbor!L11 = @claude('From the client documents in {$B$2}: {$K11}.')
+Harbor!K12 = Total W-3 box 1 wages for 2026
+Harbor!L12 = @claude('From the client documents in {$B$2}: {$K12}.')
+Harbor!K13 = Total 2026 W-2 wages paid to officers (all officers together)
+Harbor!L13 = @claude('From the client documents in {$B$2}: {$K13}.')
+Harbor!K14 = Tax depreciation for 2026, from the fixed-asset schedule
+Harbor!L14 = @claude('From the client documents in {$B$2}: {$K14}.')
+Harbor!K15 = Retained earnings at the end of 2025, from the 2025 return's Schedule L
+Harbor!L15 = @claude('From the client documents in {$B$2}: {$K15}.')
+Harbor!K17 = The first listed shareholder's ownership, as a decimal (60% is 0.6)
+Harbor!L17 = @claude('From the client documents in {$B$2}: {$K17}.')
+Harbor!K18 = The second listed shareholder's ownership, as a decimal; 0 if there is only one shareholder
+Harbor!L18 = @claude('From the client documents in {$B$2}: {$K18}.')
+Harbor!K19 = Total 2026 distributions paid to the first listed shareholder, from the distributions ledger
+Harbor!L19 = @claude('From the client documents in {$B$2}: {$K19}.')
+Harbor!K20 = Total 2026 distributions paid to the second listed shareholder; 0 if there is only one shareholder
+Harbor!L20 = @claude('From the client documents in {$B$2}: {$K20}.')
+Harbor!K22 = Checks
+Harbor!L22 = Result
+Harbor!K23 = Trial balance balances
+Harbor!L23 = = if(abs(sum({B11:B36}) - sum({C11:C36})) < 1, 'ok', 'CHECK')
+Harbor!K24 = Every account classified
+Harbor!L24 = = if(countif({E11:E36}, 'Needs review') == 0, 'ok', 'CHECK')
+Harbor!K25 = Wages tie to the W-3
+Harbor!L25 = = if(abs({I17} + {I18} - {L12}) < 1, 'ok', 'CHECK')
+Harbor!K26 = Officer pay ties to the W-3
+Harbor!L26 = = if(abs({I17} - {L13}) < 1, 'ok', 'CHECK')
+Harbor!K27 = Book-to-tax (M-1) reconciles
+Harbor!L27 = = if(abs({I37} + {I33} + {I38} - {I23} - {I35}) < 1, 'ok', 'CHECK')
+Harbor!K28 = Retained earnings tie to the 2025 return
+Harbor!L28 = = if(abs({C20} - {L15}) < 1, 'ok', 'CHECK')
+Harbor!K29 = Distributions within AAA
+Harbor!L29 = = if({I34} <= {I39}, 'ok', 'CHECK')
+Harbor!K30 = Distributions in proportion to ownership
+Harbor!L30 = = if(abs({L19} / ({L19} + {L20}) - {L17}) < 0.005, 'ok', 'CHECK')
+Harbor!K31 = K-1s add up to Schedule K
+Harbor!L31 = = if(abs({H44} + {I44} - {I30}) < 2, 'ok', 'CHECK')
+Harbor!K32 = Officer pay looks reasonable
+Harbor!L32 = = if({I17} >= 0.3 * ({I17} + {I34}), 'ok', 'REVIEW')
+Harbor!B3 = = if(or(countif({E11:E34}, '') > 0, count({L11:L20}) < 9), 'waiting on answers', if(countif({L23:L31}, 'CHECK') > 0, countif({L23:L31}, 'CHECK') & ' to fix', if({L32} == 'REVIEW', 'ready, 1 review note', 'ready')))
+Harbor!B4 = ! case {B3} in ready) sh scripts/py.sh scripts/fill_1120s.py {B1} 1a={I11} 1c={I12} 2={I13} 3={I14} 5={I15} 6={I16} 7={I17} 8={I18} 9={I19} 11={I20} 12={I21} 13={I22} 14={I23} 16={I24} 17={I25} 18={I26} 20={I27} 21={I28} 22={I29} K1={I30} K4={I31} K12a={I32} K16c={I33} K16d={I34} K18={I35} ;; *) echo not ready: {B3} >&2; exit 1 ;; esac
+@answer_type Harbor!E11 Harbor!E12 Harbor!E13 Harbor!E14 Harbor!E15 Harbor!E16 Harbor!E17 Harbor!E18 Harbor!E19 Harbor!E20 Harbor!E21 Harbor!E22 Harbor!E23 Harbor!E24 Harbor!E25 Harbor!E26 Harbor!E27 Harbor!E28 Harbor!E29 Harbor!E30 Harbor!E31 Harbor!E32 Harbor!E33 Harbor!E34 Harbor!E35 Harbor!E36 = choice:1a Gross receipts|2 Cost of goods sold|5 Other income|7 Officer compensation|8 Salaries and wages|9 Repairs|11 Rents|12 Taxes and licenses|13 Interest|14 Depreciation (book)|16 Advertising|17 Pension plans|18 Employee benefits|20 Other deductions|Meals (50%)|K4 Interest income|K12a Charitable|K16c Nondeductible|K16d Distributions|Balance sheet|Needs review
+@answer_type Harbor!L11 Harbor!L12 Harbor!L13 Harbor!L14 Harbor!L15 Harbor!L17 Harbor!L18 Harbor!L19 Harbor!L20 = number

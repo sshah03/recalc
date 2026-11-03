@@ -1,0 +1,23 @@
+SCHEDULE K-1 (FORM 1065)  PARTNER'S SHARE OF INCOME, DEDUCTIONS, CREDITS, ETC.
+TAX YEAR 2025
+[ ] Final K-1   [X] Amended K-1
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+Date issued: 04/20/2026
+
+Partnership's note: The K-1 issued 03/02/2026 used the 20% interest Ms. Kettering
+held before her November 2024 purchase of additional units. Her interest for all
+of 2025 was 25%. This amended K-1 replaces the original in full.
+
+Part I   Information about the partnership
+A  Partnership's EIN                         XX-XXX0938
+B  Partnership's name                        FAIRHAVEN STORAGE PARTNERS LP
+
+Part II  Information about the partner
+E  Partner's SSN                             XXX-XX-6093
+F  Partner's name                            ROSALIND KETTERING
+I1 Type of entity                            Individual
+J  Partner's share of profit, loss, capital  Beginning 25.00%   Ending 25.00%
+
+Part III Partner's share of current year income
+1  Ordinary business income (loss)           46,000.00
+20 Other information, code Z: Section 199A information (see statement)

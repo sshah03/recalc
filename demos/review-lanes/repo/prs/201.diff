@@ -1,0 +1,27 @@
+diff --git a/app/users.py b/app/users.py
+--- a/app/users.py
++++ b/app/users.py
+@@ -1,9 +1,17 @@
+ from app.db import connect
+ 
+ 
+ def get_user(user_id):
+     with connect() as db:
+         return db.execute("SELECT id, name, email FROM users WHERE id = ?", (user_id,)).fetchone()
++
++
++def search_users(term):
++    """Users whose name contains `term`, for the admin search box."""
++    with connect() as db:
++        query = f"SELECT id, name, email FROM users WHERE name LIKE '%{term}%'"
++        return db.execute(query).fetchall()
+diff --git a/tests/test_users.py b/tests/test_users.py
+--- a/tests/test_users.py
++++ b/tests/test_users.py
+@@ -10,3 +10,9 @@ class UsersTest(unittest.TestCase):
+     def test_get_user(self):
+         self.assertEqual(get_user(1)["name"], "Ada")
++
++    def test_search_users(self):
++        names = [u["name"] for u in search_users("Ad")]
++        self.assertEqual(names, ["Ada"])

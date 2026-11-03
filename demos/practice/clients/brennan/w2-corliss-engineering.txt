@@ -1,0 +1,15 @@
+FORM W-2  WAGE AND TAX STATEMENT                                  TAX YEAR 2025
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+c  Employer's name, address, and ZIP code
+   CORLISS ENGINEERING INC
+   88 FOUNDRY ROW
+   ROCKFORD IL 61104
+b  Employer identification number (EIN)     XX-XXX5140
+a  Employee's SSN                           XXX-XX-7731
+e  Employee's name                          IFEOMA N BRENNAN
+
+1  Wages, tips, other compensation          191,800.00
+2  Federal income tax withheld               27,320.00
+3  Social security wages                    176,100.00
+5  Medicare wages and tips                  191,800.00

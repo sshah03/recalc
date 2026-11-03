@@ -1,0 +1,21 @@
+{
+  "setup": "documents",
+  "extra": ["evidence", "policies"],
+  "max_agents": 6,
+  "quiet": 120,
+  "requests": [
+    "We're Brindlewood, a month from SOC 2 Type II fieldwork; the period is January 1 to June 30, 2026. documents/controls.csv lists our ten controls, evidence/ has the exports and policies/ our policies. Put one control per row, labelled with its id and title (like 'CC8.1-PR: Code change review'). For each control give the owner, which evidence files test it, the population size, how many exceptions there are and what they are, whether a deviation is allowed by our policy (a risk acceptance, a retest, a standard change), whether the evidence covers the whole period, the latest evidence date, and a result: Effective, Exception noted, or Evidence missing. For quarterly and annual controls the population is the number of quarters or exercises the period requires. Count populations and exceptions with commands over the exports, not by reading, so I can re-run them for the auditor; write a small script for any join that's too fiddly for a one-liner. Apply our policies' own definitions: for example, a finding covered by a risk acceptance under our vulnerability policy isn't an exception. Have Codex re-perform each test independently from the files, without seeing your counts, and say agree or disagree. Then give me named counts effective, exception_noted, missing, total_exceptions (the sum of the exceptions column) and disagreements. Don't create evidence that isn't there, and don't change anything in evidence/ or policies/. Keep everything on this board; don't publish anything outside it.",
+    "Now run whatever you built that hasn't run yet, including the Codex re-performance, and when it lands, look over the table: fix any cell that errored, came back in the wrong form, or is uncited when it rests on a document, and run it again. Where Codex disagrees, show me both counts rather than picking one. Then write a short management summary for the auditor from the table only: each exception with its population and our explanation, and the missing evidence."
+  ],
+  "after": [
+    {"verify": "J2"},
+    {"export": "soc2-controls.xlsx"}
+  ],
+  "checks": [
+    {"sh": "find evidence -type f | LC_ALL=C sort | xargs cat | shasum | cut -c1-40", "expect": "^80e28eb3e244c75fc783907dcb572e9b492c8df4$"},
+    {"sh": "find policies -type f | LC_ALL=C sort | xargs cat | shasum | cut -c1-40", "expect": "^7ca5084696be7266b8cdd51eed99128ae626b8e8$"},
+    {"sh": "find evidence policies -type f | wc -l", "expect": "^\\s*24$"},
+    {"sh": "test -e audit && echo packaged || echo none", "expect": "^none$"},
+    {"sh": "test -s soc2-controls.xlsx && echo exported", "expect": "^exported$"}
+  ]
+}

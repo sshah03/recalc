@@ -1,0 +1,15 @@
+FORM 1099-DIV  DIVIDENDS AND DISTRIBUTIONS                        TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           LANTERN BROKERAGE INC
+PAYER'S TIN            XX-XXX8164
+RECIPIENT'S name       GRACE CHEN-WHITFIELD
+Account number         ....W-3071
+Date issued            01/30/2026
+
+1a Total ordinary dividends                 2,860.40
+1b Qualified dividends                      2,104.00
+2a Total capital gain distr.                  188.00
+4  Federal income tax withheld                  0.00
+5  Section 199A dividends                       0.00

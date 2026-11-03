@@ -1,0 +1,62 @@
+{
+ "scanner": "continuous vulnerability scanning",
+ "export": "findings open during the month or remediated during the month",
+ "period_start": "2026-04-01",
+ "period_end": "2026-04-30",
+ "findings": [
+  {
+   "id": "VULN-2025-1204",
+   "severity": "low",
+   "title": "Missing security headers on status page",
+   "asset": "status-web",
+   "first_seen": "2025-12-11",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0157",
+   "severity": "medium",
+   "title": "Weak TLS cipher on internal LB",
+   "asset": "internal-lb",
+   "first_seen": "2026-01-27",
+   "status": "remediated",
+   "remediated_on": "2026-04-10"
+  },
+  {
+   "id": "VULN-2026-0311",
+   "severity": "critical",
+   "title": "Authentication bypass in legacy SOAP endpoint",
+   "asset": "legacy-gateway",
+   "first_seen": "2026-03-04",
+   "status": "remediated",
+   "remediated_on": "2026-04-02"
+  },
+  {
+   "id": "VULN-2026-0418",
+   "severity": "high",
+   "title": "Outdated kernel on worker AMI",
+   "asset": "payroll-worker",
+   "first_seen": "2026-04-07",
+   "status": "remediated",
+   "remediated_on": "2026-04-28"
+  },
+  {
+   "id": "VULN-2026-0452",
+   "severity": "high",
+   "title": "Prototype pollution in admin UI dependency",
+   "asset": "admin-web",
+   "first_seen": "2026-04-22",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0467",
+   "severity": "medium",
+   "title": "Session cookie missing SameSite",
+   "asset": "admin-web",
+   "first_seen": "2026-04-27",
+   "status": "open",
+   "remediated_on": null
+  }
+ ]
+}

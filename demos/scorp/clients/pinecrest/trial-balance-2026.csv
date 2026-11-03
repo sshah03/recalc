@@ -1,0 +1,25 @@
+Account,Debit,Credit
+"1000 Cash - operating",46910,0
+"1100 Accounts receivable",71400,0
+"1200 Inventory",12300,0
+"1500 Equipment and vehicles",286000,0
+"1510 Accumulated depreciation",0,171200
+"2000 Accounts payable",0,22700
+"2100 Accrued payroll",0,9800
+"2500 Bank loan",0,64000
+"3000 Capital stock",0,1000
+"3100 Retained earnings",0,100310
+"3200 Shareholder distributions",310000,0
+"4000 Patient fees",0,1046900
+"4100 Interest income",0,880
+"5000 Dental lab and supplies",168300,0
+"6000 Officer salary - Dr. Reyes",36000,0
+"6010 Staff wages - hygienists and front desk",286500,0
+"6100 Payroll taxes",24670,0
+"6200 Rent - office",84000,0
+"6300 Repairs - equipment",7410,0
+"6400 Advertising",9200,0
+"6500 Depreciation expense",31200,0
+"6600 Malpractice and office insurance",18640,0
+"6700 Professional fees",11300,0
+"7200 401(k) employer contributions",12960,0

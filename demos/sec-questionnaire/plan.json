@@ -1,0 +1,40 @@
+{
+  "setup": "documents",
+  "extra": [
+    "policies",
+    "reports",
+    "infra"
+  ],
+  "max_agents": 6,
+  "quiet": 120,
+  "requests": [
+    "We're Tamsin Labs. Harrowgate Regional Health sent the security questionnaire in documents/questionnaire.csv; answer it as of October 1, 2026. Put one question per row, labelled with its id and text (like 'HRH-01: Is customer data ...'). Answer every question from our policies/, reports/ and the Terraform and exports in infra/ only: an answer of Yes, No, Partial or N/A; a one- or two-sentence explanation a customer can read; the passage you relied on; which configuration claim the answer makes, if any (encryption at rest, MFA, branch protection, backups or none); and for those rows a check that tests the claim against the files in infra/ and prints pass or fail with the resource that fails, re-running when infra/ changes. Add a column that marks any answer the check contradicts, a yes/no column for whether I need to decide something before we send it (anything Not found, anything whose evidence is out of date, and anything that asks us to commit to more than our documents do), and the date of the evidence for anything time-bound like the pen test. Use the current version of each policy only. An answer is Yes only if the policy says so and, where it's a configuration claim, the configuration agrees; if they disagree, answer Partial and name what falls short. If our documents don't answer something, answer Not found and flag the cell for me to answer; don't write a commitment we haven't made. Have Codex review every answer against the files itself, then give me named counts yes, partial, no and not_found, contradicted (answers the checks contradict), needs (answers that need me), disagreements (Codex disagrees), and ready (whether it's ready to send). Don't change anything in policies/, reports/ or infra/. Keep everything on this board; don't publish anything outside it.",
+    "Now run whatever you built that hasn't run yet, including the reviewer, and when it lands, look over the table: fix any cell that errored, came back in the wrong form, or is uncited when it rests on a document, and run it again. Then tell me in three lines what I should check by hand."
+  ],
+  "after": [
+    {
+      "verify": "B4"
+    },
+    {
+      "export": "harrowgate-answers.csv"
+    }
+  ],
+  "checks": [
+    {
+      "sh": "cat infra/*.tf infra/*.json | shasum | cut -c1-40",
+      "expect": "^05fd3fd08e67f74e00be6aaafe96f000744900f8$"
+    },
+    {
+      "sh": "cat policies/*.md reports/*.md | shasum | cut -c1-40",
+      "expect": "^45d7b11f40e41d2c01ec699a22abcf4b78f31367$"
+    },
+    {
+      "sh": "find policies reports infra -type f | wc -l",
+      "expect": "^\\s*14$"
+    },
+    {
+      "sh": "test -s harrowgate-answers.csv && grep -c 'HRH-' harrowgate-answers.csv",
+      "expect": "^(1[2-9]|[2-9][0-9])$"
+    }
+  ]
+}

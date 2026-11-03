@@ -1,0 +1,18 @@
+2024 FORM 1040 — RETURN SUMMARY (from the firm's prep software, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Taxpayer: Marta Alvarez-Reyes        Filing status: Single
+Filed: 2025-03-04 (e-file accepted)
+
+Line 1z   Wages (W-2, Brightwater Dental Group) ............ 108,900.00
+Line 2b   Taxable interest .................................   3,580.00
+Line 9    Total income ..................................... 112,480.00
+Line 11   Adjusted gross income ............................ 112,480.00
+Line 12   Standard deduction ...............................  14,600.00
+Line 13   Qualified business income deduction ..............       0.00
+Line 15   Taxable income ...................................  97,880.00
+Line 16   Tax ..............................................  16,587.00
+Line 24   Total tax ........................................  16,587.00
+Line 25a  Federal income tax withheld (W-2) ................  17,040.00
+Line 26   Estimated tax payments ...........................       0.00
+Line 34   Overpaid (refunded) ..............................     453.00

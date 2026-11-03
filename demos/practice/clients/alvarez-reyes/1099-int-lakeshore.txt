@@ -1,0 +1,14 @@
+FORM 1099-INT  INTEREST INCOME                                    TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           LAKESHORE COMMUNITY BANK
+                       410 WATERFRONT DR, ROCKFORD IL 61101
+PAYER'S TIN            XX-XXX7702
+RECIPIENT'S name       MARTA ALVAREZ-REYES
+Account number         ....8812 (Money Market)
+
+1  Interest income                         3,412.77
+2  Early withdrawal penalty                    0.00
+3  Interest on U.S. Savings Bonds              0.00
+4  Federal income tax withheld                 0.00

@@ -1,0 +1,13 @@
+id,domain,question
+HRH-01,Data protection,Is customer data encrypted at rest in every production data store?
+HRH-02,Identity and access,Is multi-factor authentication enforced for all workforce access to production systems?
+HRH-03,Business continuity,Do you have a documented recovery time objective (RTO) of 8 hours or less for the production service?
+HRH-04,Human resources,Are background checks performed on personnel before they are given access to customer data?
+HRH-05,Assurance,Has an independent third party performed a penetration test of the production application within the last 12 months?
+HRH-06,Identity and access,Are user access reviews for production systems performed and completed at least quarterly?
+HRH-07,Third parties,Do any sub-processors store or process customer data on your behalf?
+HRH-08,Data residency,Is customer data stored and processed exclusively within the European Union?
+HRH-09,Secure development,Are all code changes peer-reviewed and approved before they are deployed to production?
+HRH-10,Business continuity,Are production backups taken daily and restore-tested at least annually?
+HRH-11,Incident response,Do you maintain a documented incident response plan that commits to notifying affected customers within 72 hours?
+HRH-12,Security awareness,Do all workforce members complete security awareness training at least annually?

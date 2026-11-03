@@ -1,0 +1,9 @@
+employee_id,name,termination_date,reason
+E1004,Dalia Dubrow,2025-12-19,Resignation
+E1010,Jory Janssen,2026-01-16,Resignation
+E1015,Orla Oyelaran,2026-03-06,Resignation
+E1021,Ulla Ulrich,2026-03-31,Involuntary
+E1028,Bettany Carrow,2026-04-24,Resignation (garden leave from 2026-04-22)
+E1034,Halle Dubrow,2026-05-29,Resignation
+E1041,Oskar Kowalczyk,2026-06-12,Involuntary
+E1045,Teodor Oyelaran,2026-07-10,Resignation

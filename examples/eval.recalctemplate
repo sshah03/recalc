@@ -1,0 +1,14 @@
+# LLM eval loop: the inner loop of prompt engineering, laid out on a live board.
+# The run is side-effecting, so it's a ! cell: it never fires on its own.
+# Agent loop: edit prompt -> trigger run -> read score -> keep or revert,
+# recording what changed in notes. The human watches score's sparkline
+# climb and drops steering into human_hint; the agent picks it up via
+# await_cell("human_hint", "!= ''").
+prompt = Summarize the ticket in 2 lines.
+n_cases = 20
+run = ! python eval.py --prompt {prompt} --n {n_cases} --out results.json
+score = $ jq '.mean_score' results.json
+pass_rate = $ jq '.pass_rate' results.json
+human_hint =
+notes =
+@series score

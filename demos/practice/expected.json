@@ -1,0 +1,109 @@
+{
+  "scenario": "practice",
+  "tax_year": 2025,
+  "client": "eight clients of a small practice (fictional): five individuals, an S corporation, a partnership, a trust",
+  "context_files": [],
+  "questions": [
+    {"column": "A", "header": "client folder", "shape": "none"},
+    {"column": "B", "header": "Return type: one of 1040, 1120-S, 1065, 1041", "shape": "choice:1040|1120-S|1065|1041"},
+    {"column": "C", "header": "Status: one of In progress, Waiting on client, Ready to file", "shape": "choice:In progress|Waiting on client|Ready to file"},
+    {"column": "D", "header": "Assignee (first name only)", "shape": "text"},
+    {"column": "E", "header": "Prior-year AGI from the 2024 return summary (for a 1041, adjusted total income; 1120-S or 1065: Not found)", "shape": "currency"},
+    {"column": "F", "header": "Prior-year total tax from the 2024 return summary (1120-S or 1065: Not found)", "shape": "currency"},
+    {"column": "G", "header": "Effective tax rate, % (F / E)", "shape": "formula", "formula": "= if(or({E2} == '', {F2} == ''), '', if(or({E2} == 'Not found', {F2} == 'Not found'), 'n/a', round({F2} / {E2} * 100, 1)))"},
+    {"column": "H", "header": "Missing documents (expected in profile.md, not in the folder)", "shape": "command", "command": "$ python3 tools/missing_docs.py {$A2} # watch: clients/**"},
+    {"column": "I", "header": "Status check", "shape": "formula", "formula": "= if(or({C2} == '', {H2} == ''), '', if(and({C2} == 'Ready to file', {H2} != 'none'), 'Ready but missing documents', 'ok'))"},
+    {"column": "J", "header": "QBI-eligible (Section 199A information, Schedule C, 1099-DIV box 5, or a prior-year QBI deduction)", "shape": "yesno"},
+    {"column": "K", "header": "Estimated tax paid for tax year 2025", "shape": "currency"},
+    {"column": "L", "header": "Estimated tax planned for 2025", "shape": "currency"},
+    {"column": "M", "header": "Behind on estimates", "shape": "formula", "formula": "= if(or({K2} == '', {L2} == ''), '', {K2} < {L2})"},
+    {"column": "N", "header": "Request letter", "shape": "action", "command": "! python3 tools/draft_letter.py {$A2} {$H2}"}
+  ],
+  "answers": {
+    "clients/alvarez-reyes/": {
+      "Return type": "1040", "Status": "Ready to file", "Assignee": "Dana",
+      "Prior-year AGI": "112480", "Prior-year total tax": "16587", "Effective tax rate": "14.7",
+      "Missing documents": "none", "Status check": "ok", "QBI-eligible": "No",
+      "Estimated tax paid": "0", "Estimated tax planned": "0", "Behind on estimates": "false"
+    },
+    "clients/brennan/": {
+      "Return type": "1040", "Status": "Ready to file", "Assignee": "Marcus",
+      "Prior-year AGI": "204860", "Prior-year total tax": "27851", "Effective tax rate": "13.6",
+      "Missing documents": "Schedule K-1 (Form 1065) from Ridgeline Partners LP", "Status check": "Ready but missing documents", "QBI-eligible": "Yes",
+      "Estimated tax paid": "8000", "Estimated tax planned": "8000", "Behind on estimates": "false"
+    },
+    "clients/chen-whitfield/": {
+      "Return type": "1040", "Status": "In progress", "Assignee": "Priya",
+      "Prior-year AGI": "74215", "Prior-year total tax": "8051", "Effective tax rate": "10.8",
+      "Missing documents": "none", "Status check": "ok", "QBI-eligible": "Yes",
+      "Estimated tax paid": "0", "Estimated tax planned": "0", "Behind on estimates": "false"
+    },
+    "clients/dunmore/": {
+      "Return type": "1040", "Status": "Waiting on client", "Assignee": "Marcus",
+      "Prior-year AGI": "161460", "Prior-year total tax": "45599", "Effective tax rate": "28.2",
+      "Missing documents": "1099-NEC from Halvorsen Studio", "Status check": "ok", "QBI-eligible": "Yes",
+      "Estimated tax paid": "19500", "Estimated tax planned": "26000", "Behind on estimates": "true"
+    },
+    "clients/eastgate-fabrication/": {
+      "Return type": "1120-S", "Status": "In progress", "Assignee": "Dana",
+      "Prior-year AGI": "Not found", "Prior-year total tax": "Not found (0 also passes: line 23c reads 0.00)", "Effective tax rate": "n/a",
+      "Missing documents": "none", "Status check": "ok", "QBI-eligible": "Yes",
+      "Estimated tax paid": "0", "Estimated tax planned": "0", "Behind on estimates": "false"
+    },
+    "clients/harbor-lane/": {
+      "Return type": "1065", "Status": "Ready to file", "Assignee": "Marcus",
+      "Prior-year AGI": "Not found", "Prior-year total tax": "Not found", "Effective tax rate": "n/a",
+      "Missing documents": "none", "Status check": "ok", "QBI-eligible": "Yes",
+      "Estimated tax paid": "0", "Estimated tax planned": "0", "Behind on estimates": "false"
+    },
+    "clients/ivers-trust/": {
+      "Return type": "1041", "Status": "Waiting on client", "Assignee": "Priya",
+      "Prior-year AGI": "49460", "Prior-year total tax": "4672", "Effective tax rate": "9.4",
+      "Missing documents": "1099-B from Northfield Securities", "Status check": "ok", "QBI-eligible": "No",
+      "Estimated tax paid": "6000", "Estimated tax planned": "6000", "Behind on estimates": "false"
+    },
+    "clients/kowalczyk/": {
+      "Return type": "1040", "Status": "In progress", "Assignee": "Dana",
+      "Prior-year AGI": "93160", "Prior-year total tax": "11821", "Effective tax rate": "12.7",
+      "Missing documents": "none", "Status check": "ok", "QBI-eligible": "No",
+      "Estimated tax paid": "3600", "Estimated tax planned": "3600", "Behind on estimates": "false"
+    }
+  },
+  "totals": {
+    "progress": "64 of 64 answered",
+    "ready_to_file": "3   (Alvarez-Reyes, Brennan, Harbor Lane)",
+    "waiting_on_client": "2   (Dunmore, Ivers)",
+    "in_progress": "3",
+    "individuals": "5",
+    "entities": "3",
+    "clients_missing_documents": "3   (computed before any agent runs: the $ cells read the folders)",
+    "missing_documents_total": "3",
+    "ready_but_missing": "1   (Brennan: the red line)",
+    "median_effective_rate": "13.15   (median of 9.4, 10.8, 12.7, 13.6, 14.7, 28.2; the two pass-throughs read n/a and are skipped)",
+    "qbi_eligible": "5   (Brennan, Chen-Whitfield, Dunmore, Eastgate, Harbor Lane)",
+    "behind_on_estimates": "1   (Dunmore)",
+    "dana": "3",
+    "marcus": "3",
+    "priya": "2"
+  },
+  "reconciliation": {
+    "red_line": "ready_but_missing",
+    "why": "Brennan's profile says Ready to file, but its expected-documents list (carried from the 2024 return, which reported 14,250.00 from Ridgeline Partners LP) names a Schedule K-1 (Form 1065) that isn't in the folder. H3 says so before any agent runs; I3 turns red once C3 is answered. Run N3 to draft letters/brennan.md.",
+    "a_zero_ready_but_missing_means": "the status column was answered from something other than profile.md, or the missing-documents check didn't run",
+    "batch_workflow": "N2:N9 are ! actions: a person runs one (N3), and after that the rest can be triggered; rows whose H reads none draft nothing."
+  },
+  "tolerance": "Compare amounts within a cent and rates within 0.05; median_effective_rate may print as 13.149999999999999.",
+  "notes": {
+    "hard_cases": [
+      "Corrected form: chen-whitfield has a 1099-DIV dated 01/30/2026 with box 5 0.00 and a CORRECTED one dated 03/03/2026 with box 5 Section 199A dividends 412.00. QBI-eligible is Yes only from the corrected form.",
+      "Expected K-1 not received: brennan's profile lists Schedule K-1 (Form 1065) from Ridgeline Partners LP; no such document is in the folder, and the status still says Ready to file.",
+      "A 1041 has no AGI: ivers-trust's summary lists Total income (line 9) 52,640.00, Adjusted total income (line 17) 49,460.00, and Taxable income (line 23) 27,360.00. The answer is line 17.",
+      "Wrong-year estimate: dunmore's Direct Pay export starts with a 6,500.00 payment made 01/15/2025 for tax year 2024. Counting it gives 26,000 and hides that the 2025 fourth quarter is unpaid; the answer is 19,500.",
+      "Late but counts: kowalczyk's third-quarter payment was made 09/22/2025, a week late; it is still a 2025 payment, so 3,600.",
+      "Pass-throughs: eastgate-fabrication (1120-S) and harbor-lane (1065) have no AGI or individual tax; E and F are Not found and G reads n/a, so the median skips them. Eastgate's line 23c reads 0.00; F of 0 also passes.",
+      "Distractors: kowalczyk's summary has itemized deductions and amount owed beside total tax; ivers-trust's line 26 estimated payments (5,200.00, 2024) is not a 2025 payment, nor is the 528.00 overpayment credit its EFTPS note mentions."
+    ],
+    "text_answers": "Assignee matches case-insensitively. The missing-documents column is a command, so it is exact.",
+    "not_tax_advice": "Synthetic documents. This shows the board's structure and is not tax advice."
+  }
+}

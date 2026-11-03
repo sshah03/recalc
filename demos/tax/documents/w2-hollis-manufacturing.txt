@@ -1,0 +1,25 @@
+FORM W-2  WAGE AND TAX STATEMENT                                  TAX YEAR 2025
+(synthetic sample for demonstration; not a real form)
+
+a  Employee's social security number      ***-**-4471
+b  Employer identification number (EIN)   82-1938475
+c  Employer's name, address, and ZIP code
+   HOLLIS MANUFACTURING CORP
+   1200 FOUNDRY ROAD
+   TOLEDO OH 43605
+
+e  Employee's first name and initial      DANA R
+   Last name                              OYELARAN
+f  Employee's address and ZIP code        88 LINDEN CT, PERRYSBURG OH 43551
+
+1  Wages, tips, other compensation        85,000.00
+2  Federal income tax withheld            12,410.00
+3  Social security wages                  85,000.00
+4  Social security tax withheld            5,270.00
+5  Medicare wages and tips                85,000.00
+6  Medicare tax withheld                   1,232.50
+12a Code D (401k elective deferrals)       6,000.00
+13  Retirement plan                        [X]
+15  State  OH   Employer's state ID no.   51-334412
+16  State wages, tips, etc.               85,000.00
+17  State income tax                       2,975.00

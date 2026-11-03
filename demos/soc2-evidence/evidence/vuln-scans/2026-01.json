@@ -1,0 +1,53 @@
+{
+ "scanner": "continuous vulnerability scanning",
+ "export": "findings open during the month or remediated during the month",
+ "period_start": "2026-01-01",
+ "period_end": "2026-01-31",
+ "findings": [
+  {
+   "id": "VULN-2025-1187",
+   "severity": "medium",
+   "title": "Outdated OpenSSH on bastion",
+   "asset": "bastion-01",
+   "first_seen": "2025-12-03",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2025-1204",
+   "severity": "low",
+   "title": "Missing security headers on status page",
+   "asset": "status-web",
+   "first_seen": "2025-12-11",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0102",
+   "severity": "high",
+   "title": "Deserialization in report worker dependency",
+   "asset": "report-worker",
+   "first_seen": "2026-01-08",
+   "status": "remediated",
+   "remediated_on": "2026-01-29"
+  },
+  {
+   "id": "VULN-2026-0131",
+   "severity": "high",
+   "title": "SSRF in webhook preview",
+   "asset": "api",
+   "first_seen": "2026-01-21",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0157",
+   "severity": "medium",
+   "title": "Weak TLS cipher on internal LB",
+   "asset": "internal-lb",
+   "first_seen": "2026-01-27",
+   "status": "open",
+   "remediated_on": null
+  }
+ ]
+}

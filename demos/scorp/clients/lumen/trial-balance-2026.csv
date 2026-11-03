@@ -1,0 +1,25 @@
+Account,Debit,Credit
+"1000 Cash - operating",38740,0
+"1100 Accounts receivable",48200,0
+"1200 Inventory",0,0
+"1500 Equipment and vehicles",41000,0
+"1510 Accumulated depreciation",0,19800
+"2000 Accounts payable",0,6400
+"2100 Accrued payroll",0,3100
+"2500 Bank loan",0,0
+"3000 Capital stock",0,1000
+"3100 Retained earnings",0,20504
+"3200 Shareholder distributions",90000,0
+"4000 Design fees",0,412300
+"4100 Interest income",0,310
+"6000 Officer salary - Ana Duarte",96000,0
+"6010 Contract designers",64800,0
+"6100 Payroll taxes",7344,0
+"6200 Rent - studio",30000,0
+"6400 Advertising",6150,0
+"6410 Meals - clients",2880,0
+"6450 Travel - client site visits",5640,0
+"6460 Travel - Lisbon, June (Ana and family)",14800,0
+"6500 Depreciation expense",6400,0
+"6700 Software subscriptions",9960,0
+"6800 Charitable contributions",1500,0

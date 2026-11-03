@@ -1,0 +1,65 @@
+{
+  "scenario": "entities",
+  "tax_year": 2025,
+  "client": "Rosalind Kettering and the entities she owns or benefits from (fictional)",
+  "context_files": [],
+  "questions": [
+    {"column": "A", "header": "files (return summary and K-1s issued)", "shape": "none"},
+    {"column": "B", "header": "Return type: one of 1120-S, 1065, 1041, 1040", "shape": "choice:1120-S|1065|1041|1040"},
+    {"column": "C", "header": "Rosalind's share of this entity, percent (her own 1040 is 100)", "shape": "number"},
+    {"column": "D", "header": "Entity's income before it passes out (1120-S line 21, 1065 line 23, 1041 DNI; 1040: AGI)", "shape": "currency"},
+    {"column": "E", "header": "Income on Rosalind's K-1 from this entity (1120-S or 1065 box 1, 1041 box 6; 1040: Not found)", "shape": "currency"},
+    {"column": "F", "header": "Share check: K-1 = income x share?", "shape": "formula", "formula": "= if(or({C2} == '', {D2} == '', {E2} == ''), '', if(abs({E2} - {D2} * {C2} / 100) < 1, 'ok', 'check'))"},
+    {"column": "G", "header": "Reported on her 1040", "shape": "command", "command": "$ python3 tools/schedule_e.py {file:rosalind-kettering/1040-2025-draft-summary.txt} {$A2} # watch: **/*.txt"},
+    {"column": "H", "header": "1040 vs K-1", "shape": "formula", "formula": "= if({E2} == '', '', if({G2} == 'not on the 1040', 'OMITTED', if(abs({E2} - {G2}) < 0.5, 'ok', 'MISMATCH')))"},
+    {"column": "I", "header": "Reviewer (Codex): is the amount in E right?", "shape": "choice:agree|disagree"}
+  ],
+  "answers": {
+    "kettering-millwork/1120s-2025-return-summary.txt, kettering-millwork/k1-1120s-rosalind-kettering.txt": {
+      "Return type": "1120-S", "Share": "60", "Entity income": "145750", "K-1 income": "87450",
+      "Share check": "ok", "Reported on her 1040": "78450", "1040 vs K-1": "MISMATCH", "Reviewer": "agree",
+      "Quote (must contain)": "87,450.00"
+    },
+    "fairhaven-storage/1065-2025-return-summary.txt, fairhaven-storage/k1-1065-rosalind-kettering.txt, fairhaven-storage/k1-1065-rosalind-kettering-amended.txt": {
+      "Return type": "1065", "Share": "25", "Entity income": "184000", "K-1 income": "46000",
+      "Share check": "ok", "Reported on her 1040": "46000", "1040 vs K-1": "ok", "Reviewer": "agree",
+      "Quote (must contain)": "46,000.00",
+      "cite_file": "fairhaven-storage/k1-1065-rosalind-kettering-amended.txt"
+    },
+    "kettering-trust/1041-2025-return-summary.txt, kettering-trust/k1-1041-rosalind-kettering.txt": {
+      "Return type": "1041", "Share": "50", "Entity income": "31400", "K-1 income": "15700",
+      "Share check": "ok", "Reported on her 1040": "15700", "1040 vs K-1": "ok", "Reviewer": "agree",
+      "Quote (must contain)": "15,700.00"
+    },
+    "rosalind-kettering/1040-2025-draft-summary.txt": {
+      "Return type": "1040", "Share": "100", "Entity income": "262460", "K-1 income": "Not found",
+      "Share check": "n/a", "Reported on her 1040": "140150", "1040 vs K-1": "MISMATCH   (H5 compares the Schedule E total with total_k1_income)"
+    }
+  },
+  "totals": {
+    "progress": "16 of 16 answered",
+    "total_k1_income": "149150   (= sum({E2:E4}); 87,450 + 46,000 + 15,700)",
+    "reported_on_1040": "140150   (= {G5}; Schedule E lines 32 + 37: 124,450 + 15,700)",
+    "gap": "9000   (the transposed S corporation amount)",
+    "mismatches": "1   (H2, Kettering Millwork)",
+    "share_checks_failing": "0",
+    "disagreements": "0"
+  },
+  "reconciliation": {
+    "red_line": "mismatches",
+    "why": "Kettering Millwork's K-1 box 1 is 87,450.00 (60% of 145,750.00), and the draft 1040's Schedule E Part II row A carries 78,450.00, a transposition. H2 and H5 read MISMATCH and gap reads 9000. Fix the 1040 (or, in the demo, edit the summary file): G re-runs on its own and both turn ok.",
+    "superseded_k1": "Fairhaven's original K-1 (03/02/2026) used a 20% share, 36,800.00; the Amended K-1 (04/20/2026) replaces it with 25%, 46,000.00, which the draft 1040 already uses. E3 of 36,800 makes H3 read MISMATCH; C3 of 20 with E3 of 46,000 makes F3 read check.",
+    "a_zero_mismatches_means": "E2 was answered from the 1040 rather than the K-1, or the Schedule E check didn't run"
+  },
+  "tolerance": "Compare amounts within a cent; shares exactly.",
+  "notes": {
+    "hard_cases": [
+      "Amended K-1: fairhaven-storage has an original and an Amended K-1 in the same row; the amended one controls (25%, 46,000.00).",
+      "Planted mismatch: the 1040 reports 78,450.00 for Kettering Millwork; the K-1 says 87,450.00.",
+      "Different boxes: the trust's income is K-1 (1041) box 6 net rental real estate income, 15,700.00, while boxes 1 and 2a read 0.00.",
+      "The owner's row is not an entity: E5 is Not found, and its check compares the 1040's Schedule E total with the sum of the K-1s."
+    ],
+    "second_model": "Column I asks Codex to agree or disagree with E; it needs codex installed.",
+    "not_tax_advice": "Synthetic documents. This shows the board's structure and is not tax advice."
+  }
+}

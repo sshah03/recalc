@@ -1,0 +1,71 @@
+{
+ "scanner": "continuous vulnerability scanning",
+ "export": "findings open during the month or remediated during the month",
+ "period_start": "2026-06-01",
+ "period_end": "2026-06-30",
+ "findings": [
+  {
+   "id": "VULN-2025-1204",
+   "severity": "low",
+   "title": "Missing security headers on status page",
+   "asset": "status-web",
+   "first_seen": "2025-12-11",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0467",
+   "severity": "medium",
+   "title": "Session cookie missing SameSite",
+   "asset": "admin-web",
+   "first_seen": "2026-04-27",
+   "status": "remediated",
+   "remediated_on": "2026-06-02"
+  },
+  {
+   "id": "VULN-2026-0538",
+   "severity": "high",
+   "title": "XML external entity in W-2 import",
+   "asset": "import-worker",
+   "first_seen": "2026-05-20",
+   "status": "remediated",
+   "remediated_on": "2026-06-10"
+  },
+  {
+   "id": "VULN-2026-0604",
+   "severity": "high",
+   "title": "Outdated PostgreSQL minor version",
+   "asset": "prod-rds",
+   "first_seen": "2026-06-03",
+   "status": "remediated",
+   "remediated_on": "2026-06-17"
+  },
+  {
+   "id": "VULN-2026-0622",
+   "severity": "critical",
+   "title": "Heap overflow in PDF parser",
+   "asset": "paystub-renderer",
+   "first_seen": "2026-06-15",
+   "status": "remediated",
+   "remediated_on": "2026-06-24"
+  },
+  {
+   "id": "VULN-2026-0649",
+   "severity": "high",
+   "title": "Open redirect in SSO callback",
+   "asset": "api",
+   "first_seen": "2026-06-24",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0655",
+   "severity": "medium",
+   "title": "Clickjacking on settings page",
+   "asset": "admin-web",
+   "first_seen": "2026-06-26",
+   "status": "open",
+   "remediated_on": null
+  }
+ ]
+}

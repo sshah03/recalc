@@ -1,0 +1,70 @@
+# Tax intake: five client documents down column A, one field per header, an
+# agent reads each form and answers in the format the header asks for. The
+# named cells below turn the answers into a reconciliation: totals, a
+# self-employment tax estimate, and checks against what the client said at
+# intake, one of which should come back red. The documents are synthetic; this
+# demonstrates the board's structure and is not tax advice.
+instructions = You are a tax preparer's assistant reading one client document. Answer with only the value asked for. For numbers: digits and a decimal point only, no currency symbol, no commas, no words; if the form has no such box, answer 0.
+A1 = document
+B1 = Payer or employer name (short text)
+C1 = Form type: one of W-2, 1099-INT, 1099-NEC, 1099-DIV, 1099-B
+D1 = Income reported: box 1 for W-2/INT/NEC, box 1a for DIV, net short-term gain for 1099-B (number only)
+E1 = Federal income tax withheld (number only)
+F1 = Tax year on the form (number only)
+G1 = Quote the line the income amount (column D) comes from.
+A2 = documents/w2-hollis-manufacturing.txt
+B2 = @claude('{instructions} Read the file {$A2}. {B$1}')
+C2 = @claude('{instructions} Read the file {$A2}. {C$1}')
+D2 = @claude('{instructions} Read the file {$A2}. {D$1}')
+E2 = @claude('{instructions} Read the file {$A2}. {E$1}')
+F2 = @claude('{instructions} Read the file {$A2}. {F$1}')
+G2 = @claude('{instructions} Read the file {$A2}. {G$1}')
+A3 = documents/1099-int-first-lakeshore-bank.txt
+B3 = @claude('{instructions} Read the file {$A3}. {B$1}')
+C3 = @claude('{instructions} Read the file {$A3}. {C$1}')
+D3 = @claude('{instructions} Read the file {$A3}. {D$1}')
+E3 = @claude('{instructions} Read the file {$A3}. {E$1}')
+F3 = @claude('{instructions} Read the file {$A3}. {F$1}')
+G3 = @claude('{instructions} Read the file {$A3}. {G$1}')
+A4 = documents/1099-nec-brightpath-consulting.txt
+B4 = @claude('{instructions} Read the file {$A4}. {B$1}')
+C4 = @claude('{instructions} Read the file {$A4}. {C$1}')
+D4 = @claude('{instructions} Read the file {$A4}. {D$1}')
+E4 = @claude('{instructions} Read the file {$A4}. {E$1}')
+F4 = @claude('{instructions} Read the file {$A4}. {F$1}')
+G4 = @claude('{instructions} Read the file {$A4}. {G$1}')
+A5 = documents/1099-div-vanguard-brokerage.txt
+B5 = @claude('{instructions} Read the file {$A5}. {B$1}')
+C5 = @claude('{instructions} Read the file {$A5}. {C$1}')
+D5 = @claude('{instructions} Read the file {$A5}. {D$1}')
+E5 = @claude('{instructions} Read the file {$A5}. {E$1}')
+F5 = @claude('{instructions} Read the file {$A5}. {F$1}')
+G5 = @claude('{instructions} Read the file {$A5}. {G$1}')
+A6 = documents/1099-b-summit-brokerage-summary.txt
+B6 = @claude('{instructions} Read the file {$A6}. {B$1}')
+C6 = @claude('{instructions} Read the file {$A6}. {C$1}')
+D6 = @claude('{instructions} Read the file {$A6}. {D$1}')
+E6 = @claude('{instructions} Read the file {$A6}. {E$1}')
+F6 = @claude('{instructions} Read the file {$A6}. {F$1}')
+G6 = @claude('{instructions} Read the file {$A6}. {G$1}')
+progress = = count({B2:G6}) & ' of 30 answered'
+ready = = count({C2:C6}) == 5
+wages = = if({ready}, lookup('W-2', {C2:C6}, {D2:D6}), 'waiting')
+interest = = if({ready}, lookup('1099-INT', {C2:C6}, {D2:D6}), 'waiting')
+consulting = = if({ready}, lookup('1099-NEC', {C2:C6}, {D2:D6}), 'waiting')
+dividends = = if({ready}, lookup('1099-DIV', {C2:C6}, {D2:D6}), 'waiting')
+stock_gain = = if({ready}, lookup('1099-B', {C2:C6}, {D2:D6}), 'waiting')
+withheld = = sum({E2:E6})
+total_income = = if({ready}, {wages} + {interest} + {consulting} + {dividends} + {stock_gain}, 'waiting')
+se_tax_estimate = = if({ready}, {consulting} * 0.9235 * 0.153, 'waiting')
+years_ok = = countif({F2:F6}, 2025) == 5
+client_wages = 85000
+client_gain = 3200
+wages_match = = if({ready}, {wages} == {client_wages}, 'waiting')
+gain_match = = if({ready}, {stock_gain} == {client_gain}, 'waiting')
+note = gain_match should come back false: the 1099-B says 3500, the client remembered 3200. Flag the row, then fix client_gain.
+# The typed columns hold their answers: prose where a number belongs is
+# refused and the agent answers again, so the lookups below never see it.
+@answer_type C2 C3 C4 C5 C6 = choice:W-2|1099-INT|1099-NEC|1099-DIV|1099-B
+@answer_type D2 D3 D4 D5 D6 E2 E3 E4 E5 E6 F2 F3 F4 F5 F6 = number
+@answer_type G2 G3 G4 G5 G6 = quote

@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>recalc</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+    <link rel="stylesheet" href="vendor/xterm/xterm.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header id="titlebar" data-tauri-drag-region>
+      <button id="board-name" title="Rename this board or move it"></button>
+      <span id="beta" data-tauri-drag-region title="recalc is in early beta: expect bugs and changes between versions, and keep copies of anything you can't lose">Beta</span>
+    </header>
+
+    <div id="toolbar-row" data-tauri-drag-region>
+      <div id="toolbar" data-tauri-drag-region>
+        <!-- buttons injected by chrome.ts -->
+      </div>
+      <div id="panel-switch" role="group" aria-label="Side panel">
+        <button id="switch-agents" class="on" aria-pressed="true" title="Show the Driver, what needs you, the activity and the source (click again to hide the panel)">Agents<span id="agents-count" class="count"></span></button>
+        <button id="switch-format" aria-pressed="false" title="Format the selected cells (⌘1; click again to hide the panel)">Format</button>
+      </div>
+    </div>
+
+    <div id="formulabar">
+      <span id="namebox"></span>
+      <span id="fx">fx</span>
+      <textarea id="formula" rows="1" wrap="off" spellcheck="false" autocomplete="off"></textarea>
+      <div id="findbar" hidden>
+        <input id="find" placeholder="Find in cells" spellcheck="false" autocomplete="off" />
+        <span id="find-count"></span>
+        <button id="find-prev" title="Go to the previous match (⇧↩)" aria-label="Previous match">‹</button>
+        <button id="find-next" title="Go to the next match (↩)" aria-label="Next match">›</button>
+        <button id="find-close" title="Close the find bar (esc)" aria-label="Close find">×</button>
+      </div>
+    </div>
+
+    <main>
+      <div id="grid-area">
+      <section id="grid-wrap" class="panel" tabindex="0" role="grid" aria-label="Sheet">
+        <div id="sheet">
+          <div id="col-hdr"></div>
+          <div id="frozen-rows" hidden></div>
+          <div id="body">
+            <div id="row-hdr"></div>
+            <div id="frozen-cols" hidden></div>
+            <div id="cells"></div>
+          </div>
+          <div id="fill-handle" hidden></div>
+          <input id="date-pick" type="date" tabindex="-1" aria-label="Choose a date" />
+          <textarea id="cell-editor" rows="1" wrap="off" spellcheck="false" autocomplete="off" hidden></textarea>
+        </div>
+      </section>
+      <div id="sheet-tabs" role="tablist" aria-label="Sheets"></div>
+      </div>
+
+      <div id="v-split" class="split-v" title="Drag to resize"></div>
+
+      <aside id="side">
+        <section id="tray-wrap" class="panel">
+          <div class="panel-title tabs" role="tablist" aria-label="Side panel">
+            <button id="tab-driver" role="tab" aria-selected="true" aria-controls="tray" class="tab active" title="Show the agent that works the board for you (⇧⌘D)">Driver</button>
+            <button id="tab-decisions" role="tab" aria-selected="false" aria-controls="tray" class="tab" title="Show everything waiting on you (⌘J)">Needs you<span id="needs-count" class="count"></span></button>
+            <button id="tab-activity" role="tab" aria-selected="false" aria-controls="tray" class="tab" title="Show what has happened on the board, newest first">Activity</button>
+            <button id="tab-source" role="tab" aria-selected="false" aria-controls="tray" class="tab" title="Show the document behind the selected cell (⌥⌘S)">Source</button>
+          </div>
+          <div id="tray" role="tabpanel" aria-labelledby="tab-driver"></div>
+        </section>
+        <section id="named-wrap" class="panel">
+          <button id="named-head" class="panel-title disclosure" title="Show or hide the named cells"><span class="chev">▾</span>Named cells<span id="named-count" class="count"></span></button>
+          <div id="named"></div>
+        </section>
+        <section id="format-wrap" class="panel">
+          <div class="panel-title">Format</div>
+          <div id="format-body"></div>
+        </section>
+      </aside>
+    </main>
+
+    <div id="h-split" class="split-h" title="Drag to resize; double-click to switch between compact and half the window"></div>
+
+    <footer id="inspector" class="panel">
+      <div class="panel-title" id="inspector-title">Inspector</div>
+      <div id="inspector-body"></div>
+    </footer>
+
+    <div id="statusbar">
+      <span id="status-dir" class="status"></span>
+      <span id="status-editing" class="status" hidden></span>
+      <span id="status-selection" class="status"></span>
+      <span id="status-filter" class="status"></span>
+      <span class="spacer"></span>
+      <span id="status-spend" class="status"></span>
+      <span id="status-agents" class="status"></span>
+      <button id="status-stop" class="status" hidden>Stop all</button>
+      <span id="status-awaiting" class="status" role="status" aria-live="polite"></span>
+      <span id="announce" class="sr-only" aria-live="polite"></span>
+    </div>
+
+    <div id="hovercard" hidden></div>
+    <div id="autocomplete" hidden></div>
+    <div id="overlay" hidden></div>
+
+    <!-- xterm UMD: sets window.Terminal / window.FitAddon before the module runs -->
+    <script src="vendor/xterm/xterm.js"></script>
+    <script src="vendor/xterm/addon-fit.js"></script>
+    <script type="module" src="js/app.js"></script>
+  </body>
+</html>

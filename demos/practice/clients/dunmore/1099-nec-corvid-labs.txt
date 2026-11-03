@@ -1,0 +1,12 @@
+FORM 1099-NEC  NONEMPLOYEE COMPENSATION                           TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           CORVID LABS INC
+                       500 W MONROE ST, CHICAGO IL 60661
+PAYER'S TIN            XX-XXX6620
+RECIPIENT'S name       HAROLD DUNMORE
+RECIPIENT'S TIN        XXX-XX-1187
+
+1  Nonemployee compensation               141,500.00
+4  Federal income tax withheld                  0.00

@@ -1,0 +1,149 @@
+{
+  "scenario": "sec-questionnaire",
+  "acting_for": "Tamsin Labs, Inc., the vendor answering Harrowgate Regional Health's security questionnaire",
+  "as_of": "2026-10-01",
+  "rows": "column A holds one row per question in documents/questionnaire.csv; each answer key below is the question id, which the row label must contain (e.g. 'HRH-01: Is customer data encrypted at rest ...')",
+  "questions": [
+    {
+      "header": "Question id and text",
+      "shape": "none",
+      "column": "A"
+    },
+    {
+      "header": "Answer: Yes, No, Partial or N/A",
+      "shape": "choice:Yes|No|Partial|N/A",
+      "column": "B"
+    },
+    {
+      "header": "Explanation for the customer, one or two sentences",
+      "shape": "text",
+      "column": "C"
+    },
+    {
+      "header": "Supporting passage",
+      "shape": "quote",
+      "column": "D"
+    },
+    {
+      "header": "Configuration claim to test",
+      "shape": "choice:None|Encryption at rest|MFA|Branch protection|Backups",
+      "column": "E"
+    },
+    {
+      "header": "Configuration check result",
+      "shape": "$ cell printing pass or fail: <resource>",
+      "options": ["pass", "fail"],
+      "column": "F"
+    },
+    {
+      "header": "Answer consistent with check",
+      "shape": "formula: ok | n/a | CONTRADICTED",
+      "column": "G"
+    },
+    {
+      "header": "Needs a person before sending",
+      "shape": "yesno",
+      "column": "H"
+    },
+    {
+      "header": "Codex reviewer: agree or disagree",
+      "shape": "choice:agree|disagree",
+      "column": "I"
+    },
+    {
+      "header": "Evidence date",
+      "shape": "date",
+      "column": "K"
+    , "aliases": {"2025-07-14": ["2025-06-27"]}}
+  ],
+  "answers": {
+    "HRH-01": {
+      "Answer: Yes, No, Partial or N/A": "Partial",
+      "Explanation for the customer (must contain)": "analytics",
+      "Configuration check result": "fail"
+    },
+    "HRH-02": {
+      "Answer: Yes, No, Partial or N/A": "Partial",
+      "Explanation for the customer (must contain)": "break",
+      "Configuration check result": "fail"
+    },
+    "HRH-03": {
+      "Answer: Yes, No, Partial or N/A": "Yes"
+    },
+    "HRH-04": {
+      "Answer: Yes, No, Partial or N/A": "Yes",
+      "Needs a person before sending": "No"
+    },
+    "HRH-05": {
+      "Answer: Yes, No, Partial or N/A": "No",
+      "Needs a person before sending": "Yes",
+      "Evidence date": "2025-07-14"
+    },
+    "HRH-06": {
+      "Answer: Yes, No, Partial or N/A": "Partial"
+    },
+    "HRH-07": {
+      "Answer: Yes, No, Partial or N/A": "Yes"
+    },
+    "HRH-08": {
+      "Answer: Yes, No, Partial or N/A": "Not found",
+      "Needs a person before sending": "Yes"
+    },
+    "HRH-09": {
+      "Answer: Yes, No, Partial or N/A": "Yes",
+      "Configuration check result": "pass",
+      "Needs a person before sending": "No"
+    },
+    "HRH-10": {
+      "Answer: Yes, No, Partial or N/A": "Partial"
+    },
+    "HRH-11": {
+      "Answer: Yes, No, Partial or N/A": "Partial",
+      "Needs a person before sending": "Yes"
+    },
+    "HRH-12": {
+      "Answer: Yes, No, Partial or N/A": "Yes",
+      "Needs a person before sending": "No"
+    }
+  },
+  "summaries": {
+    "yes": "= countif({B2:B13}, 'Yes') -> 5",
+    "partial": "= countif({B2:B13}, 'Partial') -> 5",
+    "no": "= countif({B2:B13}, 'No') -> 1",
+    "not_found": "= countif({B2:B13}, 'Not found') -> 1",
+    "contradicted": "= countif({G2:G13}, 'CONTRADICTED') -> 0",
+    "needs": "= countif({H2:H13}, 'Yes') -> 3",
+    "disagreements": "= countif({I2:I13}, 'disagree') -> 0",
+    "ready": "= if(and({contradicted} = 0, {not_found} = 0, {disagreements} = 0), 'ready to send', 'not ready') -> not ready (HRH-08 is Not found until the person answers it)"
+  },
+  "matching": {
+    "answer": "exact choice; 'Not found' is exact, and the shape canonicalizes 'not stated' and kin to it",
+    "explanation": "the (must contain) keys are substring checks after normalizing: HRH-01 must name the analytics exports bucket, HRH-02 the break-glass group",
+    "check": "the $ cell's output starts with pass or fail (a resource name after 'fail:' is expected but not graded)",
+    "yesno": "exact Yes / No",
+    "date": "exact YYYY-MM-DD"
+  },
+  "checks_by_hand": [
+    "Every Yes and Partial in B has a citation with found = true.",
+    "The HRH-03 citation is in policies/information-security-policy-v2.md, not v1 (v1 says 24 hours, which would make the answer No).",
+    "The HRH-11 citation is v2 s.8.2 ('without undue delay'), not v1 s.6.2 ('within 72 hours').",
+    "No row reads Yes while its check prints fail (contradicted = 0).",
+    "HRH-08 is flagged (it shows in Needs You) and nothing on the board says customer data stays in the EU. The request says flag rather than ask on purpose: scenario.mjs answers a worker's question with its default option, which could turn Not found into an invented No."
+  ],
+  "notes": {
+    "HRH-01 / unencrypted bucket": "Policy v2 s.3.1 says all customer data is encrypted at rest and that each store's encryption is declared in infrastructure code. Both RDS instances set storage_encrypted = true, and customer_uploads and audit_logs have aws_s3_bucket_server_side_encryption_configuration blocks, but aws_s3_bucket.analytics_exports (customer dashboard exports) has none. Answer Partial, name the bucket, and the check prints fail: aws_s3_bucket.analytics_exports. Yes is the trap; a Yes next to that fail makes contradicted = 1.",
+    "HRH-02 / break-glass without MFA": "Policy v2 s.4.2 says MFA for all workforce access, no standing exceptions, and the 2025 SOC 2 found no exceptions. But infra/idp-export.json has an ACTIVE priority-1 sign-on policy 'Break-glass emergency access' for the break-glass group (2 accounts, assigned the AWS production console and the database bastion) with mfa_required false. Answer Partial; the check prints fail: break-glass.",
+    "HRH-03 / superseded policy": "v1.3 says RTO 24 hours (which would make the answer No against 'of 8 hours or less'); v2.0, effective 2026-03-01, supersedes v1.3 and says 4 hours. Answer Yes, cited to v2 s.6.1.",
+    "HRH-04 / different words": "No document says 'background check'. policies/hr-security.md s.2 'Pre-employment screening' covers identity, criminal record and employment verification before any access. Answer Yes, cited there.",
+    "HRH-05 / stale pen test": "Policy v2 s.7.1 promises an annual test, but the only evidence is Greyfen's letter dated 2025-07-14 (testing 16-27 June 2025), 444 days before the 2026-10-01 as-of date. Answer No (a policy statement is not a test); evidence date 2025-07-14; needs a person (booking a test is a decision, and the answer must not promise a date).",
+    "HRH-06 / audit exception": "Policy says quarterly within 30 days, but the 2025 SOC 2 report's CC6.2.2 exception says the Q3 2025 review was signed 43 days after quarter end. Answer Partial, cited to the exception. The bridge letter says no material control failures, which does not erase the exception.",
+    "HRH-07 / LLM sub-processor": "policies/subprocessors.md lists four sub-processors, including Quillmoth AI, Inc., an LLM API behind the 'Explain this chart' feature. Answer Yes; a good explanation names the categories, including the LLM vendor.",
+    "HRH-08 / not answered anywhere": "Nothing in policies/, reports/ or infra/ states where data is stored: infra/main.tf takes the region from a variable with no default, set by the pipeline outside this repo. The answer is Not found flagged for the person. Yes or No here is invented. (The person's answer in the recording is 'No, US-only'; after that B9 = No.)",
+    "HRH-09 / clean config yes": "infra/github-org-settings.json: both production repos protect main with required_approving_review_count 1 and enforce_admins true. Policy v2 s.5.2 agrees. Answer Yes; the check prints pass.",
+    "HRH-10 / half-evidenced": "infra/backup.tf schedules a daily backup plan (cron 03:00, 35-day retention) and the SOC 2 tested daily backups, but no document shows a restore test; policy v2 s.6.3 only says restore procedures are documented. Answer Partial. A backups check (if built) passes on the schedule, which does not make the restore half true.",
+    "HRH-11 / no hour figure": "v2 s.8.1 documents an IR plan; s.8.2 says notify 'without undue delay' with no hour figure. v1 said 72 hours but is superseded. Answer Partial, and it needs a person: agreeing to 72 hours would be a new contractual commitment.",
+    "HRH-12 / clean yes": "Policy v2 s.9.1 (annual) and the SOC 2 CC1.4.1 test (no exceptions). Answer Yes.",
+    "counts": "Yes: HRH-03, 04, 07, 09, 12 (5). Partial: HRH-01, 02, 06, 10, 11 (5). No: HRH-05 (1). Not found: HRH-08 (1). Needs a person: HRH-05 (evidence out of date), HRH-08 (Not found), HRH-11 (asks for a 72-hour commitment policy doesn't make) (3). HRH-01 and HRH-02 are Partial because config falls short of a commitment policy already makes, so they don't need a decision to answer; a run that also marks them lands on 5, which the grader will call wrong on purpose: the request defines the column."
+  },
+  "summary_names": "The grader finds a summary by its exact name first, then by a named cell whose name holds every word of the key. The request asks for the counts by these names so 'no' (too short to match by words) is found exactly."
+}

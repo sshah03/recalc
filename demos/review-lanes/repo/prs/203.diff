@@ -1,0 +1,23 @@
+diff --git a/app/profiles.py b/app/profiles.py
+--- a/app/profiles.py
++++ b/app/profiles.py
+@@ -1,8 +1,16 @@
+ from app.users import get_user
+ 
++_cache = {}
++
+ 
+ def profile(user_id):
+     """A user's public profile."""
+-    user = get_user(user_id)
+-    return {"id": user["id"], "name": user["name"]}
++    if user_id not in _cache:
++        user = get_user(user_id)
++        _cache[user_id] = {"id": user["id"], "name": user["name"]}
++    return _cache[user_id]
++
++
++def rename(user_id, name):
++    from app.db import connect
++    with connect() as db:
++        db.execute("UPDATE users SET name = ? WHERE id = ?", (name, user_id))

@@ -1,0 +1,48 @@
+# Two agents, the same tasks, side by side. Column C asks Claude, column D
+# asks Codex; E and F grade each answer against the expected value with a
+# formula, and the last row uses an agent as the judge for a free-text answer.
+# Select C2:D7 and Run Selection. Runs queue under max_agents (config.toml).
+A1 = task
+B1 = expected
+C1 = claude
+D1 = codex
+E1 = claude right?
+F1 = codex right?
+A2 = What is the 10th Fibonacci number, counting F(1) = F(2) = 1?
+B2 = 55
+C2 = @claude('{$A2} Reply with only the answer, nothing else.')
+D2 = @codex('{$A2} Reply with only the answer, nothing else.')
+E2 = = if({C2} == '', 'pending', if(lower(trim({C2})) == lower({$B2}), 'yes', 'no'))
+F2 = = if({D2} == '', 'pending', if(lower(trim({D2})) == lower({$B2}), 'yes', 'no'))
+A3 = How many days are in a leap year?
+B3 = 366
+C3 = @claude('{$A3} Reply with only the answer, nothing else.')
+D3 = @codex('{$A3} Reply with only the answer, nothing else.')
+E3 = = if({C3} == '', 'pending', if(lower(trim({C3})) == lower({$B3}), 'yes', 'no'))
+F3 = = if({D3} == '', 'pending', if(lower(trim({D3})) == lower({$B3}), 'yes', 'no'))
+A4 = In Python 3, what does len("naïve") return?
+B4 = 5
+C4 = @claude('{$A4} Reply with only the answer, nothing else.')
+D4 = @codex('{$A4} Reply with only the answer, nothing else.')
+E4 = = if({C4} == '', 'pending', if(lower(trim({C4})) == lower({$B4}), 'yes', 'no'))
+F4 = = if({D4} == '', 'pending', if(lower(trim({D4})) == lower({$B4}), 'yes', 'no'))
+A5 = Which HTTP status code means Too Many Requests?
+B5 = 429
+C5 = @claude('{$A5} Reply with only the answer, nothing else.')
+D5 = @codex('{$A5} Reply with only the answer, nothing else.')
+E5 = = if({C5} == '', 'pending', if(lower(trim({C5})) == lower({$B5}), 'yes', 'no'))
+F5 = = if({D5} == '', 'pending', if(lower(trim({D5})) == lower({$B5}), 'yes', 'no'))
+A6 = What are the first 8 hex characters of the SHA-1 digest of the empty string?
+B6 = da39a3ee
+C6 = @claude('{$A6} Reply with only the answer, nothing else.')
+D6 = @codex('{$A6} Reply with only the answer, nothing else.')
+E6 = = if({C6} == '', 'pending', if(lower(trim({C6})) == lower({$B6}), 'yes', 'no'))
+F6 = = if({D6} == '', 'pending', if(lower(trim({D6})) == lower({$B6}), 'yes', 'no'))
+A7 = Explain what a race condition is, in one sentence.
+B7 = (judged)
+C7 = @claude('{$A7}')
+D7 = @codex('{$A7}')
+E7 = @claude('Does this sentence correctly explain a race condition? Reply with only yes or no. Sentence: {C7}')
+F7 = @claude('Does this sentence correctly explain a race condition? Reply with only yes or no. Sentence: {D7}')
+claude_score = = countif({E2:E7}, 'yes') & ' of 6'
+codex_score = = countif({F2:F7}, 'yes') & ' of 6'

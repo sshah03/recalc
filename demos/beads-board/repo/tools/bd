@@ -1,0 +1,53 @@
+#!/usr/bin/env python3
+"""A stand-in for beads' `bd` over .beads/standin.json, so the board runs
+without installing beads. It answers `bd list [--all] --json`,
+`bd ready --json`, `bd show ID --json` and `bd close ID --reason TEXT` with
+the same field names; delete `python3 tools/` from the board's commands to
+use the real bd on your own beads."""
+import json
+import sys
+from pathlib import Path
+
+STATE = Path(__file__).resolve().parent.parent / ".beads" / "standin.json"
+
+
+def load():
+    return json.loads(STATE.read_text())
+
+
+def public(issue, issues):
+    out = {k: v for k, v in issue.items() if k != "blocked_by"}
+    out["dependency_count"] = len(issue.get("blocked_by", []))
+    out["dependent_count"] = sum(issue["id"] in i.get("blocked_by", []) for i in issues)
+    return out
+
+
+def main(argv):
+    issues = load()
+    by_id = {i["id"]: i for i in issues}
+    cmd, rest = (argv[0], argv[1:]) if argv else ("", [])
+    if cmd == "list":
+        shown = issues if "--all" in rest else [i for i in issues if i["status"] != "closed"]
+        print(json.dumps([public(i, issues) for i in shown], indent=2))
+    elif cmd == "ready":
+        ready = [
+            i for i in issues
+            if i["status"] in ("open", "in_progress")
+            and all(by_id[b]["status"] == "closed" for b in i.get("blocked_by", []))
+        ]
+        print(json.dumps([public(i, issues) for i in ready], indent=2))
+    elif cmd == "show" and rest:
+        print(json.dumps(public(by_id[rest[0]], issues), indent=2))
+    elif cmd == "close" and rest:
+        issue = by_id.get(rest[0])
+        if issue is None:
+            sys.exit(f"bd: no issue {rest[0]}")
+        reason = rest[rest.index("--reason") + 1] if "--reason" in rest else ""
+        issue.update(status="closed", close_reason=reason)
+        STATE.write_text(json.dumps(issues, indent=2) + "\n")
+        print(f"Closed {issue['id']}: {issue['title']}")
+    else:
+        sys.exit("tools/bd: only list, ready, show and close")
+
+
+main(sys.argv[1:])

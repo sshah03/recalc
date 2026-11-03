@@ -1,0 +1,40 @@
+# Done means green: a coding session may finish only when its checks pass.
+# Each row is a task in the tally repository. Open Session on a row's B cell
+# starts Claude Code on it, live beside the grid. When the session tries to
+# finish, Claude Code's Stop hook (.claude/settings.json, `recalc hook stop`)
+# writes its session id and what it said into C and D, waits for the row's
+# acceptance test in E to settle, and reads F. While F says STALE, the session
+# isn't allowed to stop: it gets the failing test's last line and keeps
+# working. After three tries it may stop, and F is flagged for you.
+#
+# Sessions you start yourself in a terminal are held the same way if they run
+# in a folder named after the task (git worktree add wt/parse, then claude in
+# wt/parse), with recalc on your PATH. Each check keeps the test run's own exit
+# status; in `cmd | tail -1` the status would be tail's. The library and its
+# tasks are synthetic. Codex sessions are held the same way by
+# .codex/hooks.json, once you have opened codex here and trusted the hook.
+instructions = You are one of the agents working in the tally repository in the current directory (see README.md); others may be changing other parts of it. Do only your own task. Don't edit anything under tests/: the acceptance tests define done. When you have finished, say done in one line.
+A1 = Task
+B1 = Session (Open Session here)
+C1 = Session id
+D1 = What it said when it stopped
+E1 = Acceptance test
+F1 = Done?
+A2 = parse
+B2 = @claude('{instructions} Your task: make tally.money.parse accept amounts with thousands separators, 1,234.50 and 12,345,678. Its acceptance test is tests/test_parse.py.')
+E2 = $ out=$(python3 -m unittest tests.test_parse 2>&1); code=$?; echo "$out" | tail -1; exit $code # watch: {tally/**,tests/**}
+F2 = = if({D2} == '', 'working', if({E2.code} == 0, 'holds', 'STALE'))
+A3 = invoice
+B3 = @claude('{instructions} Your task: invoices should show amounts the way people read them, $1,234.50; change tally.invoice.render. Its acceptance test is tests/test_invoice.py.')
+E3 = $ out=$(python3 -m unittest tests.test_invoice 2>&1); code=$?; echo "$out" | tail -1; exit $code # watch: {tally/**,tests/**}
+F3 = = if({D3} == '', 'working', if({E3.code} == 0, 'holds', 'STALE'))
+A4 = export
+B4 = @claude('{instructions} Your task: the accounting export needs a tax column at 8%, and its amounts must stay plain numbers the accounting system can read (1234.50); change tally.export.csv_text. Its acceptance test is tests/test_export.py.')
+E4 = $ out=$(python3 -m unittest tests.test_export 2>&1); code=$?; echo "$out" | tail -1; exit $code # watch: {tally/**,tests/**}
+F4 = = if({D4} == '', 'working', if({E4.code} == 0, 'holds', 'STALE'))
+A5 = dates
+B5 = @claude('{instructions} Your task: a due date that lands on a weekend moves to the next Monday; change tally.dates.due. Its acceptance test is tests/test_dates.py.')
+E5 = $ out=$(python3 -m unittest tests.test_dates 2>&1); code=$?; echo "$out" | tail -1; exit $code # watch: {tally/**,tests/**}
+F5 = = if({D5} == '', 'working', if({E5.code} == 0, 'holds', 'STALE'))
+finished = = countif({F2:F5}, 'holds')
+held_back = = countif({F2:F5}, 'STALE')

@@ -1,0 +1,35 @@
+# Benchmarks that keep score. Each case re-runs when bench.py changes; the
+# total also re-runs every minute, and every run lands in the cell's history;
+# the sparkline and the median read that history. regressed turns red when
+# the total drifts 15% past the baseline; explain asks an agent why, and only
+# when you run it. Set the baselines from your own first run. The `: {total_ms}`
+# at the end of runs and median_ms is a shell no-op that makes them re-run
+# whenever a new total lands.
+A1 = case
+B1 = ms (best of 3)
+C1 = baseline ms
+D1 = regressed?
+A2 = sort
+B2 = $ python3 bench.py {$A2} # watch: bench.py
+C2 = 30
+D2 = = {B2} > {C2} * 1.15
+A3 = regex
+B3 = $ python3 bench.py {$A3} # watch: bench.py
+C3 = 7
+D3 = = {B3} > {C3} * 1.15
+A4 = json
+B4 = $ python3 bench.py {$A4} # watch: bench.py
+C4 = 24
+D4 = = {B4} > {C4} * 1.15
+A5 = strings
+B5 = $ python3 bench.py {$A5} # watch: bench.py
+C5 = 17
+D5 = = {B5} > {C5} * 1.15
+total_ms = $ python3 bench.py # every: 60000
+baseline_total = 76
+regressed = = {total_ms} > {baseline_total} * 1.15
+runs = $ grep -c . .recalc/history/total_ms.log; : {total_ms}
+median_ms = $ cut -f2 .recalc/history/total_ms.log | sort -n | awk '{a[NR]=$1} END {print a[int((NR+1)/2)]}'; : {total_ms}
+commit = $ git rev-parse --short HEAD 2>/dev/null || echo not-a-repo # watch: .git/HEAD
+explain = @claude('The benchmark total in bench.py went from {baseline_total} ms to {total_ms} ms (median over {runs} runs: {median_ms}). Read bench.py, run `git log -5 --stat -- bench.py` if this is a git repository, and explain the most likely cause in three sentences.')
+@series total_ms B2 B3 B4 B5

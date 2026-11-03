@@ -1,0 +1,19 @@
+2024 FORM 1040 — RETURN SUMMARY (from the firm's prep software, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Taxpayer: Harold Dunmore        Filing status: Single
+Filed: 2025-04-14 (e-file accepted)
+
+Line 2b   Taxable interest (Meridian Savings) ...............   1,240.00
+Line 8    Schedule 1: Schedule C net profit (consulting) .... 172,400.00
+Line 9    Total income ...................................... 173,640.00
+Line 10   Adjustments: deductible part of SE tax ............  12,180.00
+Line 11   Adjusted gross income ............................. 161,460.00
+Line 12   Standard deduction ................................  14,600.00
+Line 13   Qualified business income deduction (Form 8995) ...  29,372.00
+Line 15   Taxable income .................................... 117,488.00
+Line 16   Tax ...............................................  21,240.00
+Line 23   Schedule 2: self-employment tax ...................  24,359.00
+Line 24   Total tax .........................................  45,599.00
+Line 26   Estimated tax payments ............................  44,000.00
+Line 37   Amount owed .......................................   1,599.00

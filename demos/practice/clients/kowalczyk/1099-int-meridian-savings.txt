@@ -1,0 +1,11 @@
+FORM 1099-INT  INTEREST INCOME                                    TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           MERIDIAN SAVINGS BANK
+PAYER'S TIN            XX-XXX2517
+RECIPIENT'S name       NADIA KOWALCZYK
+Account number         ....7718
+
+1  Interest income                           902.15
+4  Federal income tax withheld                 0.00

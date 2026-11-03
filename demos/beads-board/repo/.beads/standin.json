@@ -1,0 +1,6 @@
+[
+  {"id": "tl-7f3.1", "title": "Accept thousands separators when parsing amounts", "status": "closed", "priority": 1, "issue_type": "task", "close_reason": "done", "acceptance_criteria": "tests/test_parse.py passes", "blocked_by": []},
+  {"id": "tl-7f3.2", "title": "Show invoice amounts as $1,234.50", "status": "open", "priority": 1, "issue_type": "task", "acceptance_criteria": "tests/test_invoice.py passes", "blocked_by": ["tl-7f3.1"]},
+  {"id": "tl-7f3.3", "title": "Add an 8% tax column to the accounting export", "status": "open", "priority": 2, "issue_type": "task", "acceptance_criteria": "tests/test_export.py passes", "blocked_by": ["tl-7f3.2"]},
+  {"id": "tl-7f3.4", "title": "Move weekend due dates to the next Monday", "status": "in_progress", "priority": 2, "issue_type": "task", "assignee": "agent-codex-2", "acceptance_criteria": "tests/test_dates.py passes", "blocked_by": []}
+]

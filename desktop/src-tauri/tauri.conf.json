@@ -1,0 +1,80 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "recalc",
+  "version": "0.1.0",
+  "identifier": "dev.recalc.desktop",
+  "build": {
+    "frontendDist": "../frontend/dist",
+    "beforeBuildCommand": "npm --prefix frontend install && npm --prefix frontend run build"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "windows": [
+      {
+        "title": "recalc",
+        "width": 1440,
+        "height": 900,
+        "minWidth": 760,
+        "minHeight": 480,
+        "titleBarStyle": "Overlay",
+        "hiddenTitle": true
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'"
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDIxRDM4NUUxNzJCNjc5RUUKUldUdWViWnk0WVhUSWU4S3E3T0c1WXdhMXluaDhJNTRsNmpOR2RmVFk5MnJKNjhVWUJ1RDc5dGgK"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": "all",
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.icns",
+      "icons/icon.png"
+    ],
+    "macOS": {
+      "minimumSystemVersion": "12.0",
+      "signingIdentity": "-"
+    },
+    "category": "DeveloperTool",
+    "shortDescription": "A spreadsheet you and your coding agents both write on.",
+    "fileAssociations": [
+      {
+        "ext": [
+          "recalc"
+        ],
+        "name": "recalc board",
+        "description": "recalc board",
+        "role": "Editor",
+        "exportedType": {
+          "identifier": "dev.recalc.board",
+          "conformsTo": [
+            "com.apple.package",
+            "public.composite-content"
+          ]
+        }
+      },
+      {
+        "ext": [
+          "recalctemplate"
+        ],
+        "name": "recalc template",
+        "description": "recalc template",
+        "role": "Editor",
+        "exportedType": {
+          "identifier": "dev.recalc.template",
+          "conformsTo": [
+            "public.plain-text"
+          ]
+        }
+      }
+    ]
+  }
+}

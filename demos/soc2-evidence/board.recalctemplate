@@ -1,0 +1,162 @@
+# SOC 2 Type II evidence: ten controls tested over six months of exports,
+# for Brindlewood, a payroll company a month from fieldwork. The period is
+# 2026-01-01 to 2026-06-30.
+#
+# B, D-F and I are commands (checks/controls.py) that re-perform each
+# control's test over the files in evidence/, applying the policies' own
+# allowances (a Standard change, a cancelled ticket, a retest within 7 days,
+# a risk acceptance approved before the due date), so every count can be
+# run again for the auditor. C, G and H are agent cells: which files test
+# the control, whether a deviation is one our policy allows, and whether the
+# evidence covers the whole period (a single snapshot of a continuous
+# control may not, which is worth the auditor's attention). J is the result,
+# computed from the counts: Evidence missing only when nothing tests it. K is a second
+# agent re-performing the test from the files without seeing the counts,
+# and L says whether it agrees. evidence_untouched checks that nothing
+# under evidence/ changed.
+#
+# Select C2:K11 and Run Selection to fill the agent cells. The company,
+# people and exports are synthetic.
+instructions = You are on Brindlewood's security team preparing for SOC 2 Type II fieldwork; the audit period is 2026-01-01 to 2026-06-30, by the UTC date of each record. documents/controls.csv lists the controls, evidence/ holds the exports, and policies/ our policies; apply the policies' own definitions and allowances. Never change anything in evidence/ or policies/. Answer in exactly the form the question asks for, with no preamble; cite the passage your answer rests on with cite_cell. If nothing in evidence/ shows the control operated, say so: Not found, or No for a yes/no question.
+A1 = Control
+B1 = Owner
+C1 = Evidence files used: the files under evidence/ that test this control, comma-separated, or Not found
+D1 = Population (check)
+E1 = Exceptions (check)
+F1 = Exception details (check)
+G1 = Is a deviation from this control one our policy allows, and did one occur in the period (a risk acceptance, a retest, a Standard change)? Yes or No
+H1 = Does the evidence cover the whole period? Yes or No
+I1 = Latest evidence date (check)
+J1 = Result
+K1 = Re-perform this control's test yourself from the files in evidence/ and the policy, without reading any other cell on the board: answer as population/exceptions, for example 120/2, or Not found
+L1 = Re-performance
+A2 = CC8.1-PR: Code change review
+B2 = $ python3 checks/controls.py owner CC8.1-PR
+D2 = $ python3 checks/controls.py population CC8.1-PR # watch: evidence/**
+E2 = $ python3 checks/controls.py exceptions CC8.1-PR # watch: evidence/**
+F2 = $ python3 checks/controls.py details CC8.1-PR # watch: evidence/**
+I2 = $ python3 checks/controls.py latest CC8.1-PR # watch: evidence/**
+C2 = @claude('{instructions} Control: {$A2}. {C$1}')
+G2 = @claude('{instructions} Control: {$A2}. {G$1}')
+H2 = @claude('{instructions} Control: {$A2}. {H$1}')
+K2 = @claude('{instructions} Control: {$A2}. {K$1}')
+J2 = = if({D2} == 'Not found', 'Evidence missing', if({E2} > 0, 'Exception noted', 'Effective'))
+L2 = = if({K2} == '', '', if(or({K2} == concat({D2}, '/', {E2}), and({D2} == 'Not found', {K2} == 'Not found')), 'agree', 'disagree'))
+A3 = CC8.1-CT: Infrastructure change approval
+B3 = $ python3 checks/controls.py owner CC8.1-CT
+D3 = $ python3 checks/controls.py population CC8.1-CT # watch: evidence/**
+E3 = $ python3 checks/controls.py exceptions CC8.1-CT # watch: evidence/**
+F3 = $ python3 checks/controls.py details CC8.1-CT # watch: evidence/**
+I3 = $ python3 checks/controls.py latest CC8.1-CT # watch: evidence/**
+C3 = @claude('{instructions} Control: {$A3}. {C$1}')
+G3 = @claude('{instructions} Control: {$A3}. {G$1}')
+H3 = @claude('{instructions} Control: {$A3}. {H$1}')
+K3 = @claude('{instructions} Control: {$A3}. {K$1}')
+J3 = = if({D3} == 'Not found', 'Evidence missing', if({E3} > 0, 'Exception noted', 'Effective'))
+L3 = = if({K3} == '', '', if(or({K3} == concat({D3}, '/', {E3}), and({D3} == 'Not found', {K3} == 'Not found')), 'agree', 'disagree'))
+A4 = CC6.3-TD: Termination deprovisioning
+B4 = $ python3 checks/controls.py owner CC6.3-TD
+D4 = $ python3 checks/controls.py population CC6.3-TD # watch: evidence/**
+E4 = $ python3 checks/controls.py exceptions CC6.3-TD # watch: evidence/**
+F4 = $ python3 checks/controls.py details CC6.3-TD # watch: evidence/**
+I4 = $ python3 checks/controls.py latest CC6.3-TD # watch: evidence/**
+C4 = @claude('{instructions} Control: {$A4}. {C$1}')
+G4 = @claude('{instructions} Control: {$A4}. {G$1}')
+H4 = @claude('{instructions} Control: {$A4}. {H$1}')
+K4 = @claude('{instructions} Control: {$A4}. {K$1}')
+J4 = = if({D4} == 'Not found', 'Evidence missing', if({E4} > 0, 'Exception noted', 'Effective'))
+L4 = = if({K4} == '', '', if(or({K4} == concat({D4}, '/', {E4}), and({D4} == 'Not found', {K4} == 'Not found')), 'agree', 'disagree'))
+A5 = CC6.2-AR: Quarterly access review
+B5 = $ python3 checks/controls.py owner CC6.2-AR
+D5 = $ python3 checks/controls.py population CC6.2-AR # watch: evidence/**
+E5 = $ python3 checks/controls.py exceptions CC6.2-AR # watch: evidence/**
+F5 = $ python3 checks/controls.py details CC6.2-AR # watch: evidence/**
+I5 = $ python3 checks/controls.py latest CC6.2-AR # watch: evidence/**
+C5 = @claude('{instructions} Control: {$A5}. {C$1}')
+G5 = @claude('{instructions} Control: {$A5}. {G$1}')
+H5 = @claude('{instructions} Control: {$A5}. {H$1}')
+K5 = @claude('{instructions} Control: {$A5}. {K$1}')
+J5 = = if({D5} == 'Not found', 'Evidence missing', if({E5} > 0, 'Exception noted', 'Effective'))
+L5 = = if({K5} == '', '', if(or({K5} == concat({D5}, '/', {E5}), and({D5} == 'Not found', {K5} == 'Not found')), 'agree', 'disagree'))
+A6 = CC6.1-MFA: MFA enforcement
+B6 = $ python3 checks/controls.py owner CC6.1-MFA
+D6 = $ python3 checks/controls.py population CC6.1-MFA # watch: evidence/**
+E6 = $ python3 checks/controls.py exceptions CC6.1-MFA # watch: evidence/**
+F6 = $ python3 checks/controls.py details CC6.1-MFA # watch: evidence/**
+I6 = $ python3 checks/controls.py latest CC6.1-MFA # watch: evidence/**
+C6 = @claude('{instructions} Control: {$A6}. {C$1}')
+G6 = @claude('{instructions} Control: {$A6}. {G$1}')
+H6 = @claude('{instructions} Control: {$A6}. {H$1}')
+K6 = @claude('{instructions} Control: {$A6}. {K$1}')
+J6 = = if({D6} == 'Not found', 'Evidence missing', if({E6} > 0, 'Exception noted', 'Effective'))
+L6 = = if({K6} == '', '', if(or({K6} == concat({D6}, '/', {E6}), and({D6} == 'Not found', {K6} == 'Not found')), 'agree', 'disagree'))
+A7 = CC1.4-SAT: New-hire security training
+B7 = $ python3 checks/controls.py owner CC1.4-SAT
+D7 = $ python3 checks/controls.py population CC1.4-SAT # watch: evidence/**
+E7 = $ python3 checks/controls.py exceptions CC1.4-SAT # watch: evidence/**
+F7 = $ python3 checks/controls.py details CC1.4-SAT # watch: evidence/**
+I7 = $ python3 checks/controls.py latest CC1.4-SAT # watch: evidence/**
+C7 = @claude('{instructions} Control: {$A7}. {C$1}')
+G7 = @claude('{instructions} Control: {$A7}. {G$1}')
+H7 = @claude('{instructions} Control: {$A7}. {H$1}')
+K7 = @claude('{instructions} Control: {$A7}. {K$1}')
+J7 = = if({D7} == 'Not found', 'Evidence missing', if({E7} > 0, 'Exception noted', 'Effective'))
+L7 = = if({K7} == '', '', if(or({K7} == concat({D7}, '/', {E7}), and({D7} == 'Not found', {K7} == 'Not found')), 'agree', 'disagree'))
+A8 = CC7.1-VM: Vulnerability remediation
+B8 = $ python3 checks/controls.py owner CC7.1-VM
+D8 = $ python3 checks/controls.py population CC7.1-VM # watch: evidence/**
+E8 = $ python3 checks/controls.py exceptions CC7.1-VM # watch: evidence/**
+F8 = $ python3 checks/controls.py details CC7.1-VM # watch: evidence/**
+I8 = $ python3 checks/controls.py latest CC7.1-VM # watch: evidence/**
+C8 = @claude('{instructions} Control: {$A8}. {C$1}')
+G8 = @claude('{instructions} Control: {$A8}. {G$1}')
+H8 = @claude('{instructions} Control: {$A8}. {H$1}')
+K8 = @claude('{instructions} Control: {$A8}. {K$1}')
+J8 = = if({D8} == 'Not found', 'Evidence missing', if({E8} > 0, 'Exception noted', 'Effective'))
+L8 = = if({K8} == '', '', if(or({K8} == concat({D8}, '/', {E8}), and({D8} == 'Not found', {K8} == 'Not found')), 'agree', 'disagree'))
+A9 = A1.2-BR: Backup restore testing
+B9 = $ python3 checks/controls.py owner A1.2-BR
+D9 = $ python3 checks/controls.py population A1.2-BR # watch: evidence/**
+E9 = $ python3 checks/controls.py exceptions A1.2-BR # watch: evidence/**
+F9 = $ python3 checks/controls.py details A1.2-BR # watch: evidence/**
+I9 = $ python3 checks/controls.py latest A1.2-BR # watch: evidence/**
+C9 = @claude('{instructions} Control: {$A9}. {C$1}')
+G9 = @claude('{instructions} Control: {$A9}. {G$1}')
+H9 = @claude('{instructions} Control: {$A9}. {H$1}')
+K9 = @claude('{instructions} Control: {$A9}. {K$1}')
+J9 = = if({D9} == 'Not found', 'Evidence missing', if({E9} > 0, 'Exception noted', 'Effective'))
+L9 = = if({K9} == '', '', if(or({K9} == concat({D9}, '/', {E9}), and({D9} == 'Not found', {K9} == 'Not found')), 'agree', 'disagree'))
+A10 = CC7.4-IR: Incident response exercise
+B10 = $ python3 checks/controls.py owner CC7.4-IR
+D10 = $ python3 checks/controls.py population CC7.4-IR # watch: evidence/**
+E10 = $ python3 checks/controls.py exceptions CC7.4-IR # watch: evidence/**
+F10 = $ python3 checks/controls.py details CC7.4-IR # watch: evidence/**
+I10 = $ python3 checks/controls.py latest CC7.4-IR # watch: evidence/**
+C10 = @claude('{instructions} Control: {$A10}. {C$1}')
+G10 = @claude('{instructions} Control: {$A10}. {G$1}')
+H10 = @claude('{instructions} Control: {$A10}. {H$1}')
+K10 = @claude('{instructions} Control: {$A10}. {K$1}')
+J10 = = if({D10} == 'Not found', 'Evidence missing', if({E10} > 0, 'Exception noted', 'Effective'))
+L10 = = if({K10} == '', '', if(or({K10} == concat({D10}, '/', {E10}), and({D10} == 'Not found', {K10} == 'Not found')), 'agree', 'disagree'))
+A11 = CC9.2-VR: Vendor risk review
+B11 = $ python3 checks/controls.py owner CC9.2-VR
+D11 = $ python3 checks/controls.py population CC9.2-VR # watch: evidence/**
+E11 = $ python3 checks/controls.py exceptions CC9.2-VR # watch: evidence/**
+F11 = $ python3 checks/controls.py details CC9.2-VR # watch: evidence/**
+I11 = $ python3 checks/controls.py latest CC9.2-VR # watch: evidence/**
+C11 = @claude('{instructions} Control: {$A11}. {C$1}')
+G11 = @claude('{instructions} Control: {$A11}. {G$1}')
+H11 = @claude('{instructions} Control: {$A11}. {H$1}')
+K11 = @claude('{instructions} Control: {$A11}. {K$1}')
+J11 = = if({D11} == 'Not found', 'Evidence missing', if({E11} > 0, 'Exception noted', 'Effective'))
+L11 = = if({K11} == '', '', if(or({K11} == concat({D11}, '/', {E11}), and({D11} == 'Not found', {K11} == 'Not found')), 'agree', 'disagree'))
+effective = = countif({J2:J11}, 'Effective')
+exception_noted = = countif({J2:J11}, 'Exception noted')
+missing = = countif({J2:J11}, 'Evidence missing')
+total_exceptions = = sum({E2:E11})
+disagreements = = countif({L2:L11}, 'disagree')
+results_verified = = countif({J2:J11.mark}, 'verified')
+evidence_hash = $ find evidence -type f | LC_ALL=C sort | xargs cat | shasum | cut -c1-40 # watch: evidence/**
+evidence_untouched = = {evidence_hash} == '80e28eb3e244c75fc783907dcb572e9b492c8df4'
+@answer_type G2 G3 G4 G5 G6 G7 G8 G9 G10 G11 H2 H3 H4 H5 H6 H7 H8 H9 H10 H11 = yesno
+@answer_type C2 C3 C4 C5 C6 C7 C8 C9 C10 C11 = text

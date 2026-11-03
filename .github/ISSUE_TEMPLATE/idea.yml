@@ -1,0 +1,16 @@
+name: An idea
+description: Something recalc could do, or do better.
+labels: [enhancement]
+body:
+  - type: textarea
+    id: want
+    attributes:
+      label: What you're trying to do
+      description: The job, not the feature. What were you working on when you wanted this?
+    validations:
+      required: true
+  - type: textarea
+    id: how
+    attributes:
+      label: What would help
+      description: How you'd like it to work, if you have a picture of it.

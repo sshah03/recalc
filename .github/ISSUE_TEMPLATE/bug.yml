@@ -1,0 +1,46 @@
+name: Something broke
+description: A bug, a crash, or something that didn't do what it said.
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what happened instead.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen again
+      description: The smallest board or steps that show it, if you can. A cell's source (what you typed into it) helps most.
+  - type: input
+    id: version
+    attributes:
+      label: recalc version
+      description: recalc → About recalc.
+      placeholder: 0.1.0
+    validations:
+      required: true
+  - type: dropdown
+    id: os
+    attributes:
+      label: System
+      options:
+        - macOS (Apple silicon)
+        - macOS (Intel)
+        - Linux
+    validations:
+      required: true
+  - type: input
+    id: agents
+    attributes:
+      label: Agents involved
+      description: If an agent was part of it, which one and its version (`claude --version`, `codex --version`).
+      placeholder: Claude Code 2.1.314
+  - type: textarea
+    id: log
+    attributes:
+      label: Crash log
+      description: If recalc crashed, paste `~/Library/Logs/recalc/crash.log` (macOS) or `~/.local/state/recalc/crash.log` (Linux).
+      render: text

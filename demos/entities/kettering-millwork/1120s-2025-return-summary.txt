@@ -1,0 +1,17 @@
+2025 FORM 1120-S — RETURN SUMMARY (from the firm's prep software, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Corporation: Kettering Millwork Inc       EIN XX-XXX4471
+S election effective: 2014-01-01          Filed: 2026-03-13 (e-file accepted)
+
+Line 1c   Gross receipts less returns ..................... 2,140,000.00
+Line 2    Cost of goods sold .............................. 1,402,300.00
+Line 7    Compensation of officers ........................   240,000.00
+Line 8    Salaries and wages ..............................   201,400.00
+Line 20   Total deductions ................................   591,950.00
+Line 21   Ordinary business income ........................   145,750.00
+Line 23c  Total tax ......................................         0.00
+
+Shareholders (Schedule K-1 issued to each):
+  Rosalind Kettering ......................... 60.00% of stock, held all year
+  Benedikt Sorell ............................ 40.00% of stock, held all year

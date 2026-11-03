@@ -1,0 +1,14 @@
+FORM 1099-DIV  DIVIDENDS AND DISTRIBUTIONS                        TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           PINECREST INVESTMENTS LLC
+PAYER'S TIN            XX-XXX2093
+RECIPIENT'S name       MARGARET IVERS TTEE, IVERS FAMILY TRUST
+Account number         ....T-1190
+
+1a Total ordinary dividends                17,936.55
+1b Qualified dividends                     14,820.10
+2a Total capital gain distr.                1,204.00
+4  Federal income tax withheld                  0.00
+5  Section 199A dividends                       0.00

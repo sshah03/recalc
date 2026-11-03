@@ -1,0 +1,7 @@
+<!doctype html>
+<!-- The hidden page behind bridge mode (desktop/src-tauri/src/bridge.rs):
+     it runs no app, only the IPC the browser's calls go through. -->
+<title>recalc bridge host</title>
+<script>
+  window.__TAURI__.core.invoke("bridge_reply", { id: 0, ok: "ready" });
+</script>

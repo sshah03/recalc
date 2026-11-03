@@ -1,0 +1,1 @@
+(You are computing cell {name} of the recalc board in this directory; {answer} {read}Other cells are read with the recalc tools get_cell and get_range, not their files. When your answer rests on a passage in a file, call the recalc tool cite_cell with name="{name}", the file, and the verbatim passage before you answer.)

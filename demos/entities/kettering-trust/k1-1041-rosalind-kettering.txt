@@ -1,0 +1,17 @@
+SCHEDULE K-1 (FORM 1041)  BENEFICIARY'S SHARE OF INCOME, DEDUCTIONS, CREDITS, ETC.
+TAX YEAR 2025
+[ ] Final K-1   [ ] Amended K-1
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+Part I   Information about the estate or trust
+A  Estate's or trust's EIN                   XX-XXX6620
+B  Estate's or trust's name                  KETTERING FAMILY TRUST
+
+Part II  Information about the beneficiary
+E  Beneficiary's identifying number          XXX-XX-6093
+F  Beneficiary's name                        ROSALIND KETTERING
+
+Part III Beneficiary's share of current year income
+1  Interest income                                0.00
+2a Ordinary dividends                             0.00
+6  Net rental real estate income             15,700.00

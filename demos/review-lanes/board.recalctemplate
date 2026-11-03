@@ -1,0 +1,43 @@
+# Review lanes: every open pull request checked along fixed lanes, and a
+# running score of which lane is worth keeping.
+# prs lists the open PRs (tools/gh stands in for the GitHub CLI; delete
+# `sh tools/` from prs and D2 to use the real gh in your repository). Its
+# output becomes rows A-C, matched by PR number: a new PR gets a row with
+# the checks and lanes of the row above, a merged one is greyed and marked
+# gone in K. D holds the diff; E and F are facts no model should judge.
+# G-I are review lanes, each an agent held to issue or ok, citing the diff
+# line its answer rests on.
+#
+# Run Selection on G2:I7 runs the lanes. Then go down the answers (Review
+# Answers, ⌥⌘R): verify the ones you agree with, flag the ones you don't.
+# Each lane's precision is the share of its "issue" answers you verified.
+# After a few weeks of PRs, it says which lane is noise. The PRs are synthetic.
+instructions = You review one pull request along one lane only; other reviewers cover the other lanes. Answer issue or ok. Base the answer on the diff, and cite the diff line it rests on.
+prs = $ sh tools/gh pr list --json number,title,author # rows: A2 key=number cols=number,title,author.login gone=K
+A1 = PR
+B1 = Title
+C1 = Author
+D1 = Diff
+E1 = Lines changed
+F1 = Tests removed
+G1 = Security
+H1 = Tests
+I1 = Design
+J1 = Verdict
+K1 = Still open?
+D2 = $ sh tools/gh pr diff {$A2}
+E2 = $ grep -c '^[+-][^+-]' {D2:file} || true
+F2 = $ grep -c '^-[[:space:]]*def test_' {D2:file} || true
+G2 = @claude('{instructions} Lane: security. Answer issue if the change adds a security problem: injection, a secret or password in a log, missing authorization, unsafe deserialisation. Pull request {$A2}, "{$B2}". Its diff is the file {D2:file}.')
+H2 = @claude('{instructions} Lane: tests. Answer issue if the change deletes or skips tests, or weakens an assertion so it checks less than before. Pull request {$A2}, "{$B2}". Its diff is the file {D2:file}.')
+I2 = @claude('{instructions} Lane: design. Answer issue if the change adds shared mutable state, a cache nothing invalidates, or a hidden coupling between modules. Pull request {$A2}, "{$B2}". Its diff is the file {D2:file}.')
+J2 = = if(or({F2} > 0, countif({G2:I2}, 'issue') > 0), 'changes needed', if(countif({G2:I2}, 'ok') == 3, 'ready', 'in review'))
+security_issues = = countif({G2:G60}, 'issue')
+security_precision = = if(countifs({G2:G60}, 'issue', {G2:G60.mark}, 'verified') + countifs({G2:G60}, 'issue', {G2:G60.mark}, 'flagged') == 0, 'not checked yet', concat(round(countifs({G2:G60}, 'issue', {G2:G60.mark}, 'verified') * 100 / (countifs({G2:G60}, 'issue', {G2:G60.mark}, 'verified') + countifs({G2:G60}, 'issue', {G2:G60.mark}, 'flagged'))), '%'))
+tests_issues = = countif({H2:H60}, 'issue')
+tests_precision = = if(countifs({H2:H60}, 'issue', {H2:H60.mark}, 'verified') + countifs({H2:H60}, 'issue', {H2:H60.mark}, 'flagged') == 0, 'not checked yet', concat(round(countifs({H2:H60}, 'issue', {H2:H60.mark}, 'verified') * 100 / (countifs({H2:H60}, 'issue', {H2:H60.mark}, 'verified') + countifs({H2:H60}, 'issue', {H2:H60.mark}, 'flagged'))), '%'))
+design_issues = = countif({I2:I60}, 'issue')
+design_precision = = if(countifs({I2:I60}, 'issue', {I2:I60.mark}, 'verified') + countifs({I2:I60}, 'issue', {I2:I60.mark}, 'flagged') == 0, 'not checked yet', concat(round(countifs({I2:I60}, 'issue', {I2:I60.mark}, 'verified') * 100 / (countifs({I2:I60}, 'issue', {I2:I60.mark}, 'verified') + countifs({I2:I60}, 'issue', {I2:I60.mark}, 'flagged'))), '%'))
+ready = = countif({J2:J60}, 'ready')
+spend = = round(sum({G2:I60.cost}), 2)
+@answer_type G2 H2 I2 = choice:issue|ok

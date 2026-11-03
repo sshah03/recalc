@@ -1,0 +1,10 @@
+ESTIMATED TAX PAYMENTS — IRS DIRECT PAY CONFIRMATIONS
+(synthetic sample for demonstration; all names and numbers invented)
+Taxpayer: Harold Dunmore
+Exported by the client from his IRS online account on 2026-03-09.
+
+Confirmation    Paid on       Tax year   Form / period          Amount
+PX6-88WE-0412   01/15/2025    2024       1040-ES, 4th quarter   6,500.00
+PX7-12HN-5530   04/15/2025    2025       1040-ES, 1st quarter   6,500.00
+PX7-58CC-9014   06/16/2025    2025       1040-ES, 2nd quarter   6,500.00
+PX7-93TB-2276   09/15/2025    2025       1040-ES, 3rd quarter   6,500.00

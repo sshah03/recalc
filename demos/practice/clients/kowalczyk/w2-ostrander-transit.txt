@@ -1,0 +1,15 @@
+FORM W-2  WAGE AND TAX STATEMENT                                  TAX YEAR 2025
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+c  Employer's name, address, and ZIP code
+   OSTRANDER TRANSIT AUTHORITY
+   1 DEPOT SQUARE
+   ROCKFORD IL 61103
+b  Employer identification number (EIN)     XX-XXX8840
+a  Employee's SSN                           XXX-XX-3352
+e  Employee's name                          NADIA KOWALCZYK
+
+1  Wages, tips, other compensation           95,120.00
+2  Federal income tax withheld                8,430.00
+3  Social security wages                     95,120.00
+5  Medicare wages and tips                   95,120.00

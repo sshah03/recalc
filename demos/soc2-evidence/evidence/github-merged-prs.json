@@ -1,0 +1,2781 @@
+{
+ "repository": "brindlewood/payroll-core",
+ "exported_at": "2026-07-14T09:00:00Z",
+ "query": "is:pr is:merged base:main merged:2025-12-15..2026-07-13",
+ "pull_requests": [
+  {
+   "number": 3121,
+   "title": "Fix CI cache",
+   "author": "kaia-kow",
+   "approvers": [
+    "yara-zel",
+    "cato-cas"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2025-12-16T14:37:51Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3123,
+   "title": "Fix direct deposit validation",
+   "author": "quill-qui",
+   "approvers": [
+    "vidar-qui",
+    "mira-mor"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2025-12-19T14:14:33Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3124,
+   "title": "Update feature flag cleanup",
+   "author": "gideon-cas",
+   "approvers": [
+    "esme-ekl",
+    "quill-qui"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2025-12-22T18:05:44Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3126,
+   "title": "Refactor report export",
+   "author": "kestrel-gal",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "kestrel-gal",
+   "merged_at": "2025-12-22T21:44:21Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3129,
+   "title": "Refactor holiday calendar",
+   "author": "esme-ekl",
+   "approvers": [
+    "soren-sal",
+    "emrys-ach"
+   ],
+   "merged_by": "esme-ekl",
+   "merged_at": "2025-12-29T15:40:23Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3132,
+   "title": "Add W-4 import",
+   "author": "greer-gal",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2025-12-29T20:51:46Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3133,
+   "title": "Improve direct deposit validation",
+   "author": "kestrel-gal",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "kestrel-gal",
+   "merged_at": "2025-12-30T20:19:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3134,
+   "title": "Bump W-4 import",
+   "author": "corin-del",
+   "approvers": [
+    "wren-whi",
+    "mira-mor"
+   ],
+   "merged_by": "corin-del",
+   "merged_at": "2026-01-01T00:40:12Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3135,
+   "title": "Add feature flag cleanup",
+   "author": "aurel-bra",
+   "approvers": [
+    "ines-ido"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-01-02T23:18:47Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3137,
+   "title": "Refactor dependency pins",
+   "author": "gideon-cas",
+   "approvers": [
+    "marlo-ido"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-01-02T20:31:25Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3140,
+   "title": "Handle timesheet sync",
+   "author": "vidar-qui",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-01-02T22:31:08Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3141,
+   "title": "Refactor pay-run preview",
+   "author": "aurel-bra",
+   "approvers": [
+    "kestrel-gal"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-01-05T21:05:49Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3143,
+   "title": "Refactor rate limiter",
+   "author": "mira-mor",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "esme-ekl",
+   "merged_at": "2026-01-05T17:14:28Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3145,
+   "title": "Add CI cache",
+   "author": "greer-gal",
+   "approvers": [
+    "soren-sal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-01-05T13:43:32Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3146,
+   "title": "Update SSO callback",
+   "author": "rafe-mor",
+   "approvers": [
+    "kestrel-gal"
+   ],
+   "merged_by": "rafe-mor",
+   "merged_at": "2026-01-05T21:55:44Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3149,
+   "title": "Improve CI cache",
+   "author": "emrys-ach",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-01-06T21:53:14Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3151,
+   "title": "Bump direct deposit validation",
+   "author": "ines-ido",
+   "approvers": [
+    "corin-del"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-01-07T17:38:43Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3153,
+   "title": "Handle ACH batch retry",
+   "author": "gideon-cas",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-01-07T22:59:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3155,
+   "title": "Add webhook signing",
+   "author": "vidar-qui",
+   "approvers": [
+    "aurel-bra",
+    "emrys-ach"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2026-01-07T22:16:24Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3158,
+   "title": "Refactor W-4 import",
+   "author": "esme-ekl",
+   "approvers": [
+    "yara-zel",
+    "isak-ekl"
+   ],
+   "merged_by": "esme-ekl",
+   "merged_at": "2026-01-08T13:14:08Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3161,
+   "title": "Add timesheet sync",
+   "author": "quill-qui",
+   "approvers": [
+    "ada-ach",
+    "isak-ekl"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-01-09T13:16:01Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3164,
+   "title": "Fix W-4 import",
+   "author": "vidar-qui",
+   "approvers": [
+    "mira-mor"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-01-09T13:19:24Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3166,
+   "title": "Bump audit log paging",
+   "author": "soren-sal",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-01-12T18:55:45Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3169,
+   "title": "Remove PDF paystub layout",
+   "author": "ines-ido",
+   "approvers": [
+    "kaia-kow",
+    "kestrel-gal"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-01-13T20:49:28Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3172,
+   "title": "Fix dependency pins",
+   "author": "soren-sal",
+   "approvers": [
+    "cato-cas"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-01-14T19:48:44Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3173,
+   "title": "Bump PDF paystub layout",
+   "author": "vidar-qui",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2026-01-15T23:09:38Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3176,
+   "title": "Update audit log paging",
+   "author": "esme-ekl",
+   "approvers": [
+    "rafe-mor"
+   ],
+   "merged_by": "esme-ekl",
+   "merged_at": "2026-01-16T15:54:52Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3178,
+   "title": "Refactor PDF paystub layout",
+   "author": "rafe-mor",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "rafe-mor",
+   "merged_at": "2026-01-19T15:52:45Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3180,
+   "title": "Add CI cache",
+   "author": "rafe-mor",
+   "approvers": [
+    "aurel-bra",
+    "kaia-kow"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-01-20T17:52:03Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3183,
+   "title": "Remove tax table loader",
+   "author": "kaia-kow",
+   "approvers": [
+    "soren-sal"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-01-21T13:53:09Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3186,
+   "title": "Fix SSO callback",
+   "author": "ines-ido",
+   "approvers": [
+    "rafe-mor",
+    "marlo-ido"
+   ],
+   "merged_by": "marlo-ido",
+   "merged_at": "2026-01-21T13:21:56Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3188,
+   "title": "Improve SSO callback",
+   "author": "greer-gal",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-01-23T22:33:54Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3189,
+   "title": "Refactor webhook signing",
+   "author": "vidar-qui",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2026-01-23T17:13:08Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3190,
+   "title": "Update timesheet sync",
+   "author": "ada-ach",
+   "approvers": [
+    "corin-del",
+    "vidar-qui"
+   ],
+   "merged_by": "corin-del",
+   "merged_at": "2026-01-23T18:45:08Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3192,
+   "title": "Update dependency pins",
+   "author": "yara-zel",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-01-26T17:52:22Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3193,
+   "title": "Improve PDF paystub layout",
+   "author": "quill-qui",
+   "approvers": [
+    "soren-sal",
+    "gideon-cas"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-01-27T18:27:34Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3196,
+   "title": "Refactor W-4 import",
+   "author": "aurel-bra",
+   "approvers": [
+    "gideon-cas"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-01-28T22:08:23Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3197,
+   "title": "Handle audit log paging",
+   "author": "marlo-ido",
+   "approvers": [
+    "quill-qui",
+    "wren-whi"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-01-28T20:24:41Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3198,
+   "title": "Handle SSO callback",
+   "author": "ada-ach",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-01-30T21:56:02Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3200,
+   "title": "Fix webhook signing",
+   "author": "rafe-mor",
+   "approvers": [
+    "cato-cas",
+    "isak-ekl"
+   ],
+   "merged_by": "rafe-mor",
+   "merged_at": "2026-01-30T17:24:51Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3203,
+   "title": "Remove webhook signing",
+   "author": "kaia-kow",
+   "approvers": [
+    "wren-whi"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-02-02T17:28:50Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3204,
+   "title": "Remove timesheet sync",
+   "author": "cato-cas",
+   "approvers": [
+    "ines-ido",
+    "marlo-ido"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-02-03T22:23:54Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3205,
+   "title": "Refactor feature flag cleanup",
+   "author": "ines-ido",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-02-03T13:25:37Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3206,
+   "title": "Update feature flag cleanup",
+   "author": "ada-ach",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-02-03T19:48:23Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3209,
+   "title": "Bump PDF paystub layout",
+   "author": "quill-qui",
+   "approvers": [
+    "mira-mor",
+    "kestrel-gal"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-02-04T14:36:27Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3210,
+   "title": "Fix CI cache",
+   "author": "aurel-bra",
+   "approvers": [
+    "greer-gal",
+    "soren-sal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-02-04T21:36:42Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3211,
+   "title": "Update tax table loader",
+   "author": "esme-ekl",
+   "approvers": [
+    "rafe-mor"
+   ],
+   "merged_by": "esme-ekl",
+   "merged_at": "2026-02-05T15:28:10Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3212,
+   "title": "Fix ACH batch retry",
+   "author": "rafe-mor",
+   "approvers": [
+    "marlo-ido"
+   ],
+   "merged_by": "rafe-mor",
+   "merged_at": "2026-02-06T19:34:41Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3213,
+   "title": "Refactor dependency pins",
+   "author": "greer-gal",
+   "approvers": [
+    "soren-sal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-02-06T19:19:20Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3214,
+   "title": "Handle feature flag cleanup",
+   "author": "ines-ido",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-02-06T13:24:30Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3215,
+   "title": "Bump ACH batch retry",
+   "author": "wren-whi",
+   "approvers": [
+    "yara-zel"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-02-09T18:32:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3216,
+   "title": "Refactor tax table loader",
+   "author": "esme-ekl",
+   "approvers": [
+    "corin-del"
+   ],
+   "merged_by": "corin-del",
+   "merged_at": "2026-02-09T15:51:11Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3219,
+   "title": "Handle ACH batch retry",
+   "author": "aurel-bra",
+   "approvers": [
+    "wren-whi"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-02-10T13:51:59Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3220,
+   "title": "Fix pay-run preview",
+   "author": "kaia-kow",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-02-10T22:46:28Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3223,
+   "title": "Update CI cache",
+   "author": "quill-qui",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "esme-ekl",
+   "merged_at": "2026-02-10T17:25:58Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3224,
+   "title": "Update feature flag cleanup",
+   "author": "kaia-kow",
+   "approvers": [
+    "vidar-qui"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-02-10T14:19:28Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3225,
+   "title": "Improve audit log paging",
+   "author": "isak-ekl",
+   "approvers": [
+    "corin-del"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-02-10T20:31:22Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3226,
+   "title": "Improve tax table loader",
+   "author": "ines-ido",
+   "approvers": [
+    "wren-whi"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-02-12T21:59:00Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3229,
+   "title": "Handle direct deposit validation",
+   "author": "soren-sal",
+   "approvers": [
+    "quill-qui",
+    "isak-ekl"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-02-13T21:59:39Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3232,
+   "title": "Add timesheet sync",
+   "author": "rafe-mor",
+   "approvers": [
+    "mira-mor",
+    "cato-cas"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-02-13T23:44:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3234,
+   "title": "Add report export",
+   "author": "corin-del",
+   "approvers": [
+    "soren-sal"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-02-16T19:54:02Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3235,
+   "title": "Improve audit log paging",
+   "author": "kaia-kow",
+   "approvers": [
+    "wren-whi",
+    "ada-ach"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-02-16T18:24:20Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3237,
+   "title": "Improve direct deposit validation",
+   "author": "emrys-ach",
+   "approvers": [
+    "marlo-ido"
+   ],
+   "merged_by": "marlo-ido",
+   "merged_at": "2026-02-17T13:44:10Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3240,
+   "title": "Add feature flag cleanup",
+   "author": "wren-whi",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-02-17T19:31:24Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3241,
+   "title": "Bump holiday calendar",
+   "author": "wren-whi",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-02-17T20:09:39Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3244,
+   "title": "Remove holiday calendar",
+   "author": "rafe-mor",
+   "approvers": [
+    "quill-qui",
+    "gideon-cas"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-02-18T14:39:30Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3245,
+   "title": "Bump timesheet sync",
+   "author": "corin-del",
+   "approvers": [
+    "kestrel-gal"
+   ],
+   "merged_by": "kestrel-gal",
+   "merged_at": "2026-02-18T13:38:14Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3246,
+   "title": "Remove holiday calendar",
+   "author": "ines-ido",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-02-20T23:08:53Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3247,
+   "title": "Update timesheet sync",
+   "author": "kestrel-gal",
+   "approvers": [
+    "mira-mor",
+    "gideon-cas"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-02-20T23:05:00Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3250,
+   "title": "Update W-4 import",
+   "author": "esme-ekl",
+   "approvers": [
+    "gideon-cas",
+    "rafe-mor"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-02-20T22:00:39Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3253,
+   "title": "Bump audit log paging",
+   "author": "greer-gal",
+   "approvers": [
+    "kestrel-gal",
+    "aurel-bra"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-02-24T18:02:10Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3255,
+   "title": "Handle feature flag cleanup",
+   "author": "aurel-bra",
+   "approvers": [
+    "marlo-ido"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-02-25T18:49:52Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3258,
+   "title": "Bump rate limiter",
+   "author": "yara-zel",
+   "approvers": [
+    "rafe-mor"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-02-25T21:42:12Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3260,
+   "title": "Remove CI cache",
+   "author": "quill-qui",
+   "approvers": [
+    "kaia-kow"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-02-26T14:22:34Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3261,
+   "title": "Improve report export",
+   "author": "kaia-kow",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "ada-ach",
+   "merged_at": "2026-02-26T21:19:56Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3264,
+   "title": "Handle W-4 import",
+   "author": "kestrel-gal",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "kestrel-gal",
+   "merged_at": "2026-02-27T20:52:52Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3265,
+   "title": "Add dependency pins",
+   "author": "isak-ekl",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-03-02T21:27:29Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3267,
+   "title": "Update PDF paystub layout",
+   "author": "esme-ekl",
+   "approvers": [
+    "cato-cas"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-03-05T18:45:39Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3268,
+   "title": "Fix SSO callback",
+   "author": "marlo-ido",
+   "approvers": [
+    "gideon-cas"
+   ],
+   "merged_by": "marlo-ido",
+   "merged_at": "2026-03-06T19:54:23Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3269,
+   "title": "Fix W-4 import",
+   "author": "aurel-bra",
+   "approvers": [
+    "corin-del"
+   ],
+   "merged_by": "corin-del",
+   "merged_at": "2026-03-09T20:04:55Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3270,
+   "title": "Remove webhook signing",
+   "author": "ines-ido",
+   "approvers": [
+    "soren-sal"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-03-09T19:52:41Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3271,
+   "title": "Remove feature flag cleanup",
+   "author": "cato-cas",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "ada-ach",
+   "merged_at": "2026-03-10T17:45:21Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3273,
+   "title": "Refactor audit log paging",
+   "author": "yara-zel",
+   "approvers": [
+    "mira-mor"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-03-10T15:34:08Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3274,
+   "title": "Handle SSO callback",
+   "author": "rafe-mor",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "ada-ach",
+   "merged_at": "2026-03-11T19:26:47Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3276,
+   "title": "Remove pay-run preview",
+   "author": "soren-sal",
+   "approvers": [
+    "rafe-mor",
+    "ines-ido"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-03-12T21:51:51Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3279,
+   "title": "Fix webhook signing",
+   "author": "vidar-qui",
+   "approvers": [
+    "kaia-kow",
+    "wren-whi"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2026-03-13T20:59:47Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3280,
+   "title": "Remove timesheet sync",
+   "author": "yara-zel",
+   "approvers": [
+    "ines-ido"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-03-16T22:50:27Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3283,
+   "title": "Add tax table loader",
+   "author": "wren-whi",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-03-16T17:23:15Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3284,
+   "title": "Update tax table loader",
+   "author": "kaia-kow",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-03-16T13:11:18Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3287,
+   "title": "Bump webhook signing",
+   "author": "greer-gal",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-03-16T15:33:28Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3289,
+   "title": "Improve tax table loader",
+   "author": "wren-whi",
+   "approvers": [
+    "gideon-cas",
+    "ada-ach"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-03-17T17:50:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3292,
+   "title": "Remove dependency pins",
+   "author": "soren-sal",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-03-19T13:32:15Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3294,
+   "title": "Update W-4 import",
+   "author": "vidar-qui",
+   "approvers": [
+    "kestrel-gal"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2026-03-19T22:40:32Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3297,
+   "title": "Bump ACH batch retry",
+   "author": "rafe-mor",
+   "approvers": [
+    "greer-gal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-03-20T21:21:32Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3300,
+   "title": "Refactor holiday calendar",
+   "author": "gideon-cas",
+   "approvers": [
+    "ines-ido"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-03-23T19:43:42Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3301,
+   "title": "Bump ACH batch retry",
+   "author": "corin-del",
+   "approvers": [
+    "yara-zel"
+   ],
+   "merged_by": "corin-del",
+   "merged_at": "2026-03-23T22:07:27Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3304,
+   "title": "Add audit log paging",
+   "author": "soren-sal",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-03-23T18:36:32Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3306,
+   "title": "Fix audit log paging",
+   "author": "yara-zel",
+   "approvers": [
+    "marlo-ido",
+    "quill-qui"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-03-25T23:24:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3307,
+   "title": "Refactor feature flag cleanup",
+   "author": "kestrel-gal",
+   "approvers": [
+    "ines-ido",
+    "isak-ekl"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-03-26T17:10:47Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3310,
+   "title": "Add PDF paystub layout",
+   "author": "yara-zel",
+   "approvers": [
+    "wren-whi"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-03-27T15:09:55Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3311,
+   "title": "Bump W-4 import",
+   "author": "quill-qui",
+   "approvers": [
+    "greer-gal",
+    "marlo-ido"
+   ],
+   "merged_by": "marlo-ido",
+   "merged_at": "2026-03-27T18:24:57Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3314,
+   "title": "Refactor holiday calendar",
+   "author": "kaia-kow",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-03-31T19:35:23Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3315,
+   "title": "Handle rate limiter",
+   "author": "greer-gal",
+   "approvers": [
+    "corin-del"
+   ],
+   "merged_by": "corin-del",
+   "merged_at": "2026-03-31T14:29:50Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3316,
+   "title": "Remove PDF paystub layout",
+   "author": "greer-gal",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "esme-ekl",
+   "merged_at": "2026-04-02T14:23:00Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3318,
+   "title": "Handle ACH batch retry",
+   "author": "mira-mor",
+   "approvers": [
+    "wren-whi"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-04-02T22:39:38Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3320,
+   "title": "Remove rate limiter",
+   "author": "emrys-ach",
+   "approvers": [
+    "ines-ido",
+    "esme-ekl"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-04-03T19:53:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3321,
+   "title": "Fix SSO callback",
+   "author": "kestrel-gal",
+   "approvers": [
+    "rafe-mor",
+    "esme-ekl"
+   ],
+   "merged_by": "kestrel-gal",
+   "merged_at": "2026-04-03T19:27:13Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3324,
+   "title": "Remove audit log paging",
+   "author": "soren-sal",
+   "approvers": [
+    "kaia-kow"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-04-03T23:01:43Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3326,
+   "title": "Refactor ACH batch retry",
+   "author": "cato-cas",
+   "approvers": [
+    "aurel-bra",
+    "corin-del"
+   ],
+   "merged_by": "corin-del",
+   "merged_at": "2026-04-03T21:14:04Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3328,
+   "title": "Add feature flag cleanup",
+   "author": "mira-mor",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-04-03T14:08:30Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3330,
+   "title": "Bump direct deposit validation",
+   "author": "isak-ekl",
+   "approvers": [
+    "rafe-mor",
+    "gideon-cas"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-04-06T20:17:03Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3333,
+   "title": "Refactor report export",
+   "author": "cato-cas",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-04-06T19:45:38Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3334,
+   "title": "Add holiday calendar",
+   "author": "marlo-ido",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "marlo-ido",
+   "merged_at": "2026-04-08T14:24:55Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3337,
+   "title": "Improve report export",
+   "author": "greer-gal",
+   "approvers": [
+    "mira-mor",
+    "soren-sal"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-04-09T21:27:46Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3340,
+   "title": "Improve pay-run preview",
+   "author": "cato-cas",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-04-09T23:08:59Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3343,
+   "title": "Bump tax table loader",
+   "author": "quill-qui",
+   "approvers": [
+    "kaia-kow",
+    "cato-cas"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-04-10T15:44:53Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3345,
+   "title": "Refactor PDF paystub layout",
+   "author": "corin-del",
+   "approvers": [
+    "marlo-ido"
+   ],
+   "merged_by": "marlo-ido",
+   "merged_at": "2026-04-10T14:46:03Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3346,
+   "title": "Add CI cache",
+   "author": "gideon-cas",
+   "approvers": [
+    "rafe-mor"
+   ],
+   "merged_by": "rafe-mor",
+   "merged_at": "2026-04-13T20:56:39Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3348,
+   "title": "Remove CI cache",
+   "author": "isak-ekl",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-04-13T18:37:00Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3349,
+   "title": "Fix tax table loader",
+   "author": "isak-ekl",
+   "approvers": [
+    "aurel-bra",
+    "ines-ido"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-04-13T20:24:36Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3351,
+   "title": "Bump W-4 import",
+   "author": "wren-whi",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-04-13T17:59:40Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3354,
+   "title": "Bump audit log paging",
+   "author": "aurel-bra",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-04-13T17:29:06Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3357,
+   "title": "Bump feature flag cleanup",
+   "author": "mira-mor",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-04-14T18:26:59Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3359,
+   "title": "Improve timesheet sync",
+   "author": "isak-ekl",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "aurel-bra",
+   "merged_at": "2026-04-14T13:46:53Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3360,
+   "title": "Fix dependency pins",
+   "author": "gideon-cas",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-04-16T23:26:32Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3363,
+   "title": "Add SSO callback",
+   "author": "kaia-kow",
+   "approvers": [
+    "wren-whi"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-04-16T14:52:54Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3365,
+   "title": "Update audit log paging",
+   "author": "isak-ekl",
+   "approvers": [
+    "rafe-mor"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-04-16T16:31:05Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3368,
+   "title": "Remove dependency pins",
+   "author": "emrys-ach",
+   "approvers": [
+    "ines-ido",
+    "yara-zel"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-04-17T20:13:36Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3369,
+   "title": "Hotfix: disable ACH batch retry loop",
+   "author": "kaia-kow",
+   "approvers": [],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-04-18T02:17:44Z",
+   "base": "main",
+   "admin_bypass": true
+  },
+  {
+   "number": 3370,
+   "title": "Remove rate limiter",
+   "author": "wren-whi",
+   "approvers": [
+    "vidar-qui"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2026-04-20T21:51:26Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3372,
+   "title": "Update pay-run preview",
+   "author": "ines-ido",
+   "approvers": [
+    "aurel-bra",
+    "cato-cas"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-04-20T13:11:46Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3373,
+   "title": "Handle feature flag cleanup",
+   "author": "vidar-qui",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-04-21T21:55:25Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3374,
+   "title": "Remove rate limiter",
+   "author": "yara-zel",
+   "approvers": [
+    "corin-del"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-04-21T17:53:42Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3377,
+   "title": "Handle pay-run preview",
+   "author": "cato-cas",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "ada-ach",
+   "merged_at": "2026-04-21T20:59:15Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3378,
+   "title": "Bump CI cache",
+   "author": "emrys-ach",
+   "approvers": [
+    "gideon-cas"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-04-21T22:13:16Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3381,
+   "title": "Improve ACH batch retry",
+   "author": "marlo-ido",
+   "approvers": [
+    "quill-qui",
+    "ines-ido"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-04-21T22:12:44Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3382,
+   "title": "Update rate limiter",
+   "author": "marlo-ido",
+   "approvers": [
+    "yara-zel"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-04-22T20:14:30Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3383,
+   "title": "Remove webhook signing",
+   "author": "greer-gal",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-04-22T23:38:32Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3386,
+   "title": "Handle webhook signing",
+   "author": "rafe-mor",
+   "approvers": [
+    "mira-mor"
+   ],
+   "merged_by": "rafe-mor",
+   "merged_at": "2026-04-23T23:13:32Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3389,
+   "title": "Handle rate limiter",
+   "author": "gideon-cas",
+   "approvers": [
+    "ada-ach",
+    "marlo-ido"
+   ],
+   "merged_by": "marlo-ido",
+   "merged_at": "2026-04-24T14:32:42Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3392,
+   "title": "Bump direct deposit validation",
+   "author": "soren-sal",
+   "approvers": [
+    "yara-zel"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-04-27T14:14:54Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3395,
+   "title": "Remove CI cache",
+   "author": "wren-whi",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-04-27T19:43:50Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3397,
+   "title": "Add SSO callback",
+   "author": "kaia-kow",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-04-27T22:31:03Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3399,
+   "title": "Refactor webhook signing",
+   "author": "mira-mor",
+   "approvers": [
+    "wren-whi"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-04-27T17:29:55Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3400,
+   "title": "Remove PDF paystub layout",
+   "author": "cato-cas",
+   "approvers": [
+    "gideon-cas"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-04-28T13:34:28Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3402,
+   "title": "Remove rate limiter",
+   "author": "vidar-qui",
+   "approvers": [
+    "ines-ido",
+    "yara-zel"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-04-29T20:06:03Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3404,
+   "title": "Update PDF paystub layout",
+   "author": "kaia-kow",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-04-29T15:35:52Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3406,
+   "title": "Refactor SSO callback",
+   "author": "vidar-qui",
+   "approvers": [
+    "rafe-mor",
+    "kestrel-gal"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2026-04-29T15:27:20Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3408,
+   "title": "Add feature flag cleanup",
+   "author": "mira-mor",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-04-30T20:59:12Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3410,
+   "title": "Handle report export",
+   "author": "kaia-kow",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-05-01T16:50:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3413,
+   "title": "Remove dependency pins",
+   "author": "ines-ido",
+   "approvers": [
+    "quill-qui",
+    "isak-ekl"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-05-04T15:22:44Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3414,
+   "title": "Improve webhook signing",
+   "author": "yara-zel",
+   "approvers": [
+    "soren-sal"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-05-04T18:06:13Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3417,
+   "title": "Update CI cache",
+   "author": "quill-qui",
+   "approvers": [
+    "mira-mor"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-05-04T22:59:49Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3420,
+   "title": "Update dependency pins",
+   "author": "corin-del",
+   "approvers": [
+    "soren-sal"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-05-05T17:14:27Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3421,
+   "title": "Add webhook signing",
+   "author": "ada-ach",
+   "approvers": [
+    "marlo-ido",
+    "corin-del"
+   ],
+   "merged_by": "corin-del",
+   "merged_at": "2026-05-06T16:37:30Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3423,
+   "title": "Fix rate limiter",
+   "author": "isak-ekl",
+   "approvers": [
+    "yara-zel",
+    "mira-mor"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-05-06T17:21:24Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3425,
+   "title": "Update rate limiter",
+   "author": "gideon-cas",
+   "approvers": [
+    "esme-ekl",
+    "quill-qui"
+   ],
+   "merged_by": "esme-ekl",
+   "merged_at": "2026-05-07T16:21:39Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3427,
+   "title": "Refactor tax table loader",
+   "author": "greer-gal",
+   "approvers": [
+    "kestrel-gal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-05-07T13:06:12Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3429,
+   "title": "Bump holiday calendar",
+   "author": "esme-ekl",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-05-08T17:07:37Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3430,
+   "title": "Update PDF paystub layout",
+   "author": "emrys-ach",
+   "approvers": [
+    "isak-ekl"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-05-08T16:43:32Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3432,
+   "title": "Update SSO callback",
+   "author": "emrys-ach",
+   "approvers": [
+    "yara-zel",
+    "gideon-cas"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-05-11T22:32:45Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3434,
+   "title": "Fix webhook signing",
+   "author": "gideon-cas",
+   "approvers": [
+    "greer-gal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-05-11T20:05:13Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3436,
+   "title": "Handle rate limiter",
+   "author": "mira-mor",
+   "approvers": [
+    "yara-zel"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-05-11T19:23:28Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3437,
+   "title": "Remove timesheet sync",
+   "author": "ines-ido",
+   "approvers": [
+    "vidar-qui",
+    "ada-ach"
+   ],
+   "merged_by": "ada-ach",
+   "merged_at": "2026-05-12T22:25:55Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3438,
+   "title": "Improve rate limiter",
+   "author": "quill-qui",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-05-12T21:29:42Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3439,
+   "title": "Add webhook signing",
+   "author": "ines-ido",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-05-13T23:37:42Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3442,
+   "title": "Update SSO callback",
+   "author": "quill-qui",
+   "approvers": [
+    "wren-whi",
+    "yara-zel"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-05-14T15:31:12Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3445,
+   "title": "Fix CI cache",
+   "author": "vidar-qui",
+   "approvers": [
+    "greer-gal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-05-15T13:23:32Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3448,
+   "title": "Remove audit log paging",
+   "author": "ines-ido",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-05-15T21:42:44Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3450,
+   "title": "Refactor timesheet sync",
+   "author": "rafe-mor",
+   "approvers": [
+    "mira-mor"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-05-15T23:26:02Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3453,
+   "title": "Add rate limiter",
+   "author": "vidar-qui",
+   "approvers": [
+    "yara-zel"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-05-18T18:38:36Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3455,
+   "title": "Remove feature flag cleanup",
+   "author": "isak-ekl",
+   "approvers": [
+    "vidar-qui"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2026-05-19T23:03:37Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3457,
+   "title": "Refactor webhook signing",
+   "author": "ines-ido",
+   "approvers": [
+    "gideon-cas"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-05-19T21:04:51Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3458,
+   "title": "Refactor ACH batch retry",
+   "author": "greer-gal",
+   "approvers": [
+    "gideon-cas",
+    "mira-mor"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-05-20T19:57:10Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3459,
+   "title": "Refactor rate limiter",
+   "author": "kestrel-gal",
+   "approvers": [
+    "mira-mor"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-05-20T15:43:44Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3460,
+   "title": "Bump webhook signing",
+   "author": "quill-qui",
+   "approvers": [
+    "greer-gal"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-05-21T13:49:11Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3463,
+   "title": "Update holiday calendar",
+   "author": "wren-whi",
+   "approvers": [
+    "ines-ido"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-05-21T15:11:41Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3465,
+   "title": "Handle feature flag cleanup",
+   "author": "mira-mor",
+   "approvers": [
+    "soren-sal",
+    "corin-del"
+   ],
+   "merged_by": "corin-del",
+   "merged_at": "2026-05-22T13:35:47Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3468,
+   "title": "Refactor PDF paystub layout",
+   "author": "marlo-ido",
+   "approvers": [
+    "gideon-cas",
+    "greer-gal"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-05-28T23:28:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3470,
+   "title": "Update direct deposit validation",
+   "author": "yara-zel",
+   "approvers": [
+    "marlo-ido",
+    "greer-gal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-05-28T15:37:14Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3473,
+   "title": "Bump dependency pins",
+   "author": "ada-ach",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-05-28T15:21:20Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3474,
+   "title": "Bump feature flag cleanup",
+   "author": "wren-whi",
+   "approvers": [
+    "greer-gal"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-05-29T19:02:50Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3476,
+   "title": "Handle W-4 import",
+   "author": "gideon-cas",
+   "approvers": [
+    "aurel-bra",
+    "soren-sal"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-06-01T18:14:34Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3479,
+   "title": "Handle report export",
+   "author": "marlo-ido",
+   "approvers": [
+    "ines-ido"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-06-01T18:31:30Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3481,
+   "title": "Update timesheet sync",
+   "author": "emrys-ach",
+   "approvers": [
+    "soren-sal",
+    "ines-ido"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-06-02T13:54:34Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3484,
+   "title": "Bump audit log paging",
+   "author": "vidar-qui",
+   "approvers": [
+    "cato-cas"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-06-02T15:44:05Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3487,
+   "title": "Improve ACH batch retry",
+   "author": "vidar-qui",
+   "approvers": [
+    "kaia-kow"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-06-02T21:55:09Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3488,
+   "title": "Fix holiday calendar",
+   "author": "greer-gal",
+   "approvers": [
+    "ines-ido",
+    "corin-del"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-06-03T16:51:51Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3489,
+   "title": "Update report export",
+   "author": "emrys-ach",
+   "approvers": [
+    "ines-ido"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-06-03T23:56:52Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3490,
+   "title": "Fix ACH batch retry",
+   "author": "soren-sal",
+   "approvers": [
+    "mira-mor"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-06-04T13:06:41Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3491,
+   "title": "Update direct deposit validation",
+   "author": "quill-qui",
+   "approvers": [
+    "yara-zel"
+   ],
+   "merged_by": "yara-zel",
+   "merged_at": "2026-06-04T20:27:31Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3492,
+   "title": "Update report export",
+   "author": "soren-sal",
+   "approvers": [
+    "yara-zel"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-06-05T18:41:07Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3495,
+   "title": "Remove feature flag cleanup",
+   "author": "mira-mor",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-06-05T19:26:16Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3496,
+   "title": "Add tax table loader",
+   "author": "vidar-qui",
+   "approvers": [
+    "mira-mor"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-06-08T13:43:06Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3497,
+   "title": "Update pay-run preview",
+   "author": "isak-ekl",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-06-08T16:38:55Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3498,
+   "title": "Remove timesheet sync",
+   "author": "greer-gal",
+   "approvers": [
+    "quill-qui",
+    "ada-ach"
+   ],
+   "merged_by": "ada-ach",
+   "merged_at": "2026-06-08T16:59:55Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3500,
+   "title": "Add report export",
+   "author": "vidar-qui",
+   "approvers": [
+    "quill-qui",
+    "ada-ach"
+   ],
+   "merged_by": "ada-ach",
+   "merged_at": "2026-06-08T20:24:30Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3503,
+   "title": "Update pay-run preview",
+   "author": "emrys-ach",
+   "approvers": [
+    "aurel-bra"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-06-08T22:33:14Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3505,
+   "title": "Remove SSO callback",
+   "author": "isak-ekl",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-06-10T16:37:51Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3507,
+   "title": "Refactor audit log paging",
+   "author": "esme-ekl",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-06-11T23:51:59Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3510,
+   "title": "Update holiday calendar",
+   "author": "soren-sal",
+   "approvers": [
+    "cato-cas"
+   ],
+   "merged_by": "soren-sal",
+   "merged_at": "2026-06-11T17:11:29Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3511,
+   "title": "Bump audit log paging",
+   "author": "kestrel-gal",
+   "approvers": [
+    "kaia-kow"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-06-12T23:45:33Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3513,
+   "title": "Fix CI cache",
+   "author": "isak-ekl",
+   "approvers": [
+    "wren-whi"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-06-15T21:08:28Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3516,
+   "title": "Remove SSO callback",
+   "author": "aurel-bra",
+   "approvers": [
+    "emrys-ach",
+    "mira-mor"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-06-15T13:34:41Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3519,
+   "title": "Update audit log paging",
+   "author": "ada-ach",
+   "approvers": [
+    "corin-del"
+   ],
+   "merged_by": "ada-ach",
+   "merged_at": "2026-06-16T13:56:03Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3522,
+   "title": "Bump feature flag cleanup",
+   "author": "kaia-kow",
+   "approvers": [
+    "mira-mor"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-06-16T16:52:59Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3524,
+   "title": "Fix tax table loader",
+   "author": "quill-qui",
+   "approvers": [
+    "esme-ekl"
+   ],
+   "merged_by": "esme-ekl",
+   "merged_at": "2026-06-16T17:20:00Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3525,
+   "title": "Handle PDF paystub layout",
+   "author": "vidar-qui",
+   "approvers": [
+    "emrys-ach"
+   ],
+   "merged_by": "emrys-ach",
+   "merged_at": "2026-06-18T19:54:14Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3528,
+   "title": "Remove timesheet sync",
+   "author": "cato-cas",
+   "approvers": [
+    "vidar-qui"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-06-18T22:22:30Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3531,
+   "title": "Remove webhook signing",
+   "author": "kaia-kow",
+   "approvers": [
+    "vidar-qui",
+    "corin-del"
+   ],
+   "merged_by": "vidar-qui",
+   "merged_at": "2026-06-22T16:27:56Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3534,
+   "title": "Update direct deposit validation",
+   "author": "emrys-ach",
+   "approvers": [
+    "kaia-kow",
+    "quill-qui"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-06-22T14:15:24Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3535,
+   "title": "Fix PDF paystub layout",
+   "author": "marlo-ido",
+   "approvers": [
+    "wren-whi",
+    "isak-ekl"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-06-23T19:03:36Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3537,
+   "title": "Handle holiday calendar",
+   "author": "mira-mor",
+   "approvers": [
+    "kestrel-gal"
+   ],
+   "merged_by": "mira-mor",
+   "merged_at": "2026-06-24T17:59:39Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3540,
+   "title": "Update webhook signing",
+   "author": "vidar-qui",
+   "approvers": [
+    "greer-gal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-06-24T21:25:52Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3541,
+   "title": "Add W-4 import",
+   "author": "marlo-ido",
+   "approvers": [
+    "corin-del",
+    "wren-whi"
+   ],
+   "merged_by": "wren-whi",
+   "merged_at": "2026-06-24T17:49:40Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3543,
+   "title": "Add CI cache",
+   "author": "gideon-cas",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "gideon-cas",
+   "merged_at": "2026-06-25T14:20:26Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3546,
+   "title": "Update holiday calendar",
+   "author": "ines-ido",
+   "approvers": [
+    "gideon-cas"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-06-25T15:07:33Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3547,
+   "title": "Handle direct deposit validation",
+   "author": "mira-mor",
+   "approvers": [
+    "kaia-kow"
+   ],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-06-26T23:35:33Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3549,
+   "title": "Remove pay-run preview",
+   "author": "gideon-cas",
+   "approvers": [
+    "quill-qui"
+   ],
+   "merged_by": "quill-qui",
+   "merged_at": "2026-06-26T13:12:42Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3552,
+   "title": "Remove CI cache",
+   "author": "ines-ido",
+   "approvers": [
+    "wren-whi",
+    "vidar-qui"
+   ],
+   "merged_by": "ines-ido",
+   "merged_at": "2026-06-29T19:29:59Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3555,
+   "title": "Add report export",
+   "author": "cato-cas",
+   "approvers": [
+    "yara-zel"
+   ],
+   "merged_by": "cato-cas",
+   "merged_at": "2026-06-30T21:14:09Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3558,
+   "title": "Add direct deposit validation",
+   "author": "kestrel-gal",
+   "approvers": [
+    "ines-ido"
+   ],
+   "merged_by": "kestrel-gal",
+   "merged_at": "2026-07-03T14:31:55Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3559,
+   "title": "Remove ACH batch retry",
+   "author": "cato-cas",
+   "approvers": [
+    "greer-gal"
+   ],
+   "merged_by": "greer-gal",
+   "merged_at": "2026-07-03T14:52:10Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3561,
+   "title": "Refactor CI cache",
+   "author": "isak-ekl",
+   "approvers": [
+    "ada-ach"
+   ],
+   "merged_by": "isak-ekl",
+   "merged_at": "2026-07-06T17:00:00Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3564,
+   "title": "Fix feature flag cleanup",
+   "author": "aurel-bra",
+   "approvers": [
+    "kestrel-gal"
+   ],
+   "merged_by": "kestrel-gal",
+   "merged_at": "2026-07-08T14:02:27Z",
+   "base": "main",
+   "admin_bypass": false
+  },
+  {
+   "number": 3565,
+   "title": "Revert pay-run preview flag",
+   "author": "kaia-kow",
+   "approvers": [],
+   "merged_by": "kaia-kow",
+   "merged_at": "2026-07-11T19:03:10Z",
+   "base": "main",
+   "admin_bypass": true
+  }
+ ]
+}

@@ -1,0 +1,11 @@
+control_id,title,description,owner,frequency
+CC8.1-PR,Code change review,Every pull request merged to main in payroll-core has at least one approval from someone other than the author and is not merged with an administrator bypass.,Head of Engineering (Rafe Moravec),Per change
+CC8.1-CT,Infrastructure change approval,Every production infrastructure change ticket is approved before it is implemented.,Head of Infrastructure (Greer Galloway),Per change
+CC6.3-TD,Termination deprovisioning,Identity provider access for a terminated workforce member is removed within one business day of the termination date.,IT Manager (Bram Balogun),Per termination
+CC6.2-AR,Quarterly access review,System owners review production user access each quarter and complete and sign the review within 30 days of quarter end.,Head of Security (Mira Moravec),Quarterly
+CC6.1-MFA,MFA enforcement,Every active identity provider account is enrolled in multi-factor authentication.,IT Manager (Bram Balogun),Continuous
+CC1.4-SAT,New-hire security training,New workforce members complete security awareness training within 30 days of their hire date.,VP People (Hana Brandt),Per hire
+CC7.1-VM,Vulnerability remediation,Critical and high vulnerabilities are remediated within the SLA in the vulnerability management policy.,Head of Infrastructure (Greer Galloway),Continuous
+A1.2-BR,Backup restore testing,A restore of the production database from backup is tested each quarter.,Head of Infrastructure (Greer Galloway),Quarterly
+CC7.4-IR,Incident response exercise,The incident response plan is exercised with a tabletop at least annually.,Head of Security (Mira Moravec),Annual
+CC9.2-VR,Vendor risk review,Critical vendors are reviewed annually against their latest assurance report.,Head of Security (Mira Moravec),Annual

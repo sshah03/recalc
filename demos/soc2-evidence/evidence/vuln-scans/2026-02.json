@@ -1,0 +1,62 @@
+{
+ "scanner": "continuous vulnerability scanning",
+ "export": "findings open during the month or remediated during the month",
+ "period_start": "2026-02-01",
+ "period_end": "2026-02-28",
+ "findings": [
+  {
+   "id": "VULN-2025-1187",
+   "severity": "medium",
+   "title": "Outdated OpenSSH on bastion",
+   "asset": "bastion-01",
+   "first_seen": "2025-12-03",
+   "status": "remediated",
+   "remediated_on": "2026-02-20"
+  },
+  {
+   "id": "VULN-2025-1204",
+   "severity": "low",
+   "title": "Missing security headers on status page",
+   "asset": "status-web",
+   "first_seen": "2025-12-11",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0131",
+   "severity": "high",
+   "title": "SSRF in webhook preview",
+   "asset": "api",
+   "first_seen": "2026-01-21",
+   "status": "remediated",
+   "remediated_on": "2026-02-11"
+  },
+  {
+   "id": "VULN-2026-0157",
+   "severity": "medium",
+   "title": "Weak TLS cipher on internal LB",
+   "asset": "internal-lb",
+   "first_seen": "2026-01-27",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0209",
+   "severity": "critical",
+   "title": "Remote code execution in image library",
+   "asset": "paystub-renderer",
+   "first_seen": "2026-02-09",
+   "status": "remediated",
+   "remediated_on": "2026-02-17"
+  },
+  {
+   "id": "VULN-2026-0233",
+   "severity": "high",
+   "title": "Privilege escalation in container runtime",
+   "asset": "payroll-worker",
+   "first_seen": "2026-02-16",
+   "status": "open",
+   "remediated_on": null
+  }
+ ]
+}

@@ -1,0 +1,17 @@
+# Batch board: one task across a column of inputs, with per-row status.
+# Edit an input and only its row recomputes. An agent fills column D with
+# analysis via ordinary set_cell / set_range. There is no batch engine; it's all ordinary cells.
+A1 = repo
+B1 = check
+C1 = ok
+A2 = serde
+B2 = $ cargo info {A2} 2>&1 | grep -c '^error'
+C2 = = {B2} == 0
+A3 = tokio
+B3 = $ cargo info {A3} 2>&1 | grep -c '^error'
+C3 = = {B3} == 0
+A4 = tokio-typo
+B4 = $ cargo info {A4} 2>&1 | grep -c '^error'
+C4 = = {B4} == 0
+E1 = pass_count
+E2 = $ printf '%s\n' {C2} {C3} {C4} | grep -c true

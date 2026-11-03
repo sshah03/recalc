@@ -1,0 +1,165 @@
+# The client grid: one question asked across every client in the practice.
+# Each row is a client folder (profile.md plus the documents received so far);
+# each column is one question, answered by an agent that cites the passage it
+# used, or computed by a formula or a re-runnable check. B-D are the columns a
+# practice filters and counts by (return type, status, assignee); E-G give the
+# prior-year effective tax rate; H compares the documents each profile expects
+# with the files actually in the folder, and re-runs whenever a file under
+# clients/ changes; I says whether a "Ready to file" status holds up; J-M read
+# QBI and estimated payments; N drafts the request letter for a client who is
+# missing something (a ! action: a person runs the first one, then the rest
+# can follow). Select B2:M9 and Run Selection to fill the agent cells. The
+# clients and documents are synthetic; this shows the board's structure and
+# is not tax advice.
+instructions = You are a preparer's assistant at a small tax practice, reading one client's folder for the 2025 return. The folder holds profile.md (the engagement: return type, status, assignee, expected documents, estimate plan) and the documents received; the prior-year return summary is the 2024 return. Answer from the files in the folder only. A CORRECTED form replaces the original from the same payer and account. If the files are silent, answer "Not found". Answer in exactly the form the question asks for, with no preamble.
+A1 = client folder
+B1 = Return type: one of 1040, 1120-S, 1065, 1041
+C1 = Status: one of In progress, Waiting on client, Ready to file
+D1 = Assignee (first name only)
+E1 = Prior-year AGI from the 2024 return summary (for a 1041, its counterpart, adjusted total income; an 1120-S or 1065 has none: answer Not found)
+F1 = Prior-year total tax from the 2024 return summary (an 1120-S or 1065: answer Not found)
+G1 = Effective tax rate, % (F / E)
+H1 = Missing documents (expected in profile.md, not in the folder)
+I1 = Status check
+J1 = QBI-eligible: does any document show qualified business income for the Section 199A deduction (Section 199A information on an entity return or K-1, Schedule C income, 1099-DIV box 5, or a QBI deduction on the prior-year return)?
+K1 = Estimated tax paid for tax year 2025 (the total of the confirmations for tax year 2025; 0 if none)
+L1 = Estimated tax planned for 2025 (the annual total in profile.md's plan; 0 if none)
+M1 = Behind on estimates
+N1 = Request letter (run to draft letters/<client>.md)
+A2 = clients/alvarez-reyes/
+B2 = @claude('{instructions} Client folder: {$A2}. {B$1}')
+C2 = @claude('{instructions} Client folder: {$A2}. {C$1}')
+D2 = @claude('{instructions} Client folder: {$A2}. {D$1}')
+E2 = @claude('{instructions} Client folder: {$A2}. {E$1}')
+F2 = @claude('{instructions} Client folder: {$A2}. {F$1}')
+G2 = = if(or({E2} == '', {F2} == ''), '', if(or({E2} == 'Not found', {F2} == 'Not found'), 'n/a', round({F2} / {E2} * 100, 1)))
+H2 = $ python3 tools/missing_docs.py {$A2} # watch: clients/**
+I2 = = if(or({C2} == '', {H2} == ''), '', if(and({C2} == 'Ready to file', {H2} != 'none'), 'Ready but missing documents', 'ok'))
+J2 = @claude('{instructions} Client folder: {$A2}. {J$1}')
+K2 = @claude('{instructions} Client folder: {$A2}. {K$1}')
+L2 = @claude('{instructions} Client folder: {$A2}. {L$1}')
+M2 = = if(or({K2} == '', {L2} == ''), '', {K2} < {L2})
+N2 = ! python3 tools/draft_letter.py {$A2} {$H2}
+A3 = clients/brennan/
+B3 = @claude('{instructions} Client folder: {$A3}. {B$1}')
+C3 = @claude('{instructions} Client folder: {$A3}. {C$1}')
+D3 = @claude('{instructions} Client folder: {$A3}. {D$1}')
+E3 = @claude('{instructions} Client folder: {$A3}. {E$1}')
+F3 = @claude('{instructions} Client folder: {$A3}. {F$1}')
+G3 = = if(or({E3} == '', {F3} == ''), '', if(or({E3} == 'Not found', {F3} == 'Not found'), 'n/a', round({F3} / {E3} * 100, 1)))
+H3 = $ python3 tools/missing_docs.py {$A3} # watch: clients/**
+I3 = = if(or({C3} == '', {H3} == ''), '', if(and({C3} == 'Ready to file', {H3} != 'none'), 'Ready but missing documents', 'ok'))
+J3 = @claude('{instructions} Client folder: {$A3}. {J$1}')
+K3 = @claude('{instructions} Client folder: {$A3}. {K$1}')
+L3 = @claude('{instructions} Client folder: {$A3}. {L$1}')
+M3 = = if(or({K3} == '', {L3} == ''), '', {K3} < {L3})
+N3 = ! python3 tools/draft_letter.py {$A3} {$H3}
+A4 = clients/chen-whitfield/
+B4 = @claude('{instructions} Client folder: {$A4}. {B$1}')
+C4 = @claude('{instructions} Client folder: {$A4}. {C$1}')
+D4 = @claude('{instructions} Client folder: {$A4}. {D$1}')
+E4 = @claude('{instructions} Client folder: {$A4}. {E$1}')
+F4 = @claude('{instructions} Client folder: {$A4}. {F$1}')
+G4 = = if(or({E4} == '', {F4} == ''), '', if(or({E4} == 'Not found', {F4} == 'Not found'), 'n/a', round({F4} / {E4} * 100, 1)))
+H4 = $ python3 tools/missing_docs.py {$A4} # watch: clients/**
+I4 = = if(or({C4} == '', {H4} == ''), '', if(and({C4} == 'Ready to file', {H4} != 'none'), 'Ready but missing documents', 'ok'))
+J4 = @claude('{instructions} Client folder: {$A4}. {J$1}')
+K4 = @claude('{instructions} Client folder: {$A4}. {K$1}')
+L4 = @claude('{instructions} Client folder: {$A4}. {L$1}')
+M4 = = if(or({K4} == '', {L4} == ''), '', {K4} < {L4})
+N4 = ! python3 tools/draft_letter.py {$A4} {$H4}
+A5 = clients/dunmore/
+B5 = @claude('{instructions} Client folder: {$A5}. {B$1}')
+C5 = @claude('{instructions} Client folder: {$A5}. {C$1}')
+D5 = @claude('{instructions} Client folder: {$A5}. {D$1}')
+E5 = @claude('{instructions} Client folder: {$A5}. {E$1}')
+F5 = @claude('{instructions} Client folder: {$A5}. {F$1}')
+G5 = = if(or({E5} == '', {F5} == ''), '', if(or({E5} == 'Not found', {F5} == 'Not found'), 'n/a', round({F5} / {E5} * 100, 1)))
+H5 = $ python3 tools/missing_docs.py {$A5} # watch: clients/**
+I5 = = if(or({C5} == '', {H5} == ''), '', if(and({C5} == 'Ready to file', {H5} != 'none'), 'Ready but missing documents', 'ok'))
+J5 = @claude('{instructions} Client folder: {$A5}. {J$1}')
+K5 = @claude('{instructions} Client folder: {$A5}. {K$1}')
+L5 = @claude('{instructions} Client folder: {$A5}. {L$1}')
+M5 = = if(or({K5} == '', {L5} == ''), '', {K5} < {L5})
+N5 = ! python3 tools/draft_letter.py {$A5} {$H5}
+A6 = clients/eastgate-fabrication/
+B6 = @claude('{instructions} Client folder: {$A6}. {B$1}')
+C6 = @claude('{instructions} Client folder: {$A6}. {C$1}')
+D6 = @claude('{instructions} Client folder: {$A6}. {D$1}')
+E6 = @claude('{instructions} Client folder: {$A6}. {E$1}')
+F6 = @claude('{instructions} Client folder: {$A6}. {F$1}')
+G6 = = if(or({E6} == '', {F6} == ''), '', if(or({E6} == 'Not found', {F6} == 'Not found'), 'n/a', round({F6} / {E6} * 100, 1)))
+H6 = $ python3 tools/missing_docs.py {$A6} # watch: clients/**
+I6 = = if(or({C6} == '', {H6} == ''), '', if(and({C6} == 'Ready to file', {H6} != 'none'), 'Ready but missing documents', 'ok'))
+J6 = @claude('{instructions} Client folder: {$A6}. {J$1}')
+K6 = @claude('{instructions} Client folder: {$A6}. {K$1}')
+L6 = @claude('{instructions} Client folder: {$A6}. {L$1}')
+M6 = = if(or({K6} == '', {L6} == ''), '', {K6} < {L6})
+N6 = ! python3 tools/draft_letter.py {$A6} {$H6}
+A7 = clients/harbor-lane/
+B7 = @claude('{instructions} Client folder: {$A7}. {B$1}')
+C7 = @claude('{instructions} Client folder: {$A7}. {C$1}')
+D7 = @claude('{instructions} Client folder: {$A7}. {D$1}')
+E7 = @claude('{instructions} Client folder: {$A7}. {E$1}')
+F7 = @claude('{instructions} Client folder: {$A7}. {F$1}')
+G7 = = if(or({E7} == '', {F7} == ''), '', if(or({E7} == 'Not found', {F7} == 'Not found'), 'n/a', round({F7} / {E7} * 100, 1)))
+H7 = $ python3 tools/missing_docs.py {$A7} # watch: clients/**
+I7 = = if(or({C7} == '', {H7} == ''), '', if(and({C7} == 'Ready to file', {H7} != 'none'), 'Ready but missing documents', 'ok'))
+J7 = @claude('{instructions} Client folder: {$A7}. {J$1}')
+K7 = @claude('{instructions} Client folder: {$A7}. {K$1}')
+L7 = @claude('{instructions} Client folder: {$A7}. {L$1}')
+M7 = = if(or({K7} == '', {L7} == ''), '', {K7} < {L7})
+N7 = ! python3 tools/draft_letter.py {$A7} {$H7}
+A8 = clients/ivers-trust/
+B8 = @claude('{instructions} Client folder: {$A8}. {B$1}')
+C8 = @claude('{instructions} Client folder: {$A8}. {C$1}')
+D8 = @claude('{instructions} Client folder: {$A8}. {D$1}')
+E8 = @claude('{instructions} Client folder: {$A8}. {E$1}')
+F8 = @claude('{instructions} Client folder: {$A8}. {F$1}')
+G8 = = if(or({E8} == '', {F8} == ''), '', if(or({E8} == 'Not found', {F8} == 'Not found'), 'n/a', round({F8} / {E8} * 100, 1)))
+H8 = $ python3 tools/missing_docs.py {$A8} # watch: clients/**
+I8 = = if(or({C8} == '', {H8} == ''), '', if(and({C8} == 'Ready to file', {H8} != 'none'), 'Ready but missing documents', 'ok'))
+J8 = @claude('{instructions} Client folder: {$A8}. {J$1}')
+K8 = @claude('{instructions} Client folder: {$A8}. {K$1}')
+L8 = @claude('{instructions} Client folder: {$A8}. {L$1}')
+M8 = = if(or({K8} == '', {L8} == ''), '', {K8} < {L8})
+N8 = ! python3 tools/draft_letter.py {$A8} {$H8}
+A9 = clients/kowalczyk/
+B9 = @claude('{instructions} Client folder: {$A9}. {B$1}')
+C9 = @claude('{instructions} Client folder: {$A9}. {C$1}')
+D9 = @claude('{instructions} Client folder: {$A9}. {D$1}')
+E9 = @claude('{instructions} Client folder: {$A9}. {E$1}')
+F9 = @claude('{instructions} Client folder: {$A9}. {F$1}')
+G9 = = if(or({E9} == '', {F9} == ''), '', if(or({E9} == 'Not found', {F9} == 'Not found'), 'n/a', round({F9} / {E9} * 100, 1)))
+H9 = $ python3 tools/missing_docs.py {$A9} # watch: clients/**
+I9 = = if(or({C9} == '', {H9} == ''), '', if(and({C9} == 'Ready to file', {H9} != 'none'), 'Ready but missing documents', 'ok'))
+J9 = @claude('{instructions} Client folder: {$A9}. {J$1}')
+K9 = @claude('{instructions} Client folder: {$A9}. {K$1}')
+L9 = @claude('{instructions} Client folder: {$A9}. {L$1}')
+M9 = = if(or({K9} == '', {L9} == ''), '', {K9} < {L9})
+N9 = ! python3 tools/draft_letter.py {$A9} {$H9}
+# The practice at a glance. Each count re-reads its column, so verifying,
+# correcting, or re-running a cell moves the numbers.
+progress = = count({B2:F9}) + count({J2:L9}) & ' of 64 answered'
+ready_to_file = = countif({C2:C9}, 'Ready to file')
+waiting_on_client = = countif({C2:C9}, 'Waiting on client')
+in_progress = = countif({C2:C9}, 'In progress')
+individuals = = countif({B2:B9}, '1040')
+entities = = countif({B2:B9}, '1120-S') + countif({B2:B9}, '1065') + countif({B2:B9}, '1041')
+clients_missing_documents = = countif({H2:H9}, '!=none')
+missing_documents_total = $ python3 tools/missing_docs.py --count clients # watch: clients/**
+ready_but_missing = = countif({I2:I9}, 'Ready but missing documents')
+median_effective_rate = = if(count({G2:G9}) < 8, 'waiting', median({G2:G9}))
+qbi_eligible = = countif({J2:J9}, 'Yes')
+behind_on_estimates = = countif({M2:M9}, 'true')
+dana = = countif({D2:D9}, 'Dana')
+marcus = = countif({D2:D9}, 'Marcus')
+priya = = countif({D2:D9}, 'Priya')
+note = ready_but_missing should come back 1: Brennan's status says Ready to file, but the Ridgeline K-1 on last year's return isn't in the folder. Run N3 to draft the request; once a person has run one, the other letters can follow.
+# Typed columns: an answer that doesn't fit is refused and asked again, so
+# the counts and the rate only ever see the values they expect.
+@answer_type B2 B3 B4 B5 B6 B7 B8 B9 = choice:1040|1120-S|1065|1041
+@answer_type C2 C3 C4 C5 C6 C7 C8 C9 = choice:In progress|Waiting on client|Ready to file
+@answer_type D2 D3 D4 D5 D6 D7 D8 D9 = text
+@answer_type E2 E3 E4 E5 E6 E7 E8 E9 F2 F3 F4 F5 F6 F7 F8 F9 K2 K3 K4 K5 K6 K7 K8 K9 L2 L3 L4 L5 L6 L7 L8 L9 = currency
+@answer_type J2 J3 J4 J5 J6 J7 J8 J9 = yesno

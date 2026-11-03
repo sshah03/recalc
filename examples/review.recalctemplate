@@ -1,0 +1,17 @@
+# Document grid: documents down column A, one question per column header, an
+# agent answer in every cell. B2 holds the prompt; select the block and
+# fill down and right ({B$1} keeps its row, the question; {$A2} keeps its
+# column, the document), then Run Selection. Runs queue under max_agents.
+# Verify an answer (⌘Y) and agents can no longer overwrite it; flag one to
+# come back to it. instructions applies to every cell; evidence asks for the
+# exact passage so each answer can be checked.
+instructions = Answer from the document only. If the document is silent, answer "not stated". Be terse: a value, a date, yes/no, or one sentence.
+A1 = document
+B1 = What law governs the agreement?
+C1 = What is the initial term, and does it auto-renew?
+D1 = Can either party assign the agreement without consent?
+E1 = Quote the passage that supports column D.
+A2 = contracts/acme-msa.md
+A3 = contracts/globex-services.md
+B2 = @claude('{instructions} Document: {$A2}. Question: {B$1}')
+progress = = count({B2:E3}) & ' of ' & (count({B1:E1}) * count({A2:A3})) & ' answered'

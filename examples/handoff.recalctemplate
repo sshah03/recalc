@@ -1,0 +1,16 @@
+# Handoff between agents: one drafts, a different one reviews, the first revises. `task` says what to write. `draft` is Claude's attempt, `review` is Codex reading the draft and the repo itself and answering approve or revise, `review_why` is its one-line reason, and `revision` is Claude again with the review in hand.
+#
+# Each handoff is a cell, so you can read what every agent was given and
+# said, change a step's prompt, and verify the version you'd keep. Run
+# draft, then review and review_why; if the review says revise, run
+# revision. `status` says where it stands.
+#
+# An agent on the board does the same with the ask_agent tool: it writes a
+# cell like these, runs it, and gets the answer back.
+task = Summarize what this repository does in three sentences, for a new contributor.
+draft = @claude('{task} Answer with the three sentences only.')
+review = @codex("Another agent was asked: {task} It answered: {draft} Read the repository yourself and decide whether the answer is accurate and complete. Answer with exactly one word: approve or revise.")
+review_why = @codex("Another agent was asked: {task} It answered: {draft} A reviewer answered {review}. In one line, say what the answer gets wrong or leaves out, or answer Not found if nothing.")
+revision = @claude('You wrote this answer to "{task}": {draft} A reviewer said {review}: {review_why} Rewrite the answer to address the review. Answer with the three sentences only.')
+status = = if({review} == '', 'run draft, then review', if({review} == 'approve', 'approved: verify draft', 'revise: run revision'))
+@answer_type review = choice:approve|revise

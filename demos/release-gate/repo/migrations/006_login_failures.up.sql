@@ -1,0 +1,1 @@
+CREATE TABLE login_failures (id INTEGER PRIMARY KEY, email TEXT NOT NULL, at TEXT NOT NULL);

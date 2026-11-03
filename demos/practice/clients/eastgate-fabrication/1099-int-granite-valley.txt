@@ -1,0 +1,11 @@
+FORM 1099-INT  INTEREST INCOME                                    TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           GRANITE VALLEY BANK
+PAYER'S TIN            XX-XXX4386
+RECIPIENT'S name       EASTGATE FABRICATION INC
+Account number         ....6610 (business sweep)
+
+1  Interest income                         2,486.19
+4  Federal income tax withheld                 0.00

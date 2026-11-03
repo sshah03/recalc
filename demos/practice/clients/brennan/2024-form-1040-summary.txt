@@ -1,0 +1,19 @@
+2024 FORM 1040 — RETURN SUMMARY (from the firm's prep software, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Taxpayers: Thomas J and Ifeoma N Brennan    Filing status: Married filing jointly
+Filed: 2025-04-09 (e-file accepted)
+
+Line 1z   Wages (W-2, Corliss Engineering) .................. 186,400.00
+Line 3b   Ordinary dividends (Pinecrest) ....................   4,210.00
+Line 8    Schedule 1: Schedule E, K-1 from Ridgeline
+          Partners LP, ordinary business income .............  14,250.00
+Line 9    Total income ...................................... 204,860.00
+Line 11   Adjusted gross income ............................. 204,860.00
+Line 12   Standard deduction ................................  29,200.00
+Line 13   Qualified business income deduction (Form 8995,
+          Ridgeline Partners LP) ............................   2,850.00
+Line 15   Taxable income .................................... 172,810.00
+Line 24   Total tax .........................................  27,851.00
+Line 25a  Federal income tax withheld .......................  26,400.00
+Line 37   Amount owed .......................................   1,451.00

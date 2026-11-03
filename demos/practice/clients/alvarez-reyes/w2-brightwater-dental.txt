@@ -1,0 +1,17 @@
+FORM W-2  WAGE AND TAX STATEMENT                                  TAX YEAR 2025
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+c  Employer's name, address, and ZIP code
+   BRIGHTWATER DENTAL GROUP PC
+   2200 HARMON AVE, SUITE 4
+   ROCKFORD IL 61107
+b  Employer identification number (EIN)     XX-XXX3318
+a  Employee's SSN                           XXX-XX-4419
+e  Employee's name                          MARTA ALVAREZ-REYES
+
+1  Wages, tips, other compensation          113,250.00
+2  Federal income tax withheld               14,180.00
+3  Social security wages                    113,250.00
+4  Social security tax withheld               7,021.50
+5  Medicare wages and tips                  113,250.00
+6  Medicare tax withheld                      1,642.13

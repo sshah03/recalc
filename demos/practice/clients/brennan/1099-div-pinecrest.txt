@@ -1,0 +1,15 @@
+FORM 1099-DIV  DIVIDENDS AND DISTRIBUTIONS                        TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           PINECREST INVESTMENTS LLC
+PAYER'S TIN            XX-XXX2093
+RECIPIENT'S name       THOMAS J BRENNAN
+                       IFEOMA N BRENNAN
+Account number         ....J-5520 (joint brokerage)
+
+1a Total ordinary dividends                 4,488.20
+1b Qualified dividends                      4,102.00
+2a Total capital gain distr.                  615.00
+4  Federal income tax withheld                  0.00
+5  Section 199A dividends                       0.00

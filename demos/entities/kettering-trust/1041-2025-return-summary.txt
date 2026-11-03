@@ -1,0 +1,17 @@
+2025 FORM 1041 — RETURN SUMMARY (from the firm's prep software, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Trust: Kettering Family Trust        EIN XX-XXX6620
+Type: Simple trust (all income distributed currently)
+Trustee: Julian Kettering            Filed: 2026-04-01 (e-file accepted)
+
+Line 5    Rents (Schedule E, duplex at 22 Orchard St) ......    31,400.00
+Line 9    Total income .....................................    31,400.00
+Line 17   Adjusted total income ............................    31,400.00
+Schedule B, line 7   Distributable net income ..............    31,400.00
+Line 18   Income distribution deduction ....................    31,400.00
+Line 23   Taxable income ...................................         0.00
+
+Beneficiaries (income shares; Schedule K-1 issued to each):
+  Rosalind Kettering .......................................   50%
+  Julian Kettering .........................................   50%

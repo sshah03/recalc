@@ -1,0 +1,16 @@
+diff --git a/app/auth.py b/app/auth.py
+--- a/app/auth.py
++++ b/app/auth.py
+@@ -1,5 +1,8 @@
++import logging
+ from app.users import find_by_email
+ 
++log = logging.getLogger("auth")
++
+ 
+ def login(email, password):
+     user = find_by_email(email)
+     if user is None or not user.check_password(password):
++        log.warning("failed login for %s with password %r", email, password)
+         return None
+     return user

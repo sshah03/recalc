@@ -1,0 +1,16 @@
+2024 FORM 1120-S — RETURN SUMMARY (from the firm's prep software, as filed)
+(synthetic sample for demonstration; all names and numbers invented)
+
+Corporation: Eastgate Fabrication Inc     EIN XX-XXX9052
+S election effective: 2011-01-01         Filed: 2025-03-14 (e-file accepted)
+
+Line 1c   Gross receipts less returns ..................... 1,284,000.00
+Line 3    Gross profit ....................................   511,300.00
+Line 7    Compensation of officers ........................   160,000.00
+Line 20   Total deductions ................................   298,700.00
+Line 21   Ordinary business income ........................   212,600.00
+Line 23c  Total tax (built-in gains and passive income tax)         0.00
+
+Schedule K, line 4  Interest income ........................     2,140.00
+Schedule K-1s issued: Owen Eastgate 50%, Lucia Eastgate 50%
+Section 199A information reported to shareholders (Schedule K-1, box 17, code V): Yes

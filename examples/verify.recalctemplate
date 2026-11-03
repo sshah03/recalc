@@ -1,0 +1,30 @@
+# Verification board: the agent's claim next to a live test result, and checks that the suite is still the suite.
+# `raw` watches the repo, so editing code re-runs the suite by itself. The
+# gate is the suite's exit status ({raw.code}) instead of a parsed count: a
+# workspace with several test binaries prints several summaries, and a
+# count that reads the first one can say 0 failed while the second binary
+# is red. `passed`, `failed` and `ignored` sum every summary; they refresh
+# from raw's cached output ({raw:file}) without a second test run.
+#
+# A green suite isn't enough when an agent can make it green by skipping
+# or deleting the tests that fail. `skips_added` counts skip markers the
+# working tree adds over the last commit, and `baseline` holds the test
+# count from before the work started: write {total} into it first (the
+# agent can, as its first step). `verified` is green only when the claim,
+# the suite, the skips, and the count all agree.
+#
+# The agent sets claim_done=true once status is green. Adapt the command
+# and the watch glob to your layout.
+A1 = Test Suite
+raw = $ cargo test 2>&1 # watch: {src,tests}/**
+passed = $ grep -oE '[0-9]+ passed' {raw:file} | awk '{s+=$1} END {print s+0}'
+failed = $ grep -oE '[0-9]+ failed' {raw:file} | awk '{s+=$1} END {print s+0}'
+ignored = $ grep -oE '[0-9]+ ignored' {raw:file} | awk '{s+=$1} END {print s+0}'
+total = = {passed} + {failed}
+status = = {raw.code} == 0
+skips_added = $ git diff HEAD -U0 -- . | grep -cE '^\+.*(#\[ignore\]|\.skip(If|Unless)?\(|skipTest\(|expectedFailure|@pytest\.mark\.(skip|xfail)|pytest\.skip\(|\bxit\(|\bxdescribe\(|t\.Skip\()' || true # watch: {src,tests}/**
+baseline =
+tests_kept = = if({baseline} == '', 'no baseline', {total} >= {baseline})
+claim_done =
+verified = = if({claim_done} == '', 'pending', and({claim_done} == {status}, {skips_added} == 0, {tests_kept} != false))
+@series failed

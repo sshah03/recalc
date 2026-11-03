@@ -1,0 +1,18 @@
+FORM 1099-INT  INTEREST INCOME                                    TAX YEAR 2025
+(synthetic sample for demonstration; not a real form)
+
+PAYER'S name, street address, city, state, ZIP
+   FIRST LAKESHORE BANK N.A.
+   PO BOX 4400
+   CLEVELAND OH 44101
+PAYER'S TIN            34-0071822
+RECIPIENT'S TIN        ***-**-4471
+RECIPIENT'S name       DANA R OYELARAN
+Account number         ....7731
+
+1  Interest income                         1,240.55
+2  Early withdrawal penalty                     0.00
+3  Interest on U.S. Savings Bonds and
+   Treasury obligations                         0.00
+4  Federal income tax withheld                  0.00
+8  Tax-exempt interest                          0.00

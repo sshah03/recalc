@@ -1,0 +1,62 @@
+{
+ "scanner": "continuous vulnerability scanning",
+ "export": "findings open during the month or remediated during the month",
+ "period_start": "2026-03-01",
+ "period_end": "2026-03-31",
+ "findings": [
+  {
+   "id": "VULN-2025-1204",
+   "severity": "low",
+   "title": "Missing security headers on status page",
+   "asset": "status-web",
+   "first_seen": "2025-12-11",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0157",
+   "severity": "medium",
+   "title": "Weak TLS cipher on internal LB",
+   "asset": "internal-lb",
+   "first_seen": "2026-01-27",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0233",
+   "severity": "high",
+   "title": "Privilege escalation in container runtime",
+   "asset": "payroll-worker",
+   "first_seen": "2026-02-16",
+   "status": "remediated",
+   "remediated_on": "2026-03-18"
+  },
+  {
+   "id": "VULN-2026-0311",
+   "severity": "critical",
+   "title": "Authentication bypass in legacy SOAP endpoint",
+   "asset": "legacy-gateway",
+   "first_seen": "2026-03-04",
+   "status": "open",
+   "remediated_on": null
+  },
+  {
+   "id": "VULN-2026-0340",
+   "severity": "high",
+   "title": "Path traversal in export download",
+   "asset": "api",
+   "first_seen": "2026-03-12",
+   "status": "remediated",
+   "remediated_on": "2026-03-30"
+  },
+  {
+   "id": "VULN-2026-0362",
+   "severity": "low",
+   "title": "Verbose error pages",
+   "asset": "api",
+   "first_seen": "2026-03-19",
+   "status": "remediated",
+   "remediated_on": "2026-03-20"
+  }
+ ]
+}

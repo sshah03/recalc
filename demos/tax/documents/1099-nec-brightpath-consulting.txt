@@ -1,0 +1,16 @@
+FORM 1099-NEC  NONEMPLOYEE COMPENSATION                           TAX YEAR 2025
+(synthetic sample for demonstration; not a real form)
+
+PAYER'S name, street address, city, state, ZIP
+   BRIGHTPATH CONSULTING GROUP LLC
+   310 MARKET STREET, SUITE 900
+   SAN FRANCISCO CA 94105
+PAYER'S TIN            47-5561208
+RECIPIENT'S TIN        ***-**-4471
+RECIPIENT'S name       DANA R OYELARAN
+
+1  Nonemployee compensation                18,500.00
+4  Federal income tax withheld                  0.00
+5  State tax withheld                           0.00
+6  State/Payer's state no.                  CA 800-1122-9
+7  State income                            18,500.00

@@ -1,0 +1,25 @@
+Account,Debit,Credit
+"1000 Cash - operating",131280,0
+"1100 Accounts receivable",212600,0
+"1200 Inventory",38400,0
+"1500 Equipment and vehicles",588000,0
+"1510 Accumulated depreciation",0,301500
+"2000 Accounts payable",0,96300
+"2100 Accrued payroll",0,21400
+"2500 Bank loan",0,142000
+"3000 Capital stock",0,5000
+"3100 Retained earnings",0,355698
+"3200 Shareholder distributions",120000,0
+"4000 Service and install revenue",0,1918400
+"4100 Interest income",0,1260
+"5000 Materials and subcontractors",902700,0
+"6000 Salaries and wages",512000,0
+"6100 Payroll taxes",39168,0
+"6200 Rent - shop and yard",54000,0
+"6300 Repairs - trucks and tools",23940,0
+"6400 Advertising",18200,0
+"6500 Depreciation expense",64800,0
+"6600 Insurance - liability and vehicles",41300,0
+"6650 Employee health insurance",48600,0
+"6700 Fuel",37150,0
+"7000 Interest expense - truck loans",9420,0

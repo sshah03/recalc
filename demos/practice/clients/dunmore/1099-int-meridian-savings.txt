@@ -1,0 +1,11 @@
+FORM 1099-INT  INTEREST INCOME                                    TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+PAYER'S name           MERIDIAN SAVINGS BANK
+PAYER'S TIN            XX-XXX2517
+RECIPIENT'S name       HAROLD DUNMORE
+Account number         ....0349
+
+1  Interest income                         1,318.40
+4  Federal income tax withheld                 0.00

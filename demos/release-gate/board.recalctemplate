@@ -1,0 +1,36 @@
+# Release gate: what must be true before acme 2.4.0 ships, and who said so.
+# B2-B5 are scripts that re-run on their own: CI every minute, the others
+# whenever the files they read change. B6 is a person's call: verify it once
+# you've tried the staging build. B7 is release notes an agent drafts and a
+# person verifies. C says whether each row passes, ready is all of them, and
+# the tag action refuses to run until ready is true.
+#
+# Two rows fail as shipped: src/acme/__init__.py still says 2.3.1, and
+# migration 007 has no down step. Fix either file and its row turns green on
+# its own. The same board is a CI gate: `recalc check board.recalctemplate --cell ready`
+# exits non-zero until it reads true. tools/ stands in for gh and the tag step.
+version = 2.4.0
+A1 = Check
+B1 = Result
+C1 = Passes?
+A2 = CI on main
+B2 = $ sh tools/gh run list --branch main --limit 1 --json conclusion # every: 60000
+C2 = = {B2} == 'success'
+A3 = Changelog has a section for the version
+B3 = $ grep -c "^## {version}" CHANGELOG.md || true # watch: CHANGELOG.md
+C3 = = {B3} > 0
+A4 = Version strings agree
+B4 = $ sh scripts/versions.sh {version} # watch: {pyproject.toml,src/**}
+C4 = = {B4.code} == 0
+A5 = Every migration can be rolled back
+B5 = $ sh scripts/check-down.sh # watch: migrations/**
+C5 = = {B5.code} == 0
+A6 = Smoke-tested on staging
+B6 = Verify this cell once you've tried the staging build.
+C6 = = {B6.mark} == 'verified'
+A7 = Release notes
+B7 = @claude('Draft the release notes for acme {version}: one sentence on what the release is for, then one line per change a user will notice, from CHANGELOG.md and the pull requests in merged.txt, each naming its PR by number. Leave out dependency bumps unless they fix something a user would see. Plain text, no headings.')
+C7 = = {B7.mark} == 'verified'
+ready = = and({C2}, {C3}, {C4}, {C5}, {C6}, {C7})
+blocking = = countif({C2:C7}, 'false')
+tag = ! test {ready} = true || { echo "not ready: {blocking} of the checks fail"; exit 1; }; sh tools/tag {version}

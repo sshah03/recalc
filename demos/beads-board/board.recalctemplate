@@ -1,0 +1,47 @@
+# beads decides what's next; this board decides what's done.
+# beads (bd) tracks the work: A-C are `bd list`, kept in sync, so a new bead
+# gets a row and a closed one updates. tools/bd stands in for bd over
+# .beads/standin.json; delete `python3 tools/` from the commands to use the
+# real bd on your own beads.
+#
+# D names each bead's test and E the bead it comes after; both are yours to
+# fill for a new bead. F runs the test whenever the code changes and G says
+# whether it holds. H is ready by checks, not by closes: a bead is ready when
+# the bead it comes after holds. I catches a bead beads says is closed while
+# its test fails. J is a session for the bead (Open Session); its Stop hook
+# won't let it finish until G holds. L closes the bead in beads, and only
+# once G holds and you have verified it.
+#
+# As shipped, an agent closed tl-7f3.1 with its test still failing: bd ready
+# offers tl-7f3.2 on the strength of that close, and the board says it waits.
+instructions = You are working in the tally repository in the current directory (see README.md), on one bead tracked in beads. Do only your bead. Don't edit anything under tests/; the bead's test defines done. Don't close the bead yourself; the board does that once a person has checked it.
+beads = $ python3 tools/bd list --all --json # rows: A2 key=id cols=id,title,status gone=M # watch: .beads/**
+bd_ready = $ python3 tools/bd ready --json | grep -o '"id": "[^"]*"' | cut -d'"' -f4 | paste -sd' ' - # watch: .beads/**
+A1 = Bead
+B1 = Title
+C1 = Status in beads
+D1 = Test
+E1 = After
+F1 = Check
+G1 = Result
+H1 = Ready, by checks
+I1 = Closed but red?
+J1 = Session (Open Session here)
+K1 = OK to close?
+L1 = Close in beads
+M1 = Still in beads?
+D2 = tests.test_parse
+D3 = tests.test_invoice
+D4 = tests.test_export
+D5 = tests.test_dates
+E3 = tl-7f3.1
+E4 = tl-7f3.2
+F2 = $ out=$(python3 -m unittest {$D2} 2>&1); code=$?; echo "$out" | tail -1; exit $code # watch: {tally/**,tests/**}
+G2 = = if({D2} == '', 'no test yet', if({F2.code} == 0, 'holds', 'red'))
+H2 = = if({E2} == '', 'ready', if(lookup({E2}, {$A$2:$A$40}, {$G$2:$G$40}) == 'holds', 'ready', 'waiting'))
+I2 = = if(and({C2} == 'closed', {G2} != 'holds'), 'closed but red', '')
+J2 = @claude('{instructions} Your bead: {$A2}, "{$B2}". It is done when {$D2} passes: python3 -m unittest {$D2}.')
+K2 = = and({G2} == 'holds', {G2.mark} == 'verified', {C2} != 'closed')
+L2 = ! test {K2} = true || { echo "not closed: its test must hold, and you verify the result first"; exit 1; }; python3 tools/bd close {$A2} --reason 'test holds; verified in recalc'
+closed_but_red = = countif({I2:I40}, 'closed but red')
+ready_by_checks = = countifs({H2:H40}, 'ready', {C2:C40}, '<>closed')

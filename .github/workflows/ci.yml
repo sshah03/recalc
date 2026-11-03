@@ -1,0 +1,57 @@
+# PAUSED while the repo is private (since 2026-09-24): Actions minutes on a
+# private repo, the macOS e2e job most of all, cost real money. The workflow is
+# disabled in GitHub, not deleted. When the repo goes public, turn it back on
+# with `gh workflow enable ci`, then delete this note. Until then, run the
+# checks locally (cargo fmt/clippy/test, and npm test in desktop/frontend and
+# desktop/e2e).
+name: ci
+on:
+  push:
+    branches: [main]
+  pull_request:
+jobs:
+  test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libayatana-appindicator3-dev librsvg2-dev patchelf
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: rustup update stable
+      - run: cargo fmt --check
+      - run: cargo clippy --workspace --all-targets -- -D warnings
+      - run: cargo test --workspace
+      - run: npm --prefix desktop/frontend ci
+      - run: npm --prefix desktop/frontend test
+
+  # The real app driven through its UI (desktop/e2e): bridge mode serves it
+  # to Playwright's WebKit, since macOS's own webview can't be automated.
+  e2e:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: rustup update stable
+      - run: npm --prefix desktop/frontend ci
+      - run: npm --prefix desktop/frontend run build
+      - run: cargo build -p recalc-desktop
+      - run: npm ci
+        working-directory: desktop/e2e
+      - run: npx playwright install webkit
+        working-directory: desktop/e2e
+      - run: npm test
+        working-directory: desktop/e2e
+      - if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: e2e-shots
+          path: desktop/e2e/shots/

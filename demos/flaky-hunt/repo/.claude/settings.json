@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "recalc hook stop --task A --gate G --wait 75 || true",
+            "timeout": 90
+          }
+        ]
+      }
+    ]
+  }
+}

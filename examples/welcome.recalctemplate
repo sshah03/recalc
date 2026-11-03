@@ -1,0 +1,26 @@
+# Welcome tour: a live board showing every cell kind. Edit anything.
+# Loaded automatically on a fresh board; load it again any time from
+# File → Insert Template.
+A1 = The cell kinds
+A2 = A value
+B2 = 42
+A3 = A formula over cells
+B3 = = {B2} * 2
+A4 = A shell command (re-runs when its inputs change)
+B4 = $ echo B2 is {B2} and B3 is {B3}
+A5 = A watched command (re-runs on its own)
+B5 = $ date +%H:%M:%S # every: 5000
+A6 = An action (runs only when you trigger it)
+B6 = ! echo you triggered me
+A7 = An agent call (select B7 and press Run, ⌘↩)
+B7 = @claude('which of these numbers is largest? answer in one short sentence', {B8:B10})
+A8 = A column of numbers
+B8 = 120
+B9 = 80
+B10 = 45
+A11 = Their sum
+B11 = = sum({B8:B10})
+A12 = Big spender?
+B12 = = if({B11} > 200, 'yes', 'no')
+try_this = Select B2, type a new number, press Enter. Watch B3 and B4 follow.
+help = Press ⌘/ for the cheatsheet and ⌘K for every command.

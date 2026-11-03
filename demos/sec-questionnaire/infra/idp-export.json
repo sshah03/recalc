@@ -1,0 +1,33 @@
+{
+  "exported_at": "2026-09-22T15:47:30Z",
+  "tenant": "tamsinlabs.idp.example",
+  "groups": [
+    {"name": "Everyone", "description": "All workforce accounts", "member_count": 63},
+    {"name": "engineering", "description": "Engineers", "member_count": 27},
+    {"name": "prod-admins", "description": "Production administrators", "member_count": 4},
+    {"name": "break-glass", "description": "Emergency production access when the IdP's MFA provider is unavailable", "member_count": 2,
+     "members": ["bg-admin-01@tamsinlabs.example", "bg-admin-02@tamsinlabs.example"]}
+  ],
+  "applications": [
+    {"name": "AWS production console", "assigned_groups": ["prod-admins", "break-glass"]},
+    {"name": "Production database bastion", "assigned_groups": ["engineering", "break-glass"]},
+    {"name": "GitHub", "assigned_groups": ["engineering"]},
+    {"name": "Google Workspace", "assigned_groups": ["Everyone"]}
+  ],
+  "sign_on_policies": [
+    {
+      "name": "Break-glass emergency access",
+      "priority": 1,
+      "status": "ACTIVE",
+      "applies_to_groups": ["break-glass"],
+      "rule": {"mfa_required": false, "network_zone": "any", "session_lifetime_minutes": 60}
+    },
+    {
+      "name": "Workforce default",
+      "priority": 2,
+      "status": "ACTIVE",
+      "applies_to_groups": ["Everyone"],
+      "rule": {"mfa_required": true, "factors": ["webauthn", "push", "totp"], "session_lifetime_minutes": 720}
+    }
+  ]
+}

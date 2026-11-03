@@ -1,0 +1,163 @@
+# A customer's security questionnaire, answered from our own documents and
+# checked against our infrastructure: Tamsin Labs answering twelve questions
+# from Harrowgate Regional Health, as of 2026-10-01.
+#
+# B-E and H-J are agent cells: the answer, an explanation the customer can
+# read, the passage it rests on, which configuration claim it makes, whether
+# a person must decide something before it goes out, a second agent's review,
+# and the date of time-bound evidence such as a pen test. F tests the claim
+# the agent named against the Terraform and exports in infra/
+# (checks/config.py) and re-runs when infra/ changes; G marks any answer the
+# check contradicts, a Yes beside a failing configuration. A passing check
+# doesn't make the whole answer true: daily backups pass, but nothing shows
+# a restore test. The named cells count the answers and say whether the
+# questionnaire is ready to send.
+#
+# Select B2:J13 and Run Selection to fill the agent cells. The company,
+# documents and infrastructure are synthetic.
+instructions = You are on Tamsin Labs's security team answering a customer's security questionnaire as of 2026-10-01. Answer only from policies/, reports/ and the Terraform and exports in infra/. Use the current version of each policy: a newer version supersedes an older one from its effective date. Answer Yes only if our documents say so and, where the answer is a configuration claim, the configuration in infra/ agrees; if they disagree, answer Partial and name what falls short. A time-bound activity (a test, an audit, a review) counts only if its evidence falls within the period the question asks about. Never commit to more than our documents do. If our documents don't answer the question, answer Not found. Answer in exactly the form the question asks for, with no preamble; cite the passage your answer rests on with cite_cell.
+A1 = Question
+B1 = Answer: Yes, No, Partial or N/A
+C1 = Explanation for the customer, in one or two sentences
+D1 = The passage the answer rests on, verbatim
+E1 = Configuration claim the answer makes: one of None, Encryption at rest, MFA, Branch protection, Backups
+F1 = Configuration check
+G1 = Answer and check
+H1 = Does a person need to decide something before this goes out (anything Not found, evidence out of date, or a commitment beyond our documents)? Yes or No
+I1 = Review the answer another agent gave against our documents, and say agree or disagree
+J1 = Evidence date, for an answer resting on a time-bound activity such as a test or an audit, as YYYY-MM-DD; Not found otherwise
+A2 = HRH-01: Is customer data encrypted at rest in every production data store?
+B2 = @claude('{instructions} Question: {$A2}. {B$1}')
+C2 = @claude('{instructions} Question: {$A2}. {C$1}')
+D2 = @claude('{instructions} Question: {$A2}. {D$1}')
+E2 = @claude('{instructions} Question: {$A2}. {E$1}')
+H2 = @claude('{instructions} Question: {$A2}. {H$1}')
+J2 = @claude('{instructions} Question: {$A2}. {J$1}')
+I2 = @claude('{instructions} Question: {$A2}. Another agent answered {B2}: {C2} {I$1}')
+F2 = $ python3 checks/config.py {E2} # watch: infra/**
+G2 = = if({F2} == 'n/a', 'n/a', if(and({B2} == 'Yes', {F2} != 'pass'), 'CONTRADICTED', 'ok'))
+A3 = HRH-02: Is multi-factor authentication enforced for all workforce access to production systems?
+B3 = @claude('{instructions} Question: {$A3}. {B$1}')
+C3 = @claude('{instructions} Question: {$A3}. {C$1}')
+D3 = @claude('{instructions} Question: {$A3}. {D$1}')
+E3 = @claude('{instructions} Question: {$A3}. {E$1}')
+H3 = @claude('{instructions} Question: {$A3}. {H$1}')
+J3 = @claude('{instructions} Question: {$A3}. {J$1}')
+I3 = @claude('{instructions} Question: {$A3}. Another agent answered {B3}: {C3} {I$1}')
+F3 = $ python3 checks/config.py {E3} # watch: infra/**
+G3 = = if({F3} == 'n/a', 'n/a', if(and({B3} == 'Yes', {F3} != 'pass'), 'CONTRADICTED', 'ok'))
+A4 = HRH-03: Do you have a documented recovery time objective (RTO) of 8 hours or less for the production service?
+B4 = @claude('{instructions} Question: {$A4}. {B$1}')
+C4 = @claude('{instructions} Question: {$A4}. {C$1}')
+D4 = @claude('{instructions} Question: {$A4}. {D$1}')
+E4 = @claude('{instructions} Question: {$A4}. {E$1}')
+H4 = @claude('{instructions} Question: {$A4}. {H$1}')
+J4 = @claude('{instructions} Question: {$A4}. {J$1}')
+I4 = @claude('{instructions} Question: {$A4}. Another agent answered {B4}: {C4} {I$1}')
+F4 = $ python3 checks/config.py {E4} # watch: infra/**
+G4 = = if({F4} == 'n/a', 'n/a', if(and({B4} == 'Yes', {F4} != 'pass'), 'CONTRADICTED', 'ok'))
+A5 = HRH-04: Are background checks performed on personnel before they are given access to customer data?
+B5 = @claude('{instructions} Question: {$A5}. {B$1}')
+C5 = @claude('{instructions} Question: {$A5}. {C$1}')
+D5 = @claude('{instructions} Question: {$A5}. {D$1}')
+E5 = @claude('{instructions} Question: {$A5}. {E$1}')
+H5 = @claude('{instructions} Question: {$A5}. {H$1}')
+J5 = @claude('{instructions} Question: {$A5}. {J$1}')
+I5 = @claude('{instructions} Question: {$A5}. Another agent answered {B5}: {C5} {I$1}')
+F5 = $ python3 checks/config.py {E5} # watch: infra/**
+G5 = = if({F5} == 'n/a', 'n/a', if(and({B5} == 'Yes', {F5} != 'pass'), 'CONTRADICTED', 'ok'))
+A6 = HRH-05: Has an independent third party performed a penetration test of the production application within the last 12 months?
+B6 = @claude('{instructions} Question: {$A6}. {B$1}')
+C6 = @claude('{instructions} Question: {$A6}. {C$1}')
+D6 = @claude('{instructions} Question: {$A6}. {D$1}')
+E6 = @claude('{instructions} Question: {$A6}. {E$1}')
+H6 = @claude('{instructions} Question: {$A6}. {H$1}')
+J6 = @claude('{instructions} Question: {$A6}. {J$1}')
+I6 = @claude('{instructions} Question: {$A6}. Another agent answered {B6}: {C6} {I$1}')
+F6 = $ python3 checks/config.py {E6} # watch: infra/**
+G6 = = if({F6} == 'n/a', 'n/a', if(and({B6} == 'Yes', {F6} != 'pass'), 'CONTRADICTED', 'ok'))
+A7 = HRH-06: Are user access reviews for production systems performed and completed at least quarterly?
+B7 = @claude('{instructions} Question: {$A7}. {B$1}')
+C7 = @claude('{instructions} Question: {$A7}. {C$1}')
+D7 = @claude('{instructions} Question: {$A7}. {D$1}')
+E7 = @claude('{instructions} Question: {$A7}. {E$1}')
+H7 = @claude('{instructions} Question: {$A7}. {H$1}')
+J7 = @claude('{instructions} Question: {$A7}. {J$1}')
+I7 = @claude('{instructions} Question: {$A7}. Another agent answered {B7}: {C7} {I$1}')
+F7 = $ python3 checks/config.py {E7} # watch: infra/**
+G7 = = if({F7} == 'n/a', 'n/a', if(and({B7} == 'Yes', {F7} != 'pass'), 'CONTRADICTED', 'ok'))
+A8 = HRH-07: Do any sub-processors store or process customer data on your behalf?
+B8 = @claude('{instructions} Question: {$A8}. {B$1}')
+C8 = @claude('{instructions} Question: {$A8}. {C$1}')
+D8 = @claude('{instructions} Question: {$A8}. {D$1}')
+E8 = @claude('{instructions} Question: {$A8}. {E$1}')
+H8 = @claude('{instructions} Question: {$A8}. {H$1}')
+J8 = @claude('{instructions} Question: {$A8}. {J$1}')
+I8 = @claude('{instructions} Question: {$A8}. Another agent answered {B8}: {C8} {I$1}')
+F8 = $ python3 checks/config.py {E8} # watch: infra/**
+G8 = = if({F8} == 'n/a', 'n/a', if(and({B8} == 'Yes', {F8} != 'pass'), 'CONTRADICTED', 'ok'))
+A9 = HRH-08: Is customer data stored and processed exclusively within the European Union?
+B9 = @claude('{instructions} Question: {$A9}. {B$1}')
+C9 = @claude('{instructions} Question: {$A9}. {C$1}')
+D9 = @claude('{instructions} Question: {$A9}. {D$1}')
+E9 = @claude('{instructions} Question: {$A9}. {E$1}')
+H9 = @claude('{instructions} Question: {$A9}. {H$1}')
+J9 = @claude('{instructions} Question: {$A9}. {J$1}')
+I9 = @claude('{instructions} Question: {$A9}. Another agent answered {B9}: {C9} {I$1}')
+F9 = $ python3 checks/config.py {E9} # watch: infra/**
+G9 = = if({F9} == 'n/a', 'n/a', if(and({B9} == 'Yes', {F9} != 'pass'), 'CONTRADICTED', 'ok'))
+A10 = HRH-09: Are all code changes peer-reviewed and approved before they are deployed to production?
+B10 = @claude('{instructions} Question: {$A10}. {B$1}')
+C10 = @claude('{instructions} Question: {$A10}. {C$1}')
+D10 = @claude('{instructions} Question: {$A10}. {D$1}')
+E10 = @claude('{instructions} Question: {$A10}. {E$1}')
+H10 = @claude('{instructions} Question: {$A10}. {H$1}')
+J10 = @claude('{instructions} Question: {$A10}. {J$1}')
+I10 = @claude('{instructions} Question: {$A10}. Another agent answered {B10}: {C10} {I$1}')
+F10 = $ python3 checks/config.py {E10} # watch: infra/**
+G10 = = if({F10} == 'n/a', 'n/a', if(and({B10} == 'Yes', {F10} != 'pass'), 'CONTRADICTED', 'ok'))
+A11 = HRH-10: Are production backups taken daily and restore-tested at least annually?
+B11 = @claude('{instructions} Question: {$A11}. {B$1}')
+C11 = @claude('{instructions} Question: {$A11}. {C$1}')
+D11 = @claude('{instructions} Question: {$A11}. {D$1}')
+E11 = @claude('{instructions} Question: {$A11}. {E$1}')
+H11 = @claude('{instructions} Question: {$A11}. {H$1}')
+J11 = @claude('{instructions} Question: {$A11}. {J$1}')
+I11 = @claude('{instructions} Question: {$A11}. Another agent answered {B11}: {C11} {I$1}')
+F11 = $ python3 checks/config.py {E11} # watch: infra/**
+G11 = = if({F11} == 'n/a', 'n/a', if(and({B11} == 'Yes', {F11} != 'pass'), 'CONTRADICTED', 'ok'))
+A12 = HRH-11: Do you maintain a documented incident response plan that commits to notifying affected customers within 72 hours?
+B12 = @claude('{instructions} Question: {$A12}. {B$1}')
+C12 = @claude('{instructions} Question: {$A12}. {C$1}')
+D12 = @claude('{instructions} Question: {$A12}. {D$1}')
+E12 = @claude('{instructions} Question: {$A12}. {E$1}')
+H12 = @claude('{instructions} Question: {$A12}. {H$1}')
+J12 = @claude('{instructions} Question: {$A12}. {J$1}')
+I12 = @claude('{instructions} Question: {$A12}. Another agent answered {B12}: {C12} {I$1}')
+F12 = $ python3 checks/config.py {E12} # watch: infra/**
+G12 = = if({F12} == 'n/a', 'n/a', if(and({B12} == 'Yes', {F12} != 'pass'), 'CONTRADICTED', 'ok'))
+A13 = HRH-12: Do all workforce members complete security awareness training at least annually?
+B13 = @claude('{instructions} Question: {$A13}. {B$1}')
+C13 = @claude('{instructions} Question: {$A13}. {C$1}')
+D13 = @claude('{instructions} Question: {$A13}. {D$1}')
+E13 = @claude('{instructions} Question: {$A13}. {E$1}')
+H13 = @claude('{instructions} Question: {$A13}. {H$1}')
+J13 = @claude('{instructions} Question: {$A13}. {J$1}')
+I13 = @claude('{instructions} Question: {$A13}. Another agent answered {B13}: {C13} {I$1}')
+F13 = $ python3 checks/config.py {E13} # watch: infra/**
+G13 = = if({F13} == 'n/a', 'n/a', if(and({B13} == 'Yes', {F13} != 'pass'), 'CONTRADICTED', 'ok'))
+yes = = countif({B2:B13}, 'Yes')
+partial = = countif({B2:B13}, 'Partial')
+no = = countif({B2:B13}, 'No')
+not_found = = countif({B2:B13}, 'Not found')
+contradicted = = countif({G2:G13}, 'CONTRADICTED')
+needs_a_person = = countif({H2:H13}, 'Yes')
+disagreements = = countif({I2:I13}, 'disagree')
+ready = = if(and({contradicted} == 0, {not_found} == 0, {disagreements} == 0), 'ready to send', 'not ready')
+answers_verified = = countif({B2:B13.mark}, 'verified')
+@answer_type B2 B3 B4 B5 B6 B7 B8 B9 B10 B11 B12 B13 = choice:Yes|No|Partial|N/A
+@answer_type D2 D3 D4 D5 D6 D7 D8 D9 D10 D11 D12 D13 = quote
+@answer_type E2 E3 E4 E5 E6 E7 E8 E9 E10 E11 E12 E13 = choice:None|Encryption at rest|MFA|Branch protection|Backups
+@answer_type H2 H3 H4 H5 H6 H7 H8 H9 H10 H11 H12 H13 = yesno
+@answer_type I2 I3 I4 I5 I6 I7 I8 I9 I10 I11 I12 I13 = choice:agree|disagree
+@answer_type J2 J3 J4 J5 J6 J7 J8 J9 J10 J11 J12 J13 = date

@@ -1,0 +1,29 @@
+# Multi-agent lock board: several agents in one repo, each working inside files it has claimed, and checks that say when the working tree strays outside the claims.
+# Subtasks are rows agents claim by writing their id into the owner
+# column. Before touching files, an agent writes the globs it will edit
+# into its claim cell (claim_agent_a = src/auth/**) and checks the other
+# claims first; it clears its claim when done. Nothing enforces this; it
+# works because every claim is visible, and the checks below watch what
+# actually changed.
+#
+# `changed` is the working tree against the last commit, refreshed every
+# few seconds. `unclaimed` lists changed files no claim covers (someone
+# edited outside their area), `contested` lists files two claims cover
+# (two agents may edit the same file), and `clear` is true when both are
+# empty. Add a claim cell per agent, and add it to both checks' loops.
+A1 = subtask
+B1 = owner
+C1 = status
+A2 = refactor auth module
+B2 =
+C2 =
+A3 = migrate db layer
+B3 =
+C3 =
+claim_agent_a =
+claim_agent_b =
+changed = $ git status --porcelain --untracked-files=all -- . ':!.recalc' | cut -c4- # every: 3000
+unclaimed = $ set -f; printf '%s\n' {changed} | while IFS= read -r f; do [ -z "$f" ] && continue; hit=0; for g in {claim_agent_a:raw} {claim_agent_b:raw}; do case "$f" in $g) hit=$((hit+1));; esac; done; [ $hit -eq 0 ] && echo "$f"; done; true
+contested = $ set -f; printf '%s\n' {changed} | while IFS= read -r f; do [ -z "$f" ] && continue; hit=0; for g in {claim_agent_a:raw} {claim_agent_b:raw}; do case "$f" in $g) hit=$((hit+1));; esac; done; [ $hit -gt 1 ] && echo "$f"; done; true
+clear = = and({unclaimed} == '', {contested} == '')
+human_hint =

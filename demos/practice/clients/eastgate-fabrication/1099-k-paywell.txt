@@ -1,0 +1,12 @@
+FORM 1099-K  PAYMENT CARD AND THIRD PARTY NETWORK TRANSACTIONS    TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+FILER'S name           PAYWELL MERCHANT SERVICES LLC
+FILER'S TIN            XX-XXX7731
+PAYEE'S name           EASTGATE FABRICATION INC
+Merchant ID            ....22-0918
+
+1a Gross amount of payment card/third party network transactions   418,265.40
+3  Number of payment transactions                                        1,206
+4  Federal income tax withheld                                            0.00

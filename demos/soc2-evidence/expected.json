@@ -1,0 +1,157 @@
+{
+  "scenario": "soc2-evidence",
+  "acting_for": "Brindlewood, Inc. (payroll SaaS), its security team preparing for SOC 2 Type II fieldwork",
+  "period": "2026-01-01 to 2026-06-30",
+  "rows": "column A holds one row per control in documents/controls.csv; each answer key below is the control id, which the row label must contain (e.g. 'CC8.1-PR: Code change review')",
+  "questions": [
+    {
+      "header": "Control id and title",
+      "shape": "none",
+      "column": "A"
+    },
+    {
+      "header": "Owner",
+      "shape": "text",
+      "column": "B"
+    },
+    {
+      "header": "Evidence files used",
+      "shape": "text",
+      "column": "C"
+    },
+    {
+      "header": "Population, count",
+      "shape": "number ($ cell over the export)",
+      "column": "D"
+    },
+    {
+      "header": "Exceptions, count",
+      "shape": "number ($ cell over the export, after policy allowances)",
+      "column": "E"
+    },
+    {
+      "header": "Exception details",
+      "shape": "text",
+      "column": "F"
+    },
+    {
+      "header": "Allowed by policy (risk acceptance or retest)",
+      "shape": "yesno",
+      "column": "G"
+    },
+    {
+      "header": "Evidence covers the whole period",
+      "shape": "yesno",
+      "column": "H"
+    },
+    {
+      "header": "Latest evidence date",
+      "shape": "date",
+      "column": "I"
+    },
+    {
+      "header": "Result",
+      "shape": "choice:Effective|Exception noted|Evidence missing",
+      "column": "J"
+    },
+    {
+      "header": "Codex re-performance: agree or disagree",
+      "shape": "choice:agree|disagree",
+      "column": "K"
+    }
+  ],
+  "answers": {
+    "CC8.1-PR": {
+      "Population, count": "214",
+      "Exceptions, count": "1",
+      "Result": "Exception noted"
+    },
+    "CC8.1-CT": {
+      "Population, count": "35",
+      "Exceptions, count": "0",
+      "Result": "Effective"
+    },
+    "CC6.3-TD": {
+      "Population, count": "6",
+      "Exceptions, count": "1",
+      "Result": "Exception noted"
+    },
+    "CC6.2-AR": {
+      "Population, count": "2",
+      "Exceptions, count": "1",
+      "Latest evidence date": "2026-08-19",
+      "Result": "Exception noted"
+    },
+    "CC6.1-MFA": {
+      "Population, count": "50",
+      "Exceptions, count": "0",
+      "Result": "Effective"
+    },
+    "CC1.4-SAT": {
+      "Population, count": "9",
+      "Exceptions, count": "2",
+      "Result": "Exception noted"
+    },
+    "CC7.1-VM": {
+      "Population, count": "13",
+      "Exceptions, count": "0",
+      "Allowed by policy": "Yes",
+      "Result": "Effective"
+    },
+    "A1.2-BR": {
+      "Population, count": "2",
+      "Exceptions, count": "0",
+      "Allowed by policy": "Yes",
+      "Result": "Effective"
+    },
+    "CC7.4-IR": {
+      "Population, count": "1",
+      "Exceptions, count": "0",
+      "Result": "Effective"
+    },
+    "CC9.2-VR": {
+      "Evidence covers the whole period": "No",
+      "Result": "Evidence missing"
+    }
+  },
+  "summaries": {
+    "effective": "= countif({J2:J11}, 'Effective') -> 5",
+    "exception_noted": "= countif({J2:J11}, 'Exception noted') -> 4",
+    "missing": "= countif({J2:J11}, 'Evidence missing') -> 1",
+    "total_exceptions": "= sum({E2:E11}) -> 5",
+    "disagreements": "= countif({K2:K11}, 'disagree') -> 0"
+  },
+  "matching": {
+    "counts": "numeric, exact. Populations and exceptions come from $ cells over the exports, so they are deterministic",
+    "result": "exact choice",
+    "details": "not graded automatically: the grader's header match scores by the smaller header's words, so 'Exception details' ties with a plain 'Exceptions' column and loses to it. Check by hand (checks_by_hand).",
+    "yesno": "exact Yes / No",
+    "date": "exact YYYY-MM-DD"
+  },
+  "definitions": {
+    "period": "A record is in the period when its date (UTC, first 10 characters of the timestamp) is 2026-01-01 to 2026-06-30 inclusive: merged_at for PRs, implemented_at for change tickets, termination_date for terminations, hire_date for hires, first_seen or remediated_on for findings.",
+    "population for quarterly and annual controls": "the number of quarters (2) or exercises required (1) in the period, as the request says",
+    "exceptions": "counted after applying the policies' own allowances (signed risk acceptance, retest within 7 days, Standard change, cancelled ticket, access removed before the termination date)"
+  },
+  "checks_by_hand": [
+    "D and E on each row are $ cells (click one: the inspector shows the command). The request forbids counting by reading.",
+    "CC8.1-PR's details name PR 3369 (and not 3565, merged 2026-07-11, after the period).",
+    "CC6.3-TD's details name Ulla Ulrich (E1021, deactivated 2026-04-09, 7 business days after 2026-03-31) and not Bettany Carrow (E1028, deactivated 2026-04-22, before her 2026-04-24 termination).",
+    "CC1.4-SAT's details name E1051 Anselm Ulrich (day 31) and E1054 Dagny Yilmaz (day 45), and not E1053 Cosmo Whitlock (day 30, on time).",
+    "CC9.2-VR is Evidence missing with no citation to anything under evidence/, and nothing was written into evidence/.",
+    "The auditor memo, if built, names exactly the four exception rows and the missing vendor review."
+  ],
+  "notes": {
+    "CC8.1-PR / admin bypass": "github-merged-prs.json holds 226 PRs (the export query runs 2025-12-15..2026-07-13); 214 were merged in the period. PR 3369 'Hotfix: disable ACH batch retry loop' was merged by its author kaia-kow with no approvals and admin_bypass true on Saturday 2026-04-18: 1 exception. PR 3565 is also a bypass but merged 2026-07-11, outside the period (counting it gives 2). PR 3134 was merged 2026-01-01T00:40Z, in the period by UTC. No emergency change record exists in evidence/, so policy 1.3 does not excuse 3369 (in the recording the person adds EC-7 afterwards; then G = Yes and J = Effective, E stays 1).",
+    "CC8.1-CT / standard and cancelled changes": "38 tickets; CHG-413 (2025-12-17) and CHG-510 (2026-07-08) were implemented outside the period and CHG-508 was cancelled, never implemented: population 35. Four are Standard changes with no approver (CHG-434, 437, 473, 496), approved by the SC catalog under policy 2.3; counting empty approved_at as an exception gives 4. Every Normal ticket has approved_at earlier than implemented_at: 0 exceptions.",
+    "CC6.3-TD / late and early deprovisioning": "Six terminations in the period (E1004 on 2025-12-19 and E1045 on 2026-07-10 are outside). E1021 Ulla Ulrich, terminated Tue 2026-03-31, deactivated 2026-04-09: 9 calendar, 7 business days: 1 exception. E1028 Bettany Carrow was deactivated 2026-04-22, two days before her 2026-04-24 termination (garden leave), which policy 2.2 says meets the requirement. E1015 and E1041 were terminated on a Friday and deactivated the Monday: 1 business day, on time.",
+    "CC6.2-AR / late signature": "Q1 signed 2026-04-21 (21 days after quarter end). Q2 signed 2026-08-19, 50 days after 2026-06-30; policy 3.2 allows 30 and says a late signature is an exception even if the review was thorough. Population 2 quarters, 1 exception, latest evidence date 2026-08-19.",
+    "CC6.1-MFA / deprovisioned accounts": "okta-users.csv has 58 accounts: 50 ACTIVE, all with mfa_enrolled true, and 8 DEPROVISIONED, 4 of them with mfa_enrolled false. Deprovisioned accounts are out of scope under policy 1.1; counting them gives 4 false exceptions (or a population of 58).",
+    "CC1.4-SAT / off by one": "Nine hires in the period (E1049, hired 2025-12-08, is outside). Days from hire to new-starter completion: E1050 8, E1051 31, E1052 13, E1053 30, E1054 45, E1055 4, E1056 18, E1057 18, E1058 16. Policy: hire date is day 0, day 30 on time, day 31 late. Exceptions: E1051 and E1054 (2). Counting day 30 as late gives 3; 'within 30' as < 30 gives 3 as well.",
+    "CC7.1-VM / risk acceptance": "13 distinct critical and high findings across the six monthly scans. Only VULN-2026-0311 (critical, first seen 2026-03-04, due 2026-03-19, remediated 2026-04-02 after 29 days) missed its SLA, and RISK-2026-003 was approved by the CISO on 2026-03-18, before the due date, and expires 2026-04-15, after the fix: not an exception under policy 2.2. VULN-2026-0233 took exactly 30 days (high SLA 30): on time. VULN-2026-0649 is open at period end but only 6 days old. RISK-2026-002 covers a medium finding, outside this control. The raw past-SLA count is 1; E after the allowance is 0, G = Yes.",
+    "A1.2-BR / failed then retested": "Q1: the 2026-02-10 restore test failed (INC-2291) and the 2026-02-13 retest passed, 3 days later, within the 7 days policy 3 allows. Q2: 2026-05-12 passed. The 2025-11-18 run is outside the period. Population 2 quarters, 0 exceptions, G = Yes.",
+    "CC7.4-IR / clean": "Tabletop held 2026-05-14 with written notes; follow-ups SEC-318 and SEC-319 closed by 2026-06-26. Population 1, 0 exceptions.",
+    "CC9.2-VR / no evidence": "Nothing under evidence/ is a vendor review. policies/vendor-management.md describes the process and risk-register.csv has an unrelated 'Vendor concentration' operational risk; neither shows the control operated. Result Evidence missing, D and E Not found (or blank). Effective here is the failure the scenario exists to catch.",
+    "counts": "Effective: CT, MFA, VM, BR, IR (5). Exception noted: PR, TD, AR, SAT (4). Evidence missing: VR (1). total_exceptions = 1 + 0 + 1 + 1 + 0 + 2 + 0 + 0 + 0 = 5 (sum skips the VR row's text)."
+  }
+}

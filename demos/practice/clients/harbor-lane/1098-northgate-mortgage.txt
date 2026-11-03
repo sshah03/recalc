@@ -1,0 +1,11 @@
+FORM 1098  MORTGAGE INTEREST STATEMENT                            TAX YEAR 2025
+[ ] VOID   [ ] CORRECTED
+(synthetic sample for demonstration; not a real form; all names and numbers invented)
+
+RECIPIENT'S/LENDER'S name   NORTHGATE MORTGAGE CORP
+RECIPIENT'S TIN             XX-XXX1408
+PAYER'S/BORROWER'S name     HARBOR LANE PROPERTIES LP
+Account number              ....77-4021 (commercial, 14-18 Harbor Lane)
+
+1  Mortgage interest received from payer(s)/borrower(s)   61,804.33
+2  Outstanding mortgage principal                      1,412,000.00
