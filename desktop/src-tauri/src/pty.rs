@@ -521,7 +521,8 @@ mod tests {
         ptys.spawn(
             app.handle().clone(),
             "review".into(),
-            "echo session-output",
+            // Long enough to still be running when it's checked below.
+            "echo session-output; sleep 0.5",
             &std::env::temp_dir().to_string_lossy(),
             term_size(80, 24),
             Mode::Live { tmux: None },
