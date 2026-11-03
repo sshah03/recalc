@@ -53,7 +53,7 @@ if [ "$VERSION" = latest ]; then
 else
   release="$API/repos/$REPO/releases/tags/$VERSION"
 fi
-say "Finding recalc ($VERSION) for $os $arch…"
+say "Finding recalc ($VERSION) for $os ${arch}…"
 curl -fsSL "$release" -o "$tmp/release.json" || fail "couldn't read $release"
 # One field a line, however the JSON is laid out.
 tr ',{}' '\n\n\n' <"$tmp/release.json" >"$tmp/fields"

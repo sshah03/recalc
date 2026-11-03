@@ -65,6 +65,8 @@ function install(home, { env = {}, path } = {}) {
     env: {
       HOME: home,
       PATH: path ?? `${home}/.local/bin:/usr/bin:/bin:/usr/sbin:/sbin`,
+      // A Terminal's locale: under UTF-8, sh reads "$name…" as a longer name.
+      LANG: "en_US.UTF-8",
       RECALC_API: `http://127.0.0.1:${port}`,
       RECALC_REPO: "me/recalc",
       RECALC_APPS: join(home, "Applications"),
