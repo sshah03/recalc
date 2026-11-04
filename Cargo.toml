@@ -1,6 +1,6 @@
 [package]
 name = "recalc"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "A whiteboard you and your coding agent can both write on — and the whiteboard can run commands."
 license = "Apache-2.0"

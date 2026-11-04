@@ -1,6 +1,6 @@
 [package]
 name = "recalc-desktop"
-version = "0.1.1"
+version = "0.1.2"
 edition = "2021"
 description = "recalc — a reactive grid you and your coding agents share, as a desktop app"
 license = "Apache-2.0"
