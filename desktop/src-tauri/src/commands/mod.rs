@@ -17,6 +17,7 @@ mod sessions;
 
 #[cfg(target_os = "macos")]
 pub(crate) use boards::open_path;
+pub(crate) use boards::{boards_home, fresh_folder};
 pub(crate) use sessions::start_session;
 use sessions::{detach_all, picked};
 

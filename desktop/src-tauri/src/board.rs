@@ -418,20 +418,27 @@ pub(crate) fn from_disk_image(exe: &Path) -> bool {
         && parts[3].as_os_str().to_string_lossy().ends_with(".app")
 }
 
-/// The board to open when none was named. Opened from Finder or the Dock the
-/// working directory is `/` (a Linux launcher gives home), never a board, so
-/// reopen the most recent board, or else `~/recalc`.
-pub fn launch_dir() -> PathBuf {
+/// The board to open when none was named, and whether it's a new one.
+/// Opened from Finder or the Dock the working directory is `/` (a Linux
+/// launcher gives home), never a board, so reopen the most recent board, or
+/// else start an Untitled board in the boards folder, as New Board does.
+pub fn launch_dir() -> (PathBuf, bool) {
     let cwd = std::env::current_dir().unwrap_or_else(|_| PathBuf::from("/"));
     let home = dirs::home_dir().unwrap_or_else(|| PathBuf::from("/"));
     if cwd != Path::new("/") && cwd != home {
-        return cwd;
+        return (cwd, false);
     }
-    load_recents()
+    if let Some(recent) = load_recents()
         .into_iter()
         .map(PathBuf::from)
         .find(|d| d.join(".recalc").is_dir())
-        .unwrap_or_else(|| home.join("recalc"))
+    {
+        return (recent, false);
+    }
+    match crate::commands::fresh_folder(&crate::commands::boards_home(), "Untitled board") {
+        Ok(dir) => (dir, true),
+        Err(_) => (home.join("recalc"), false),
+    }
 }
 
 /// On open, a persisted status claiming a live session becomes `detached`
@@ -573,19 +580,21 @@ pub fn set_title(app: &AppHandle, dir: &Path) {
 static SET_UP: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::new(false);
 
 /// Open the board in `dir` and run the app until the window closes.
-pub fn run(dir: PathBuf) {
+pub fn run(dir: PathBuf, fresh: bool) {
     // Launched from the Dock, PATH is launchd's; take the login shell's first.
     recalc::shell_env::adopt_login_shell_path();
     recalc::shell_env::put_own_dir_on_path();
     // Opening a board can spawn runs, which need the runtime.
     let board = tauri::async_runtime::block_on(async { Board::open(&dir) });
-    let board = match board {
+    let mut board = match board {
         Ok(b) => b,
         Err(e) => {
             eprintln!("recalc: {e}");
             std::process::exit(1);
         }
     };
+    // Left untouched, a new launch board goes when another board opens.
+    board.fresh = fresh;
 
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())

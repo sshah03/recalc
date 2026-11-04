@@ -19,7 +19,8 @@ fn main() {
     recalc::crash::install();
     let args = recalc::cli::parse();
     let Some(cmd) = args.cmd else {
-        board::run(board::launch_dir());
+        let (dir, fresh) = board::launch_dir();
+        board::run(dir, fresh);
         return;
     };
     // Like any command-line tool, end quietly when the reader goes
@@ -41,6 +42,6 @@ fn main() {
     drop(rt);
     // `recalc demo` ends by opening a window.
     if let Some(dir) = open {
-        board::run(dir);
+        board::run(dir, false);
     }
 }
