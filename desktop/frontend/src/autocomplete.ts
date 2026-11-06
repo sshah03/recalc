@@ -46,7 +46,7 @@ export interface Typed {
 
 // Builtin agents; custom ones come from [agents] in .recalc/config.toml.
 // Explicit-run, like ! actions.
-const AGENTS = ["claude", "codex"].map((name) => ({
+const AGENTS = ["claude", "codex", "pi"].map((name) => ({
   insert: `${name}('`,
   label: `@${name}('prompt', {A1:B3})`,
   hint: `runs ${name} connected to this board, only when you run it`,

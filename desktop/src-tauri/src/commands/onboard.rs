@@ -1,4 +1,4 @@
-//! A first run that says what's missing: whether Claude Code and Codex are
+//! A first run that says what's missing: whether Claude Code, Codex and pi are
 //! installed and signed in, and a `recalc` command on the PATH a terminal
 //! sees (Install Command Line Tool…), as VS Code does for `code`.
 
@@ -23,20 +23,22 @@ pub(crate) async fn agent_status(state: State<'_, Shared>) -> Result<Vec<Value>,
             "claude",
             "Claude Code",
             "https://claude.com/claude-code",
-            ["auth", "status"],
+            &["auth", "status"] as &[&str],
         ),
         (
             "codex",
             "Codex",
             "https://github.com/openai/codex",
-            ["login", "status"],
+            &["login", "status"],
         ),
+        // pi signs in per provider and has no one command that says so.
+        ("pi", "pi", "https://pi.dev", &[]),
     ] {
         let wanted = paths.get(name).cloned().unwrap_or_else(|| name.to_string());
         let found = recalc::shell_env::which(&wanted);
         let signed_in = match &found {
-            Some(exe) => signed_in(exe, &status).await,
-            None => None,
+            Some(exe) if !status.is_empty() => signed_in(exe, status).await,
+            _ => None,
         };
         out.push(json!({
             "name": name,

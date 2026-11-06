@@ -427,6 +427,35 @@ fn claude_session_in(home: &Path, id: &str) -> bool {
             .any(|project| project.path().join(&file).is_file())
 }
 
+/// Whether pi has conversation `id` here. pi keeps one file per session,
+/// `<sessions>/<folder>/<time>_<id>.jsonl`, under `PI_CODING_AGENT_SESSION_DIR`
+/// or the agent directory (`PI_CODING_AGENT_DIR`, else `~/.pi/agent`).
+pub fn pi_session_exists(id: &str) -> bool {
+    let sessions = std::env::var_os("PI_CODING_AGENT_SESSION_DIR")
+        .map(PathBuf::from)
+        .or_else(|| {
+            std::env::var_os("PI_CODING_AGENT_DIR").map(|d| PathBuf::from(d).join("sessions"))
+        })
+        .or_else(|| std::env::var_os("HOME").map(|h| PathBuf::from(h).join(".pi/agent/sessions")));
+    sessions.is_some_and(|dir| pi_session_in(&dir, id))
+}
+
+fn pi_session_in(sessions: &Path, id: &str) -> bool {
+    let suffix = format!("_{id}.jsonl");
+    !id.is_empty()
+        && std::fs::read_dir(sessions)
+            .into_iter()
+            .flatten()
+            .flatten()
+            .flat_map(|folder| {
+                std::fs::read_dir(folder.path())
+                    .into_iter()
+                    .flatten()
+                    .flatten()
+            })
+            .any(|f| f.file_name().to_string_lossy().ends_with(&suffix))
+}
+
 /// What one Claude Code session used, as Claude Code itself recorded it when
 /// it ended: the last session that ran in a folder.
 #[derive(Debug, Clone, PartialEq, serde::Serialize, serde::Deserialize)]
@@ -488,6 +517,7 @@ pub fn conversation_exists(agent: &str, id: &str) -> bool {
     match agent {
         "claude" => claude_session_exists(id),
         "codex" => codex_session_exists(id),
+        "pi" => pi_session_exists(id),
         _ => true,
     }
 }
@@ -631,6 +661,28 @@ mod tests {
             conversation_exists("my-own-agent", "anything"),
             "agents recalc can't look into are taken at their word"
         );
+    }
+
+    #[test]
+    fn a_pi_conversation_is_found_by_its_file_name() {
+        let sessions = tempfile::tempdir().unwrap();
+        let folder = sessions.path().join("--Users-me-board--");
+        std::fs::create_dir_all(&folder).unwrap();
+        std::fs::write(
+            folder.join("2026-11-05T19-28-18-005Z_01a1ad2e-f453.jsonl"),
+            "{}",
+        )
+        .unwrap();
+        assert!(pi_session_in(sessions.path(), "01a1ad2e-f453"));
+        assert!(
+            !pi_session_in(sessions.path(), "f453"),
+            "the whole id, not its end"
+        );
+        assert!(!pi_session_in(sessions.path(), ""));
+        assert!(!pi_session_in(
+            &sessions.path().join("nowhere"),
+            "01a1ad2e-f453"
+        ));
     }
 
     #[test]

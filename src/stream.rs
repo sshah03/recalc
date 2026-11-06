@@ -170,10 +170,71 @@ pub async fn run_codex(
     cwd: &Path,
     env: &HashMap<String, String>,
     timeout: Duration,
+    cancel: oneshot::Receiver<()>,
+    groups: &Groups,
+    task: &str,
+    on_event: impl Fn(Event),
+) -> Result<Output, String> {
+    let read = |event: &Value| {
+        let kind = event["type"].as_str().unwrap_or_default();
+        let item = event["item"]["type"].as_str().unwrap_or_default();
+        let doing = (kind == "item.started")
+            .then(|| describe_codex(&event["item"]))
+            .flatten();
+        let keep = matches!(
+            kind,
+            "thread.started" | "turn.completed" | "turn.failed" | "error"
+        ) || (kind == "item.completed" && item == "agent_message");
+        (doing, keep)
+    };
+    run_events(
+        shell, command, cwd, env, timeout, cancel, groups, task, on_event, read,
+    )
+    .await
+}
+
+/// Runs `pi --mode json`, reporting activity as events arrive. pi can't ask a
+/// person mid-run. stdout is the event lines `agent::parse_output` reads.
+#[allow(clippy::too_many_arguments)]
+pub async fn run_pi(
+    shell: &str,
+    command: &str,
+    cwd: &Path,
+    env: &HashMap<String, String>,
+    timeout: Duration,
+    cancel: oneshot::Receiver<()>,
+    groups: &Groups,
+    task: &str,
+    on_event: impl Fn(Event),
+) -> Result<Output, String> {
+    let read = |event: &Value| {
+        let kind = event["type"].as_str().unwrap_or_default();
+        let doing = (kind == "tool_execution_start")
+            .then(|| describe_pi(&event["toolName"], &event["args"]));
+        let keep =
+            kind == "session" || (kind == "message_end" && event["message"]["role"] == "assistant");
+        (doing, keep)
+    };
+    run_events(
+        shell, command, cwd, env, timeout, cancel, groups, task, on_event, read,
+    )
+    .await
+}
+
+/// Runs an agent that takes its prompt on stdin and prints JSON events.
+/// `read` says what an event shows as activity, and whether the parser needs it.
+#[allow(clippy::too_many_arguments)]
+async fn run_events(
+    shell: &str,
+    command: &str,
+    cwd: &Path,
+    env: &HashMap<String, String>,
+    timeout: Duration,
     mut cancel: oneshot::Receiver<()>,
     groups: &Groups,
     task: &str,
     on_event: impl Fn(Event),
+    read: impl Fn(&Value) -> (Option<String>, bool),
 ) -> Result<Output, String> {
     let start = Instant::now();
     let exec::Started {
@@ -181,7 +242,7 @@ pub async fn run_codex(
         pgid,
         member: _member,
     } = exec::spawn(shell, command, cwd, env, groups, true).await?;
-    // The prompt, then EOF: `codex exec -` reads it whole before starting.
+    // The prompt, then EOF: both read it whole before starting.
     if let Some(mut stdin) = child.stdin.take() {
         let _ = stdin.write_all(task.as_bytes()).await;
     }
@@ -211,18 +272,11 @@ pub async fn run_codex(
         let Ok(event) = serde_json::from_str::<Value>(&line) else {
             continue;
         };
-        let kind = event["type"].as_str().unwrap_or_default();
-        if kind == "item.started" {
-            if let Some(what) = describe_codex(&event["item"]) {
-                on_event(Event::Activity(relative(&what, cwd)));
-            }
+        let (doing, keep) = read(&event);
+        if let Some(what) = doing {
+            on_event(Event::Activity(relative(&what, cwd)));
         }
-        let item = event["item"]["type"].as_str().unwrap_or_default();
-        if matches!(
-            kind,
-            "thread.started" | "turn.completed" | "turn.failed" | "error"
-        ) || (kind == "item.completed" && item == "agent_message")
-        {
+        if keep {
             kept.push(line);
         }
     }
@@ -280,6 +334,29 @@ fn describe_codex(item: &Value) -> Option<String> {
     } else {
         what
     })
+}
+
+/// A few words for a pi tool call, as Claude Code's are described.
+fn describe_pi(name: &Value, args: &Value) -> String {
+    let arg = |k: &str| args[k].as_str().map(first_line);
+    let what = match name.as_str().unwrap_or_default() {
+        "bash" => arg("command").map(|c| format!("Bash: {c}")),
+        "read" => arg("path").map(|p| format!("Read {p}")),
+        "edit" => arg("path").map(|p| format!("Edit {p}")),
+        "write" => arg("path").map(|p| format!("Write {p}")),
+        "ls" => Some(format!(
+            "List {}",
+            arg("path").unwrap_or_else(|| ".".into())
+        )),
+        "grep" => arg("pattern").map(|p| format!("Grep {p}")),
+        "find" => arg("pattern").map(|p| format!("Find {p}")),
+        _ => None,
+    };
+    match what {
+        Some(w) if w.chars().count() > 80 => w.chars().take(79).collect::<String>() + "…",
+        Some(w) => w,
+        None => describe(name, args),
+    }
 }
 
 /// A few words for a tool call: `Bash: cargo test`, `Read src/main.rs`.
@@ -609,6 +686,25 @@ mod tests {
         assert!(
             !out.stdout.contains("command_execution"),
             "command items aren't kept"
+        );
+    }
+
+    #[test]
+    fn pi_tool_calls_read_as_claude_codes_do() {
+        let d = |name: &str, args: Value| describe_pi(&json!(name), &args);
+        assert_eq!(
+            d("read", json!({"path": "src/main.rs"})),
+            "Read src/main.rs"
+        );
+        assert_eq!(
+            d("bash", json!({"command": "cargo test\nmore"})),
+            "Bash: cargo test"
+        );
+        assert_eq!(d("grep", json!({"pattern": "TODO"})), "Grep TODO");
+        assert_eq!(d("ls", json!({})), "List .");
+        assert_eq!(
+            d("mcp__recalc__get_cell", json!({"name": "A1"})),
+            "recalc get_cell A1"
         );
     }
 

@@ -43,7 +43,7 @@ const DEFAULT_BLOCK_MS: u64 = 45_000;
 const MAX_BLOCK_MS: u64 = 50_000;
 
 /// Board overview sent to every MCP client at initialize.
-const INSTRUCTIONS: &str = include_str!("../prompts/instructions.md");
+pub(crate) const INSTRUCTIONS: &str = include_str!("../prompts/instructions.md");
 
 pub struct Server {
     engine: Engine,

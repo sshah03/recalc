@@ -62,7 +62,7 @@ export function agentNote(): HTMLElement {
         lead.className = "agent-note-lead";
         lead.textContent = ready.length
           ? "An agent is installed but not signed in."
-          : "recalc runs the AI agents you already use. Install Claude Code or Codex and sign in once to use agent cells and the Driver. Formulas and commands work without one.";
+          : "recalc runs the AI agents you already use. Install Claude Code, Codex or pi and sign in once to use agent cells and the Driver. Formulas and commands work without one.";
         const rows = (ready.length ? signedOut : agents).map((a) => {
           const r = document.createElement("div");
           r.className = "agent-note-row";

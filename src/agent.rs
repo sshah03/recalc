@@ -24,7 +24,8 @@ pub struct Call {
 /// Headless templates; `[agents]` in config.toml adds to and overrides them.
 /// Placeholders are substituted shell-quoted: `{task}` the prompt, `{mcp}`
 /// the MCP config path, `{recalc}` this binary, `{mcpargs}` the `recalc mcp`
-/// arguments as a JSON array (naming the cell for a headless run).
+/// arguments as a JSON array (naming the cell for a headless run), `{piext}`
+/// the pi extension that connects pi to the config (`Store::write_mcp_config`).
 const BUILTIN: &[(&str, &str)] = &[
     // Claude: the prompt goes on stdin; other tools are asked of the person
     // over stream-json (`stream::run`). Reads are pre-approved only inside
@@ -43,6 +44,14 @@ const BUILTIN: &[(&str, &str)] = &[
         "codex",
         "codex exec {model} --skip-git-repo-check --json -c mcp_servers.recalc.command={recalc} -c mcp_servers.recalc.args={mcpargs} -c 'mcp_servers.recalc.default_tools_approval_mode=\"approve\"' -",
     ),
+    // pi: the prompt goes on stdin and events come out as JSON lines. pi has no
+    // flag for an MCP config, so `{piext}`, an extension recalc writes beside
+    // the config, connects it. A headless run can read and search files and
+    // use the board's tools: no shell, no edits.
+    (
+        "pi",
+        "pi --mode json {model} -e {piext} --recalc-mcp {mcp} --tools read,grep,find,ls,'mcp__recalc__*'",
+    ),
 ];
 
 /// Interactive templates for live sessions in a PTY. `{session}` is the
@@ -60,6 +69,10 @@ const SESSION_BUILTIN: &[(&str, &str)] = &[
         "codex",
         "codex {model} -c mcp_servers.recalc.command={recalc} -c 'mcp_servers.recalc.args=[\"mcp\"]' -c 'mcp_servers.recalc.env_vars=[\"RECALC_AGENT\"]' -c 'mcp_servers.recalc.default_tools_approval_mode=\"approve\"' {task}",
     ),
+    (
+        "pi",
+        "pi {model} --session-id {session} -e {piext} --recalc-mcp {mcp} {task}",
+    ),
 ];
 
 /// Templates that resume a cell's conversation in a terminal. A custom
@@ -70,6 +83,7 @@ const RESUME_BUILTIN: &[(&str, &str)] = &[
         "codex",
         "codex resume {model} {session} -c mcp_servers.recalc.command={recalc} -c 'mcp_servers.recalc.args=[\"mcp\"]' -c 'mcp_servers.recalc.env_vars=[\"RECALC_AGENT\"]' -c 'mcp_servers.recalc.default_tools_approval_mode=\"approve\"'",
     ),
+    ("pi", "pi --session {session} {model} -e {piext} --recalc-mcp {mcp}"),
 ];
 
 /// Templates for the driver: an interactive agent with no cell, connected as
@@ -84,6 +98,10 @@ const DRIVER_BUILTIN: &[(&str, &str)] = &[
         "codex",
         "codex -c mcp_servers.recalc.command={recalc} -c 'mcp_servers.recalc.args=[\"mcp\", \"--id\", \"driver\"]' -c 'mcp_servers.recalc.default_tools_approval_mode=\"approve\"' -c {instructions}",
     ),
+    (
+        "pi",
+        "pi --session-id {session} -e {piext} --recalc-mcp {mcp} --append-system-prompt {prompt}",
+    ),
 ];
 
 /// Templates that continue the driver's conversation after its terminal is
@@ -96,6 +114,10 @@ const DRIVER_RESUME_BUILTIN: &[(&str, &str)] = &[
     (
         "codex",
         "codex resume {session} -c mcp_servers.recalc.command={recalc} -c 'mcp_servers.recalc.args=[\"mcp\", \"--id\", \"driver\"]' -c 'mcp_servers.recalc.default_tools_approval_mode=\"approve\"' -c {instructions}",
+    ),
+    (
+        "pi",
+        "pi --session {session} -e {piext} --recalc-mcp {mcp} --append-system-prompt {prompt}",
     ),
 ];
 
@@ -275,6 +297,7 @@ pub fn footer(name: &str, agent: &str, live: bool, tools: bool) -> String {
     let read = match agent {
         "claude" => "Read files with the Read and Grep tools; a shell command needs a person's permission and waits for it. ",
         "codex" => "Read files with your shell (cat, sed, rg); reading needs no one's permission. ",
+        "pi" => "Read files with the read, grep, find and ls tools; reading needs no one's permission. ",
         _ => "",
     };
     let answer = if live {
@@ -314,6 +337,7 @@ pub fn missing_program(agent: &str) -> String {
     let install = match agent {
         "claude" => "Claude Code isn't installed, or recalc can't find it. Install it (https://claude.com/claude-code, or `npm install -g @anthropic-ai/claude-code`) and run `claude` once to sign in",
         "codex" => "Codex isn't installed, or recalc can't find it. Install it (`npm install -g @openai/codex`) and run `codex` once to sign in",
+        "pi" => "pi isn't installed, or recalc can't find it. Install it (https://pi.dev, or `npm install -g @earendil-works/pi-coding-agent`), then run `pi` once and /login to sign in",
         _ => return format!("{agent}'s command wasn't found; check its template under [agents] in .recalc/config.toml"),
     };
     format!("{install}. If it's installed somewhere unusual, set `{agent} = \"/path/to/{agent}\"` under [paths] in .recalc/config.toml.")
@@ -487,7 +511,7 @@ fn main_model(usage: &Value) -> Option<String> {
     (!id.is_empty()).then_some(id)
 }
 
-/// Parse an agent's stdout: Claude Code's result object, Codex's JSONL
+/// Parse an agent's stdout: Claude Code's result object, Codex's or pi's JSONL
 /// events, or else plain text as the answer. Err is the agent's own error.
 pub fn parse_output(stdout: &str) -> Result<Parsed, AgentError> {
     let text = stdout.trim();
@@ -558,6 +582,66 @@ pub fn parse_output(stdout: &str) -> Result<Parsed, AgentError> {
                         model: None,
                     });
                 }
+                // pi (`--mode json`): its session header, then each assistant
+                // message whole as it ends, with that response's usage.
+                "session" => {
+                    session_id = ev["id"].as_str().map(str::to_string);
+                }
+                "message_end" if ev["message"]["role"] == "assistant" => {
+                    let m = &ev["message"];
+                    let u = &m["usage"];
+                    turns += 1;
+                    let prev: Usage = usage.take().unwrap_or_default();
+                    let n = |k: &str| u[k].as_u64().unwrap_or(0);
+                    let cost = u["cost"]["total"].as_f64();
+                    usage = Some(Usage {
+                        input_tokens: prev.input_tokens
+                            + n("input")
+                            + n("cacheRead")
+                            + n("cacheWrite"),
+                        output_tokens: prev.output_tokens + n("output"),
+                        cost_usd: match (prev.cost_usd, cost) {
+                            (None, None) => None,
+                            (a, b) => Some(a.unwrap_or(0.0) + b.unwrap_or(0.0)),
+                        },
+                        turns: Some(turns),
+                        model: m["responseModel"]
+                            .as_str()
+                            .or(m["model"].as_str())
+                            .map(str::to_string)
+                            .or(prev.model),
+                    });
+                    if m["stopReason"] == "error" {
+                        // pi passes an HTTP failure on as `429: <the API's body>`.
+                        let raw = m["errorMessage"].as_str().unwrap_or_default();
+                        let (status, body) = match raw.split_once(": ") {
+                            Some((code, body))
+                                if code.len() == 3 && code.bytes().all(|b| b.is_ascii_digit()) =>
+                            {
+                                (code.parse().ok(), body)
+                            }
+                            _ => (None, raw),
+                        };
+                        let inner = serde_json::from_str::<Value>(body).ok();
+                        let text = inner
+                            .as_ref()
+                            .and_then(|v| v["error"]["message"].as_str().or(v["message"].as_str()))
+                            .unwrap_or(body);
+                        error = Some(classify(status, text));
+                    } else {
+                        let text: Vec<&str> = m["content"]
+                            .as_array()
+                            .into_iter()
+                            .flatten()
+                            .filter(|b| b["type"] == "text")
+                            .filter_map(|b| b["text"].as_str())
+                            .collect();
+                        let text = text.join("\n");
+                        if !text.trim().is_empty() {
+                            answer = Some(text.trim().to_string());
+                        }
+                    }
+                }
                 "turn.failed" | "error" => {
                     let raw = ev["error"]["message"]
                         .as_str()
@@ -586,6 +670,14 @@ pub fn parse_output(stdout: &str) -> Result<Parsed, AgentError> {
                 text: answer,
                 usage,
                 session_id,
+            });
+        }
+        // A whole run with nothing to say: its events aren't an answer.
+        if session_id.is_some() {
+            return Err(AgentError {
+                message: "The agent finished without an answer. Resume its conversation to see what it did, or run it again.".into(),
+                rate_limited: false,
+                resets_at: None,
             });
         }
     }
@@ -627,7 +719,10 @@ fn with_model(template: &str, call: &Call, setup: Setup<'_>) -> Result<String, S
             call.agent
         )),
         Some(m) => Ok(template.replace("{model}", &format!("--model {}", shell_quote(&m)))),
-        None => Ok(template.replace("{model} ", "").replace("{model}", "")),
+        None => Ok(template
+            .replace("{model} ", "")
+            .replace(" {model}", "")
+            .replace("{model}", "")),
     }
 }
 
@@ -689,6 +784,9 @@ pub enum Protocol {
     /// Codex's `exec --json` events (`stream::run_codex`): activity only.
     /// The prompt goes on stdin (`exec -`).
     CodexEvents,
+    /// pi's `--mode json` events (`stream::run_pi`): activity only. The
+    /// prompt goes on stdin.
+    PiEvents,
     /// Anything else: run it, read what it printed.
     Plain,
 }
@@ -714,11 +812,15 @@ pub fn protocol(agent: &str, setup: Setup<'_>) -> Protocol {
             {
                 Protocol::CodexEvents
             }
+            Some((_, "pi", _)) if t.contains("--mode json") && !t.contains("{task}") => {
+                Protocol::PiEvents
+            }
             _ => Protocol::Plain,
         },
         None => match agent {
             "claude" => Protocol::ClaudeStream,
             "codex" => Protocol::CodexEvents,
+            "pi" => Protocol::PiEvents,
             _ => Protocol::Plain,
         },
     }
@@ -746,7 +848,7 @@ pub fn resume_command(
                 .iter()
                 .find(|(n, _)| *n == agent)
                 .ok_or_else(|| {
-                    format!("recalc knows how to resume claude and codex, not {agent:?}")
+                    format!("recalc knows how to resume claude, codex and pi, not {agent:?}")
                 })?;
             relocate(t, agent, setup.paths)
         }
@@ -756,7 +858,7 @@ pub fn resume_command(
 }
 
 /// How a custom template's conversation continues: its `[resume]` entry, or,
-/// for a template that runs `claude` or `codex exec` (after any `cd dir &&`),
+/// for a template that runs `claude`, `codex exec` or `pi` (after any `cd dir &&`),
 /// that program's resume from the same directory, with the board's tools only
 /// if the template gave them.
 fn custom_resume(agent: &str, template: &str, setup: Setup<'_>) -> Result<String, String> {
@@ -774,23 +876,24 @@ fn custom_resume(agent: &str, template: &str, setup: Setup<'_>) -> Result<String
             .find(|(n, _)| *n == program)
             .map_or("", |(_, t)| t),
         ("claude", false) => "claude --resume {session} {model}",
+        ("pi", false) => "pi --session {session} {model}",
         (_, false) => "codex resume {model} {session}",
     };
     Ok(format!("{prefix}{spelled}{}", &resume[program.len()..]))
 }
 
-/// The builtin program an agent's conversations belong to (`claude` or
-/// `codex`), for finding them on disk. None for a custom template that runs
+/// The builtin program an agent's conversations belong to (`claude`, `codex`
+/// or `pi`), for finding them on disk. None for a custom template that runs
 /// something else.
 pub fn program_of(agent: &str, setup: Setup<'_>) -> Option<&'static str> {
     match setup.agents.get(agent) {
         Some(t) => runs_builtin(t).map(|(_, program, _)| program),
-        None => ["claude", "codex"].into_iter().find(|p| *p == agent),
+        None => ["claude", "codex", "pi"].into_iter().find(|p| *p == agent),
     }
 }
 
 /// A custom template's `cd dir && ` prefix, the builtin it runs (`claude`,
-/// or `codex` for `codex exec`), and how the template spells that program.
+/// `pi`, or `codex` for `codex exec`), and how the template spells that program.
 fn runs_builtin(template: &str) -> Option<(&str, &'static str, &str)> {
     let mut rest = template.trim_start();
     while rest.starts_with("cd ") {
@@ -801,6 +904,7 @@ fn runs_builtin(template: &str) -> Option<(&str, &'static str, &str)> {
     let spelled = words.next()?;
     match spelled.rsplit('/').next()? {
         "claude" => Some((prefix, "claude", spelled)),
+        "pi" => Some((prefix, "pi", spelled)),
         "codex" if words.next() == Some("exec") => Some((prefix, "codex", spelled)),
         _ => None,
     }
@@ -818,7 +922,7 @@ pub fn driver_command(
 ) -> Result<String, String> {
     let template = template(agent, setup, DRIVER_BUILTIN).map_err(|_| {
         format!(
-            "driver = {agent:?} in .recalc/config.toml names no agent recalc knows; use claude, codex, or a name under [agents]"
+            "driver = {agent:?} in .recalc/config.toml names no agent recalc knows; use claude, codex, pi, or a name under [agents]"
         )
     })?;
     Ok(fill_driver(
@@ -846,7 +950,7 @@ pub fn driver_resume_command(
                 .iter()
                 .find(|(n, _)| *n == agent)
                 .ok_or_else(|| {
-                    format!("recalc knows how to resume claude and codex, not {agent:?}")
+                    format!("recalc knows how to resume claude, codex and pi, not {agent:?}")
                 })?;
             relocate(t, agent, setup.paths)
         }
@@ -916,7 +1020,7 @@ fn template(agent: &str, setup: Setup<'_>, builtin: &[(&str, &str)]) -> Result<S
         None => {
             let (_, t) = builtin.iter().find(|(n, _)| *n == agent).ok_or_else(|| {
                 format!(
-                    "unknown agent {agent:?}: builtins are claude and codex; add `{agent} = \"...\"` under [agents] in .recalc/config.toml"
+                    "unknown agent {agent:?}: builtins are claude, codex and pi; add `{agent} = \"...\"` under [agents] in .recalc/config.toml"
                 )
             })?;
             Ok(relocate(t, agent, setup.paths))
@@ -940,7 +1044,13 @@ fn substitute(
     let recalc = std::env::current_exe()
         .map(|p| p.to_string_lossy().into_owned())
         .unwrap_or_else(|_| "recalc".to_string());
+    // Written beside every MCP config (`Store::write_mcp_config`).
+    let piext = std::path::Path::new(mcp_config)
+        .with_file_name(crate::store::PI_EXTENSION)
+        .to_string_lossy()
+        .into_owned();
     template
+        .replace("{piext}", &shell_quote(&piext))
         .replace("{mcpargs}", &shell_quote(mcp_args))
         .replace("{mcp}", &shell_quote(mcp_config))
         .replace("{recalc}", &shell_quote(&recalc))
@@ -1536,6 +1646,120 @@ mod tests {
                 "{v}: the API's message, not the JSON it came wrapped in"
             );
         }
+    }
+
+    /// pi's `--mode json` output, recorded against a scripted model. The
+    /// system prompt's lines (every tool's schema) are left out of the record.
+    #[test]
+    fn recorded_pi_output_parses() {
+        let v = "pi-1.5.0";
+        let ok = parse_output(&fixture(&format!("{v}/ok.jsonl"))).unwrap();
+        assert_eq!(ok.text, "pong");
+        assert!(ok.session_id.is_some());
+        let usage = ok.usage.unwrap();
+        assert_eq!(usage.turns, Some(1));
+        assert_eq!(usage.model.as_deref(), Some("m"));
+        assert!(usage.input_tokens > 0 && usage.cost_usd.unwrap() > 0.0);
+
+        // A recalc tool call, then the answer: usage is summed over both.
+        let tools = parse_output(&fixture(&format!("{v}/tools.jsonl"))).unwrap();
+        assert!(tools.text.starts_with("A1 says hello"), "{}", tools.text);
+        let usage = tools.usage.unwrap();
+        assert_eq!(usage.turns, Some(2));
+        assert_eq!(usage.input_tokens, 2000);
+
+        // pi exits 0 and reports the failure in its last message.
+        let limit = parse_output(&fixture(&format!("{v}/rate-limit.jsonl"))).unwrap_err();
+        assert!(limit.rate_limited);
+        assert_eq!(
+            limit.message, "Rate limit reached for requests",
+            "the API's message, not the JSON it came wrapped in"
+        );
+    }
+
+    /// A small local model on pi once ended with an empty message; the cell
+    /// showed pi's raw events as its value.
+    #[test]
+    fn a_run_that_ends_without_an_answer_says_so() {
+        let pi = r#"{"type":"session","version":3,"id":"s-1","cwd":"/b"}
+{"type":"message_end","message":{"role":"assistant","content":[],"stopReason":"stop","usage":{"input":10,"output":0,"cost":{"total":0}}}}"#;
+        let codex = r#"{"type":"thread.started","thread_id":"t-1"}
+{"type":"turn.completed","usage":{"input_tokens":10,"output_tokens":0}}"#;
+        for out in [pi, codex] {
+            let e = parse_output(out).unwrap_err();
+            assert!(e.message.contains("without an answer"), "{}", e.message);
+            assert!(!e.rate_limited);
+        }
+        // Lines that aren't an agent's run are still plain text.
+        assert_eq!(
+            parse_output(r#"{"type":"note"}"#).unwrap().text,
+            r#"{"type":"note"}"#
+        );
+    }
+
+    #[test]
+    fn pi_runs_connected_through_its_extension() {
+        let none = HashMap::new();
+        let set = setup(&none, &none);
+        let call = parse("pi('x', model='sonnet')").unwrap();
+        let cmd = command(&call, set, "t", "/b/.recalc/mcp-cell-B2.json", "B2", 1).unwrap();
+        assert_eq!(
+            cmd,
+            "pi --mode json --model 'sonnet' -e '/b/.recalc/pi-recalc.ts' --recalc-mcp '/b/.recalc/mcp-cell-B2.json' --tools read,grep,find,ls,'mcp__recalc__*'"
+        );
+        assert_eq!(protocol("pi", set), Protocol::PiEvents);
+        assert_eq!(program_of("pi", set), Some("pi"));
+
+        // A session takes recalc's id, and resumes by it.
+        let sess = session_command(&call, set, "do it", "/b/.recalc/mcp.json", "s-1").unwrap();
+        assert_eq!(
+            sess,
+            "pi --model 'sonnet' --session-id 's-1' -e '/b/.recalc/pi-recalc.ts' --recalc-mcp '/b/.recalc/mcp.json' 'do it'"
+        );
+        assert!(session_takes_id("pi", set));
+        let resume = resume_command(&call, set, "s-1", "/b/.recalc/mcp.json").unwrap();
+        assert!(
+            resume.starts_with("pi --session 's-1' --model 'sonnet' -e"),
+            "{resume}"
+        );
+
+        // The driver gets the role as a system-prompt file.
+        let drv = driver_command(
+            "pi",
+            set,
+            "/b/.recalc/mcp-driver.json",
+            "role",
+            "/b/role.md",
+            "d-1",
+        )
+        .unwrap();
+        assert!(
+            drv.starts_with("pi --session-id 'd-1' -e '/b/.recalc/pi-recalc.ts'"),
+            "{drv}"
+        );
+        assert!(
+            drv.ends_with("--append-system-prompt '/b/role.md'"),
+            "{drv}"
+        );
+        assert!(driver_takes_id("pi", set));
+        let drv = driver_resume_command("pi", set, "/m.json", "role", "/b/role.md", "d-1").unwrap();
+        assert!(drv.starts_with("pi --session 'd-1'"), "{drv}");
+
+        // A custom template written as the builtin talks and resumes as pi.
+        let mut agents = HashMap::new();
+        agents.insert(
+            "local".to_string(),
+            "pi --mode json --model ollama/qwen -e {piext} --recalc-mcp {mcp}".to_string(),
+        );
+        agents.insert("plain".to_string(), "pi -p {task}".to_string());
+        let custom = setup(&agents, &none);
+        assert_eq!(protocol("local", custom), Protocol::PiEvents);
+        assert_eq!(protocol("plain", custom), Protocol::Plain);
+        let resume = resume_command(&parse("plain('x')").unwrap(), custom, "s-2", "/m").unwrap();
+        assert_eq!(resume, "pi --session 's-2'");
+
+        assert!(footer("B2", "pi", false, true).contains("read, grep, find and ls"));
+        assert!(missing_program("pi").contains("pi.dev"));
     }
 
     #[test]

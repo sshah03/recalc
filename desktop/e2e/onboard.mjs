@@ -63,15 +63,16 @@ const startScreen = async (app) => {
 const note = (app) => app.page.locator("#overlay .agent-note");
 
 await check("the start screen says no agent is installed, with a way to get each", async () => {
-  const app = await open(boardWith({ claude: "/nonexistent/claude", codex: "/nonexistent/codex" }));
+  const app = await open(boardWith({ claude: "/nonexistent/claude", codex: "/nonexistent/codex", pi: "/nonexistent/pi" }));
   try {
     await startScreen(app);
     await until(() => note(app).isVisible(), { what: "the agent note" });
     const text = await note(app).textContent();
-    assert.match(text, /Install Claude Code or Codex/);
+    assert.match(text, /Install Claude Code, Codex or pi/);
     assert.match(text, /Claude Code\s*Not installed/);
     assert.match(text, /Codex\s*Not installed/);
-    assert.deepEqual(await note(app).locator("button").allTextContents(), ["Get Claude Code", "Get Codex", "Check Again"]);
+    assert.match(text, /pi\s*Not installed/);
+    assert.deepEqual(await note(app).locator("button").allTextContents(), ["Get Claude Code", "Get Codex", "Get pi", "Check Again"]);
     assert.ok(await app.page.locator("#overlay .start-pane:not([hidden]) .agent-note + .start-cards").count(), "above the cards");
     await app.shot("onboard-no-agents");
   } finally {
@@ -80,7 +81,7 @@ await check("the start screen says no agent is installed, with a way to get each
 });
 
 await check("an agent installed but signed out is named, with how to sign in; the ready one isn't", async () => {
-  const app = await open(boardWith({ claude: CLAUDE_OUT, codex: CODEX_IN }));
+  const app = await open(boardWith({ claude: CLAUDE_OUT, codex: CODEX_IN, pi: "/nonexistent/pi" }));
   try {
     await startScreen(app);
     await until(() => note(app).isVisible(), { what: "the agent note" });
@@ -94,11 +95,11 @@ await check("an agent installed but signed out is named, with how to sign in; th
 });
 
 await check("with an agent ready, the start screen says nothing about agents", async () => {
-  const app = await open(boardWith({ claude: CLAUDE_IN, codex: "/nonexistent/codex" }));
+  const app = await open(boardWith({ claude: CLAUDE_IN, codex: "/nonexistent/codex", pi: "/nonexistent/pi" }));
   try {
     await startScreen(app);
     const st = await app.call("agent_status");
-    assert.deepEqual(st.map((a) => [a.name, a.signed_in]), [["claude", true], ["codex", null]]);
+    assert.deepEqual(st.map((a) => [a.name, a.signed_in]), [["claude", true], ["codex", null], ["pi", null]]);
     await app.page.waitForTimeout(500);
     assert.ok(await note(app).isHidden());
   } finally {
@@ -188,6 +189,8 @@ async function feed(version) {
   await new Promise((r) => server.listen(0, "127.0.0.1", r));
   return { url: `http://127.0.0.1:${server.address().port}/latest.json`, close: () => server.close() };
 }
+/** The app's own version, as the update dialog states it. */
+const VERSION = JSON.parse(readFileSync(join(here, "../src-tauri/tauri.conf.json"), "utf8")).version;
 const updates = (app) => app.page.locator("#overlay .onboard");
 
 await check("Check for Updates: built from source it says so; on the newest version it says so", async () => {
@@ -205,7 +208,7 @@ await check("Check for Updates: built from source it says so; on the newest vers
   try {
     await app.page.keyboard.press("Escape");
     await app.menu("app.updates");
-    await until(async () => /You have the newest version, recalc 0\.1\.0/.test(await updates(app).textContent()), { what: "up to date" });
+    await until(async () => new RegExp(`You have the newest version, recalc ${VERSION.replaceAll(".", "\\.")}`).test(await updates(app).textContent()), { what: "up to date" });
   } finally {
     await app.close();
     f.close();
@@ -221,7 +224,7 @@ await check("an update found by the daily check shows in the status bar; its not
     await until(() => app.page.locator("#status-update").isVisible(), { what: "the status bar's update", timeout: 20000 });
     assert.equal(await app.page.locator("#status-update").textContent(), "Update to 9.9.9");
     await app.page.click("#status-update");
-    await until(async () => /recalc 9\.9\.9 is available\. You have 0\.1\.0\./.test(await updates(app).textContent()), { what: "the dialog" });
+    await until(async () => new RegExp(`recalc 9\\.9\\.9 is available\\. You have ${VERSION.replaceAll(".", "\\.")}\\.`).test(await updates(app).textContent()), { what: "the dialog" });
     assert.equal(await app.page.locator("#overlay .update-notes").textContent(), "Fixes the thing.\nAnd another.");
     await app.call("set_cell", { name: "A1", content: "still here" });
     await app.page.locator("#overlay button", { hasText: /^Restart to Update$/ }).click();

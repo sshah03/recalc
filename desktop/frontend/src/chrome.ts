@@ -250,7 +250,7 @@ export async function openConnect() {
       const caps = document.createElement("span");
       caps.className = "agent-caps";
       caps.textContent = a.reports_usage ? "reports tokens and cost per run" : "plain-text output: runs carry no token or cost figures";
-      caps.title = a.reports_usage ? "" : "Add --output-format json (claude) or --json (codex) to the template under [agents] to get them";
+      caps.title = a.reports_usage ? "" : "Add --output-format json (claude), --json (codex) or --mode json (pi) to the template under [agents] to get them";
       row.appendChild(caps);
     }
     status.appendChild(row);
@@ -864,7 +864,7 @@ export function openQuestionColumn(
     name.spellcheck = false;
     const agentSel = document.createElement("select");
     agentSel.className = "field qcol-agent";
-    for (const a of agents.length ? agents : ["claude", "codex"]) {
+    for (const a of agents.length ? agents : ["claude", "codex", "pi"]) {
       const o = document.createElement("option");
       o.value = a;
       o.textContent = agentProduct(a);

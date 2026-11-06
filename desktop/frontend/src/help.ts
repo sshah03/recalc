@@ -75,6 +75,7 @@ const ANNOTATIONS: Array<[string, string]> = [
 const AGENTS: Array<[string, string]> = [
   ["@claude('summarize {failed}', {A1:A20})", "runs Claude Code in the background, connected to this board; its answer is the value"],
   ["@codex('fix the flaky test')", "the same with Codex; the agent can read and write cells while it runs"],
+  ["@pi('summarize {A2}')", "the same with pi, on whichever provider and model you signed it in to"],
   ["@claude('summarize {A2}', model='haiku')", "the same on another model: an alias from [models] in config.toml or the agent's own name for it; {B2.model} reads the model that ran"],
   ["@claude('{B$1} Document: {$A2}')", "a document grid: fill this across a block, then Run Selection"],
   ["The quote mark (”) on a cell", "the agent attached the passage its answer rests on; the inspector shows it, Show Source opens the document"],
@@ -88,7 +89,7 @@ const AGENTS: Array<[string, string]> = [
   ["[inputs changed]", "a session's inputs changed after it started; Tell Agent About Changed Inputs types the changes into its terminal"],
   ["Resume session on an agent cell", "after a restart, continue its last conversation; More → New Conversation starts over"],
   ["Open in Terminal (⌥⌘T) on an agent cell", "the same conversation in a terminal window: joins the live session (it outlives this window), or picks up a finished run"],
-  ["Driver (⇧⌘D)", "one agent in the side panel that works the board for you: fills cells, starts other agents, points you at what needs a look; to seat Codex instead of Claude Code, set driver to codex in the board's settings"],
+  ["Driver (⇧⌘D)", "one agent in the side panel that works the board for you: fills cells, starts other agents, points you at what needs a look; to seat Codex or pi instead of Claude Code, pick it in the Driver tab before starting, or set driver in the board's settings"],
   ["review = @claude('…')  →  {review}", "reference the answer; {review.code} is its exit status, {review.mark} whether a person verified it"],
   ["The board's settings: .recalc/config.toml", 'add your own agents (myagent = "mytool {task}"), set how long a run may take and how many agents run at once'],
   ["claude mcp add recalc -- recalc mcp", "wire an interactive Claude Code to this board; Agent → Connect an Agent gives the app's full path"],

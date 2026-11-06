@@ -28,7 +28,7 @@ failing hasn't been shown to guard anything.
 
 ## Agent output
 
-What Claude Code and Codex print is recorded under
+What Claude Code, Codex and pi print is recorded under
 `tests/fixtures/agents/<cli>-<version>/` and parsed in the tests. When a
 feature reads something new from an agent, record it with
 `scripts/record-agent-fixtures.sh` or `scripts/record-stream-fixtures.py`
@@ -50,11 +50,12 @@ done, walk this list and say which entries applied:
   (`src/cli.rs`), and the raw file contract under `.recalc/`. Decide per
   surface, even if the decision is "not here". Verifying, for one, is
   deliberately human-only.
-- **Providers.** Claude Code and Codex differ (output format, pricing, stdin).
+- **Providers.** Claude Code, Codex and pi differ (output format, pricing, stdin).
   A feature that reads an agent's output needs a decision per builtin
   template and a fallback for a custom one. The builtin `claude` runs over
-  stream-json (`src/stream.rs`); Codex and custom templates run through
-  `exec::run` and print their answer.
+  stream-json (`src/stream.rs`), Codex and pi over their JSON events
+  (`run_codex`, `run_pi`); other custom templates run through `exec::run`
+  and print their answer.
 - **Types.** The engine's `Cell` is serialized to the webview; `types.ts`
   mirrors it and a test in `board.rs` fails when they drift. Meta fields
   also need `Meta` in `store.rs`, and the Excel export if they matter to a

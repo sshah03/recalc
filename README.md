@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  macOS · Linux (experimental) · works with Claude Code and Codex · free and open source · runs on your computer
+  macOS · Linux (experimental) · works with Claude Code, Codex and pi · free and open source · runs on your computer
 </p>
 
 <p align="center">
@@ -91,7 +91,7 @@ https://github.com/user-attachments/assets/6208594e-8072-4a30-9dd7-fd4f22c50499
    (Or try to open it, then click Open Anyway in System Settings → Privacy & Security.) recalc → Install Command Line Tool… adds the `recalc` command.
    </details>
 
-2. **Make sure you have an agent.** recalc runs the agents you already use. Install [Claude Code](https://claude.com/claude-code) or [Codex](https://github.com/openai/codex) and sign in once. Agent → Connect an Agent shows what recalc found.
+2. **Make sure you have an agent.** recalc runs the agents you already use. Install [Claude Code](https://claude.com/claude-code), [Codex](https://github.com/openai/codex) or [pi](https://pi.dev) and sign in once. Agent → Connect an Agent shows what recalc found.
 3. **Try an example.** File → New Board… → Examples. "Legal due diligence" is a good first one: select the empty answer cells and choose Cell → Run Selection (⇧⌘↩) to watch agents fill them in.
 
 Your agent can also work on the board from its own chat. To connect a Claude Code you run yourself, run this in your project's folder:
@@ -112,7 +112,7 @@ The first character of a cell says what it is:
 | `= {passed} > 0` | a formula | Updates when the cells it reads change |
 | `$ npm test` | a command | Runs in your terminal, and its output becomes the value. Re-runs when its inputs change. (`$1,200` is just an amount) |
 | `! git push` | an action | Only runs when **you** run it. Use it for anything that changes things |
-| `@claude('summarize {A2}')` | an agent | Asks Claude (or `@codex`) and puts the answer in the cell. Only runs when you run it |
+| `@claude('summarize {A2}')` | an agent | Asks Claude (or `@codex`, `@pi`) and puts the answer in the cell. Only runs when you run it |
 
 `{A2}` pulls in another cell's value. That's most of what you need to know.
 

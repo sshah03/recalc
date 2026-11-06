@@ -51,14 +51,17 @@ export function board(demo) {
 // Paid checks test recalc, not the model: real agents run on efficient
 // models, through wrappers recalc starts in place of `claude` and `codex`
 // (`[paths]`), so its own commands are intact. Set a variable to "default"
-// for the person's own model.
+// for the person's own model. pi takes a provider/model pair; RECALC_E2E_PI_DIR
+// runs it from another config folder (a local model's provider, say).
 const MODELS = {
   claude: process.env.RECALC_E2E_CLAUDE_MODEL ?? "claude-haiku-5-5",
   codex: process.env.RECALC_E2E_CODEX_MODEL ?? "gpt-5.6-luna",
+  pi: process.env.RECALC_E2E_PI_MODEL ?? "openai/gpt-5.6-luna",
 };
 const FLAGS = {
   claude: (m) => `--model '${m}'`,
   codex: (m) => `-c 'model="${m}"' -c 'model_reasoning_effort="low"'`,
+  pi: (m) => `--model '${m}' --thinking low`,
 };
 let wrappers = null;
 /** `[paths]` wrappers for the agents found on PATH, made once per run. */
@@ -67,7 +70,7 @@ export function agentWrappers() {
   wrappers = {};
   const bin = mkdtempSync(join(tmpdir(), "recalc-e2e-bin-"));
   made.push(bin);
-  for (const agent of ["claude", "codex"]) {
+  for (const agent of ["claude", "codex", "pi"]) {
     if (MODELS[agent] === "default") continue;
     let real;
     try {
@@ -82,7 +85,9 @@ export function agentWrappers() {
     const script =
       agent === "codex"
         ? `#!/bin/sh\ncase "$1" in\n  exec|e|resume|fork) sub="$1"; shift; exec '${real}' "$sub" ${flags} "$@" ;;\nesac\nexec '${real}' ${flags} "$@"\n`
-        : `#!/bin/sh\nexec '${real}' ${flags} "$@"\n`;
+        : agent === "pi" && process.env.RECALC_E2E_PI_DIR
+          ? `#!/bin/sh\nexport PI_CODING_AGENT_DIR='${process.env.RECALC_E2E_PI_DIR}'\nexec '${real}' ${flags} "$@"\n`
+          : `#!/bin/sh\nexec '${real}' ${flags} "$@"\n`;
     writeFileSync(file, script, { mode: 0o755 });
     wrappers[agent] = file;
   }

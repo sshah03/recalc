@@ -4208,7 +4208,7 @@ fn a_custom_claude_driver_resumes_as_its_own_template() {
         "driver = \"mine\"\n[agents]\nmine = \"claude --model claude-opus-5-5 --session-id {session} --mcp-config {mcp} --append-system-prompt-file {prompt} --allowedTools WebFetch\"\nbare = \"claude {task}\"\nother = \"tool {task}\"\n[resume]\nother = \"tool --again {session}\"\n",
     );
     // Only templates that can reach the board are offered for the seat.
-    assert_eq!(e.driver_choices(), ["claude", "codex", "mine"]);
+    assert_eq!(e.driver_choices(), ["claude", "codex", "pi", "mine"]);
     let (cmd, _) = e.driver_resume_info("d-1").unwrap();
     assert!(
         cmd.starts_with("export RECALC_AGENT='driver'; claude --model claude-opus-5-5 --resume 'd-1' --mcp-config "),

@@ -208,6 +208,11 @@ impl Sheets {
 /// What in `.recalc/` belongs to this computer rather than the board: what's
 /// running, requests in flight, and agent configs that name this computer's
 /// paths. Everything else is the board, to commit or copy with its folder.
+/// The pi extension recalc writes beside a board's MCP configs; `{piext}` in
+/// an agent template names it.
+pub const PI_EXTENSION: &str = "pi-recalc.ts";
+const PI_EXTENSION_SOURCE: &str = include_str!("pi/recalc.ts");
+
 const GITIGNORE: &str = "\
 # Written by recalc: what belongs to this computer, not the board.
 engine.pid
@@ -215,6 +220,7 @@ running/
 inbox/
 answers/
 mcp*.json
+pi-recalc.ts
 driver_session
 .tmp-*
 ";
@@ -466,12 +472,20 @@ impl Store {
     }
 
     /// Atomic, so an agent starting mid-write never reads a partial config.
+    /// pi takes no MCP config, so the extension that connects it goes beside
+    /// every config, with the instructions the server would give (pi shows a
+    /// server's instructions only for tools it reaches through codemode).
     fn write_mcp_config(&self, path: PathBuf, args: &[&str]) -> Result<PathBuf> {
         let recalc = std::env::current_exe().context("locating recalc binary")?;
         let config = serde_json::json!({
             "mcpServers": { "recalc": { "command": recalc, "args": args } }
         });
         write_atomic(&path, &config.to_string())?;
+        write_if_changed(&self.root.join(PI_EXTENSION), PI_EXTENSION_SOURCE)?;
+        let instructions = self
+            .prompt_override("instructions")
+            .unwrap_or_else(|| crate::mcp::INSTRUCTIONS.to_string());
+        self.ensure_prompt_file("instructions", instructions.trim())?;
         Ok(path)
     }
 
@@ -1136,6 +1150,15 @@ fn read_entry(path: &Path) -> Result<Option<String>> {
 
 /// Write to a temp file and rename, so readers never see partial content. The
 /// pid in the temp name keeps concurrent processes off each other's temp file.
+/// `write_atomic`, skipped when the file already holds `contents`.
+fn write_if_changed(path: &Path, contents: &str) -> Result<()> {
+    let want = format!("{}\n", contents.trim_end());
+    if fs::read_to_string(path).ok().as_deref() == Some(want.as_str()) {
+        return Ok(());
+    }
+    write_atomic(path, contents.trim_end())
+}
+
 fn write_atomic(path: &Path, contents: &str) -> Result<()> {
     let dir = path.parent().expect("store paths always have a parent");
     let file_name = path
@@ -1434,6 +1457,23 @@ mod tests {
         assert_eq!(store.driver_session().as_deref(), Some("abc"));
         let prompt = store.ensure_prompt_file("driver", "role text").unwrap();
         assert_eq!(std::fs::read_to_string(prompt).unwrap(), "role text");
+    }
+
+    #[test]
+    fn pi_gets_its_extension_and_the_instructions_beside_every_mcp_config() {
+        let (_dir, store) = store();
+        let config = store.ensure_mcp_config_for_cell("B2", 1).unwrap();
+        let ext = config.with_file_name(PI_EXTENSION);
+        assert!(std::fs::read_to_string(&ext)
+            .unwrap()
+            .contains("registerMcpServer"));
+        let said = std::fs::read_to_string(store.root.join("prompts/instructions.md")).unwrap();
+        assert_eq!(said.trim(), crate::mcp::INSTRUCTIONS.trim());
+        // A board's own instructions are the ones pi is given.
+        std::fs::write(store.root.join("prompts/instructions.local.md"), "Ours.").unwrap();
+        store.ensure_mcp_config().unwrap();
+        let said = std::fs::read_to_string(store.root.join("prompts/instructions.md")).unwrap();
+        assert_eq!(said, "Ours.");
     }
 
     #[test]

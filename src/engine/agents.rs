@@ -142,8 +142,8 @@ impl Engine {
         agent::parse(def_body(source)).ok().map(|c| c.agent)
     }
 
-    /// The program whose conversations this agent cell's are (`claude` or
-    /// `codex`), a custom template's included. None when recalc can't tell.
+    /// The program whose conversations this agent cell's are (`claude`,
+    /// `codex` or `pi`), a custom template's included. None when recalc can't tell.
     pub fn program_of(&self, name: &str) -> Option<&'static str> {
         agent::program_of(&self.agent_of(name)?, self.setup())
     }
@@ -245,7 +245,7 @@ impl Engine {
         Ok((as_agent("driver", &cmd), self.launch_dir.clone()))
     }
 
-    /// The program the driver's conversations belong to (`claude` or `codex`),
+    /// The program the driver's conversations belong to (`claude`, `codex` or `pi`),
     /// a custom template's included. None when recalc can't tell.
     pub fn driver_program(&self) -> Option<&'static str> {
         agent::program_of(&self.config.driver, self.setup())
@@ -279,15 +279,16 @@ impl Engine {
             .config
             .agents
             .keys()
-            .filter(|k| !matches!(k.as_str(), "claude" | "codex"))
+            .filter(|k| !matches!(k.as_str(), "claude" | "codex" | "pi"))
             // One with no way to reach the board can't drive it (a sandboxed
             // eval contestant, a local model).
             .filter(|k| agent::has_board_tools(k, self.setup()) || **k == self.config.driver)
             .cloned()
             .collect();
         custom.sort();
-        ["claude".to_string(), "codex".to_string()]
+        ["claude", "codex", "pi"]
             .into_iter()
+            .map(str::to_string)
             .chain(custom)
             .collect()
     }

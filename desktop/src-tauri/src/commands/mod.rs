@@ -1003,7 +1003,7 @@ fn agent_paths(state: State<'_, Shared>) -> Vec<Value> {
     let board = state.lock();
     let config = board.engine.config();
     let mut out = Vec::new();
-    for name in ["claude", "codex"] {
+    for name in ["claude", "codex", "pi"] {
         if config.agents.contains_key(name) {
             continue; // shadowed by a custom template, listed below
         }
@@ -1029,7 +1029,9 @@ fn agent_paths(state: State<'_, Shared>) -> Vec<Value> {
             "name": name,
             "configured": template,
             "found": recalc::shell_env::which(word).map(|p| p.display().to_string()),
-            "reports_usage": template.contains("--output-format json") || template.contains("--json"),
+            "reports_usage": template.contains("--output-format json")
+                || template.contains("--json")
+                || template.contains("--mode json"),
         }));
     }
     out

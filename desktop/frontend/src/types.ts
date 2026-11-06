@@ -293,7 +293,7 @@ export function costLabel(usd: number): string {
 
 /** An agent's product name for a person: "claude" is Claude Code. */
 export function agentProduct(a: string): string {
-  return ({ claude: "Claude Code", codex: "Codex" } as Record<string, string>)[a] ?? a;
+  return ({ claude: "Claude Code", codex: "Codex", pi: "pi" } as Record<string, string>)[a] ?? a;
 }
 
 /** The first line of a value, for a one-line row. */

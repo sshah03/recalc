@@ -49,7 +49,7 @@ cd ../.. && cargo build --release -p recalc-desktop     # → target/release/rec
 
 Then, in a project, `recalc` opens the board in that folder. Opened from Finder or the Dock, the app reopens your last board, or starts an Untitled board in `~/Documents/recalc boards`. Without the install script, recalc → Install Command Line Tool… (Help → Install Command Line Tool… on Linux) links `recalc` into `~/.local/bin` when your PATH has it, otherwise `/usr/local/bin`, which asks for your password.
 
-recalc runs the agents you already use, Claude Code and Codex, signed in to your own plan. Launched from the Dock, it adopts your login shell's `PATH`, so `claude`, `codex`, and whatever your cells call resolve as they do in a terminal. Agent → Connect an Agent… shows where each one resolves; if one is somewhere unusual, name it under `[paths]` in [settings](#settings).
+recalc runs the agents you already use, Claude Code, Codex and [pi](https://pi.dev), signed in to your own plan or provider. Launched from the Dock, it adopts your login shell's `PATH`, so `claude`, `codex`, and whatever your cells call resolve as they do in a terminal. Agent → Connect an Agent… shows where each one resolves; if one is somewhere unusual, name it under `[paths]` in [settings](#settings).
 
 To let an agent you run yourself work on the board, add recalc as an MCP server. For Claude Code:
 
@@ -173,13 +173,13 @@ B2 = @claude('{instructions} Document: {$A2}. Question: {B$1}')
 
 **Documents outside the board.** A grid over a folder picked from anywhere works. A cell's agent is allowed to read the folder holding the document it names, and only that folder.
 
-**Where the documents go.** The files stay on your machine, but the agent reads them. With Claude Code or Codex, the text of each document it answers from goes to Anthropic or OpenAI, like any other prompt. For confidential documents, run the grid on a local model and nothing leaves the machine: [LOCAL.md](LOCAL.md) has the two-line setup.
+**Where the documents go.** The files stay on your machine, but the agent reads them. With Claude Code or Codex, the text of each document it answers from goes to Anthropic or OpenAI, like any other prompt; with pi, to whichever provider it's set to. For confidential documents, run the grid on a local model and nothing leaves the machine: [LOCAL.md](LOCAL.md) has the two-line setup.
 
 Help → Document Grids Guide walks through the flow in the app, with notes for contract review, document intake, and research reading.
 
 ## Agents in cells
 
-Type `@claude('fix the flaky auth test')` (or `@codex(…)`; New Agent Cell, ⇧⌘A, starts one). Then either:
+Type `@claude('fix the flaky auth test')` (or `@codex(…)`, `@pi(…)`; New Agent Cell, ⇧⌘A, starts one). Then either:
 
 - **Run** (⌘↩) for a headless run whose answer becomes the cell's value. The cell shows what the agent is doing while it works.
 - **Open Session** (⇧⌘T) for the agent's interactive terminal, live beside the grid. It writes its answer into the cell when it has one.
@@ -199,7 +199,7 @@ Click an agent cell and the Inspector shows the prompt it ran, the inputs it rea
 
 **Permissions and limits.**
 
-- **Tool requests.** A headless Claude run that wants a tool it wasn't given (Bash, say) asks you in Needs You, showing the exact command, and waits. The wait doesn't count against its timeout. Codex runs don't ask, because `codex exec` has no way to.
+- **Tool requests.** A headless Claude run that wants a tool it wasn't given (Bash, say) asks you in Needs You, showing the exact command, and waits. The wait doesn't count against its timeout. Codex and pi runs don't ask, because neither has a way to. A headless pi run gets its read, grep, find and ls tools and the board's: no shell, and no edits.
 - **Usage limits.** If an agent's account hits its usage limit, queued agent cells wait until it lifts instead of all failing. The status bar says until when, and running one yourself tries sooner.
 - **Commands.** An agent computing a cell can't write or run `$` or `!` cells.
 
@@ -213,16 +213,16 @@ Click an agent cell and the Inspector shows the prompt it ran, the inputs it rea
 **Other agents, or your own flags.** Name them under `[agents]` in [settings](#settings). In a template, `{task}` is the prompt and `{model}` is the `model=` argument, and `@name('…')` runs it.
 
 - **Keeping an agent to one folder.** Start the command with `cd folder &&`, since Claude Code in print mode can't read outside the folder it starts in: `contestant = "cd arena && claude -p {task} {model} --output-format json --strict-mcp-config --allowedTools 'Read(./**)'"` reads `arena/` and nothing else on the board.
-- **Showing progress and asking.** Write a template the way the builtin one is written, with the prompt on stdin: `claude -p {model} --input-format stream-json --output-format stream-json --verbose --permission-prompt-tool stdio …` with no `{task}`, or `codex exec {model} --json … -`. Its runs then show what they're doing, and a tool it isn't allowed asks you in Needs You. Leave out `--permission-prompt-tool stdio` when a run should be refused instead of asking, as an eval's contestants should be.
-- **Resuming.** A template that runs `claude` or `codex exec` resumes like the builtin one, from the same folder and on the cell's model. For any other program, say how under `[resume]`: `mine = "mine --resume {session}"`.
+- **Showing progress and asking.** Write a template the way the builtin one is written, with the prompt on stdin: `claude -p {model} --input-format stream-json --output-format stream-json --verbose --permission-prompt-tool stdio …` with no `{task}`, or `codex exec {model} --json … -`, or `pi --mode json {model} -e {piext} --recalc-mcp {mcp} …` (`{piext}` is the extension that connects pi to the board, since pi takes no MCP config of its own). Its runs then show what they're doing, and a tool it isn't allowed asks you in Needs You. Leave out `--permission-prompt-tool stdio` when a run should be refused instead of asking, as an eval's contestants should be.
+- **Resuming.** A template that runs `claude`, `codex exec` or `pi` resumes like the builtin one, from the same folder and on the cell's model. For any other program, say how under `[resume]`: `mine = "mine --resume {session}"`.
 
 ## The Driver, and agents working together
 
-The **Driver** (⇧⌘D; ⌥⌘D widens it) seats a Claude Code or Codex session in the side panel that is told what the grid is and how to use it. Ask it to set up a document grid over a folder, pull a dataset off the web into a column, or start three workers on three tasks with a check beside each. It fills cells, starts other agents, and points you at what needs a look. It cannot verify; that stays with you.
+The **Driver** (⇧⌘D; ⌥⌘D widens it) seats a Claude Code, Codex or pi session in the side panel that is told what the grid is and how to use it. Ask it to set up a document grid over a folder, pull a dataset off the web into a column, or start three workers on three tasks with a check beside each. It fills cells, starts other agents, and points you at what needs a look. It cannot verify; that stays with you.
 
 - **Starting from it.** File → New Board… → Describe it to the Driver starts a board this way.
 - **Answering from one conversation.** Cell → Ask the Driver to Answer has the Driver answer the selected agent cells itself, in its own conversation, instead of running each as an agent of its own.
-- **Choosing who sits there.** While the seat is empty, pick Claude Code, Codex, or one of your `[agents]` templates from the Driver tab. The choice is saved as `driver` in settings.
+- **Choosing who sits there.** While the seat is empty, pick Claude Code, Codex, pi, or one of your `[agents]` templates from the Driver tab. The choice is saved as `driver` in settings.
 - **Resuming.** Resume continues its conversation. Start new begins fresh, picking up from the plan and facts it kept in cells.
 
 Agents work with each other the way they work with you: through cells. There's no channel between agents that isn't a cell, and agents started by agents stop three deep.
@@ -276,7 +276,7 @@ After three blocks (`--max-blocks`), the session may stop and F is flagged for y
 
 Keep the `|| true`. Claude Code reads a Stop hook's exit status 2 as "block", so a `recalc` too old to know `hook` would otherwise keep the session going.
 
-Codex reads the same hook from `.codex/hooks.json` (the same JSON, under `hooks.Stop`), once you trust it: open `codex` in the folder and accept its hook review. Until then Codex skips the hook without saying so, `codex exec` included. The "Done means green" example ships both files.
+Codex reads the same hook from `.codex/hooks.json` (the same JSON, under `hooks.Stop`), once you trust it: open `codex` in the folder and accept its hook review. Until then Codex skips the hook without saying so, `codex exec` included. The "Done means green" example ships both files. pi has no Stop hook yet, so a pi session's "done" isn't held to its row.
 
 ## Scripts, the command line, and CI
 
@@ -334,12 +334,12 @@ A board's settings are in `.recalc/config.toml`. Every key is optional:
 | `timeout_ms` | how long a `$` or `!` command may take (default 30000) |
 | `shell`, `cwd`, `env` | how commands run: the shell (default `sh`), the folder, extra environment variables |
 | `budget_usd` | the board's agent spend, at API prices, after which queued agent cells wait (Set Agent Budget… writes it) |
-| `driver` | who sits in the Driver seat: `claude`, `codex`, or an `[agents]` name |
+| `driver` | who sits in the Driver seat: `claude`, `codex`, `pi`, or an `[agents]` name |
 | `danger_tokens` | extra words that quarantine a `$` cell, on top of the built-in list |
 | `[paths]` | where an agent lives when it isn't on your PATH: `claude = "/opt/tools/claude"` |
 | `[models]` | short names for `model=`: `fast = "claude-haiku-5-5"` |
 | `[agents]` | agent command templates, run as `@name(…)` |
-| `[resume]` | how to continue an `[agents]` template's conversation, for programs other than `claude` and `codex` |
+| `[resume]` | how to continue an `[agents]` template's conversation, for programs other than `claude`, `codex` and `pi` |
 
 To change what agents are told on one board, write `.recalc/prompts/instructions.local.md` (what every agent gets when it connects) or `.recalc/prompts/driver.local.md` (the Driver's role). recalc's defaults are in [src/prompts/](../src/prompts/).
 
@@ -427,7 +427,7 @@ AGENTS.md            working habits for agents on a recalc board; copy it into y
 RECIPES.md           the boards people actually keep, and why they work
 docs/tools/          one page per MCP tool: inputs, outputs, flow, errors
 docs/RELEASING.md    cutting a release, signing secrets, re-recording agent fixtures
-tests/fixtures/      what Claude Code and Codex really print, per CLI version, for the parser tests
+tests/fixtures/      what Claude Code, Codex and pi really print, per CLI version, for the parser tests
 CONTRIBUTING.md      the checks, and the hit-every-surface list
 ```
 

@@ -711,6 +711,16 @@ impl Engine {
                     )
                     .await
                 }
+                Some(task) if protocol == agent::Protocol::PiEvents => {
+                    let who = name.clone();
+                    let on_event = move |ev| {
+                        let _ = events.send((who.clone(), gen, ev));
+                    };
+                    stream::run_pi(
+                        &shell, &resolved, &cwd, &env, timeout, stop_rx, &groups, &task, on_event,
+                    )
+                    .await
+                }
                 Some(task) => {
                     let who = name.clone();
                     let on_event = move |ev| {
