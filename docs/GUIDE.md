@@ -49,7 +49,7 @@ cd ../.. && cargo build --release -p recalc-desktop     # → target/release/rec
 
 Then, in a project, `recalc` opens the board in that folder. Opened from Finder or the Dock, the app reopens your last board, or starts an Untitled board in `~/Documents/recalc boards`. Without the install script, recalc → Install Command Line Tool… (Help → Install Command Line Tool… on Linux) links `recalc` into `~/.local/bin` when your PATH has it, otherwise `/usr/local/bin`, which asks for your password.
 
-recalc runs the agents you already use, Claude Code, Codex and [pi](https://pi.dev), signed in to your own plan or provider. Launched from the Dock, it adopts your login shell's `PATH`, so `claude`, `codex`, and whatever your cells call resolve as they do in a terminal. Agent → Connect an Agent… shows where each one resolves; if one is somewhere unusual, name it under `[paths]` in [settings](#settings).
+recalc runs the agents you already use, Claude Code, Codex and [pi](https://pi.dev), signed in to your own plan or provider. pi support is experimental: it has been tested on a local model, not yet on the cloud providers most people use it with. Launched from the Dock, it adopts your login shell's `PATH`, so `claude`, `codex`, and whatever your cells call resolve as they do in a terminal. Agent → Connect an Agent… shows where each one resolves; if one is somewhere unusual, name it under `[paths]` in [settings](#settings).
 
 To let an agent you run yourself work on the board, add recalc as an MCP server. For Claude Code:
 

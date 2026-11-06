@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  macOS · Linux (experimental) · works with Claude Code, Codex and pi · free and open source · runs on your computer
+  macOS · Linux (experimental) · works with Claude Code, Codex and pi (experimental) · free and open source · runs on your computer
 </p>
 
 <p align="center">
@@ -91,7 +91,7 @@ https://github.com/user-attachments/assets/6208594e-8072-4a30-9dd7-fd4f22c50499
    (Or try to open it, then click Open Anyway in System Settings → Privacy & Security.) recalc → Install Command Line Tool… adds the `recalc` command.
    </details>
 
-2. **Make sure you have an agent.** recalc runs the agents you already use. Install [Claude Code](https://claude.com/claude-code), [Codex](https://github.com/openai/codex) or [pi](https://pi.dev) and sign in once. Agent → Connect an Agent shows what recalc found.
+2. **Make sure you have an agent.** recalc runs the agents you already use. Install [Claude Code](https://claude.com/claude-code), [Codex](https://github.com/openai/codex) or [pi](https://pi.dev) (experimental) and sign in once. Agent → Connect an Agent shows what recalc found.
 3. **Try an example.** File → New Board… → Examples. "Legal due diligence" is a good first one: select the empty answer cells and choose Cell → Run Selection (⇧⌘↩) to watch agents fill them in.
 
 Your agent can also work on the board from its own chat. To connect a Claude Code you run yourself, run this in your project's folder:
