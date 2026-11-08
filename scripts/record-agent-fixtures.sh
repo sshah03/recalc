@@ -13,6 +13,8 @@ if command -v claude >/dev/null; then
   mkdir -p "$out"
   claude -p "Reply with the single word pong and nothing else." --output-format json > "$out/ok.json"
   claude -p "hi" --output-format json --model claude-nonexistent-model-xyz > "$out/bad-model.json" || true
+  # When the recorder's login expires isn't the parser's business, nor the public's.
+  sed -i.bak 's/"credential_expires_at":"[^"]*"/"credential_expires_at":"2026-01-01T00:00:00.000Z"/' "$out"/*.json && rm -f "$out"/*.json.bak
   echo "recorded $out"
 fi
 

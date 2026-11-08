@@ -1609,7 +1609,7 @@ mod tests {
 
     #[test]
     fn recorded_claude_output_parses() {
-        for v in ["claude-2.1.280", "claude-2.1.314"] {
+        for v in ["claude-2.1.280", "claude-2.1.314", "claude-2.1.319"] {
             let ok = parse_output(&fixture(&format!("{v}/ok.json"))).unwrap();
             assert_eq!(ok.text, "pong", "{v}");
             assert!(ok.session_id.is_some());
