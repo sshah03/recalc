@@ -19,7 +19,7 @@ tokio = { version = "1", features = ["io-std", "io-util", "macros", "net", "proc
 toml = "0.8"
 uuid = { version = "1", features = ["v4"] }
 pdf-extract = "0.12"
-zip = { version = "2", default-features = false, features = ["deflate"] }
+zip = { version = "9.0.5", default-features = false, features = ["deflate"] }
 
 [dev-dependencies]
 tempfile = "3"

@@ -310,7 +310,11 @@ pub fn unzip(file: &Path) -> Result<PathBuf> {
     .with_context(|| format!("{} isn't a zip", file.display()))?;
     let not_a_board = || anyhow::anyhow!("{} isn't a board recalc exported", file.display());
     // One folder at the top, with a board in it.
-    let names: Vec<String> = zip.file_names().map(String::from).collect();
+    let names: Vec<String> = zip
+        .file_names()
+        .map(|n| n.map(String::from))
+        .collect::<Result<_, _>>()
+        .map_err(|_| not_a_board())?;
     let top = names
         .first()
         .and_then(|n| n.split('/').next())
@@ -346,7 +350,8 @@ pub fn unzip(file: &Path) -> Result<PathBuf> {
         .expect("some name is free");
     for i in 0..zip.len() {
         let mut entry = zip.by_index(i)?;
-        let Some(rel) = entry.name().strip_prefix(&format!("{top}/")).map(Path::new) else {
+        let name = entry.name().map_err(|_| not_a_board())?.into_owned();
+        let Some(rel) = name.strip_prefix(&format!("{top}/")).map(Path::new) else {
             continue;
         };
         // Nothing outside `into`, whatever the archive says.

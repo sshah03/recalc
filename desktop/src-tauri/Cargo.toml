@@ -23,7 +23,7 @@ portable-pty = "0.9"
 uuid = { version = "1", features = ["v4"] }
 rust_xlsxwriter = "0.99"
 libc = "0.2"
-zip = { version = "2", default-features = false, features = ["deflate"] }
+zip = { version = "9.0.5", default-features = false, features = ["deflate"] }
 
 # macOS window chrome: an empty native toolbar, so the system places the
 # traffic lights (src/native.rs).
