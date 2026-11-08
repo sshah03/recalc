@@ -296,6 +296,11 @@ export function agentProduct(a: string): string {
   return ({ claude: "Claude Code", codex: "Codex", pi: "pi" } as Record<string, string>)[a] ?? a;
 }
 
+/** The same, where a person picks an agent: support still settling is said there. */
+export function agentChoice(a: string): string {
+  return a === "pi" ? `${agentProduct(a)} (experimental)` : agentProduct(a);
+}
+
 /** The first line of a value, for a one-line row. */
 export function firstLineOf(v: string): string {
   const i = v.indexOf("\n");

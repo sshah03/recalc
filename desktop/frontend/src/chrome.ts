@@ -5,7 +5,7 @@ import type { Action } from "./actions.js";
 import { rectLabel } from "./a1.js";
 import { FILLS, NUM_PRESETS, formatValue, formatApplies, CURRENCIES } from "./format.js";
 import type { Format, AnswerType, Highlight } from "./types.js";
-import { agentProduct, API_PRICES, costLabel, tokensLabel } from "./types.js";
+import { agentChoice, API_PRICES, costLabel, tokensLabel } from "./types.js";
 import { cheatsheet, reviewGuide } from "./help.js";
 import { icon } from "./icons.js";
 import { needsAction, showTray, working } from "./side.js";
@@ -239,7 +239,7 @@ export async function openConnect() {
     row.className = "agent-row";
     const name = document.createElement("span");
     name.className = "agent-name";
-    name.textContent = agentProduct(a.name);
+    name.textContent = agentChoice(a.name);
     const where = document.createElement("span");
     where.className = a.found ? "agent-found" : "agent-missing";
     where.textContent = a.found
@@ -867,7 +867,7 @@ export function openQuestionColumn(
     for (const a of agents.length ? agents : ["claude", "codex", "pi"]) {
       const o = document.createElement("option");
       o.value = a;
-      o.textContent = agentProduct(a);
+      o.textContent = agentChoice(a);
       agentSel.appendChild(o);
     }
     // The model is free text: an alias from [models], or any model id.

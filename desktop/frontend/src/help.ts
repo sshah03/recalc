@@ -75,7 +75,7 @@ const ANNOTATIONS: Array<[string, string]> = [
 const AGENTS: Array<[string, string]> = [
   ["@claude('summarize {failed}', {A1:A20})", "runs Claude Code in the background, connected to this board; its answer is the value"],
   ["@codex('fix the flaky test')", "the same with Codex; the agent can read and write cells while it runs"],
-  ["@pi('summarize {A2}')", "the same with pi, on whichever provider and model you signed it in to"],
+  ["@pi('summarize {A2}')", "the same with pi (experimental), on whichever provider and model you signed it in to"],
   ["@claude('summarize {A2}', model='haiku')", "the same on another model: an alias from [models] in config.toml or the agent's own name for it; {B2.model} reads the model that ran"],
   ["@claude('{B$1} Document: {$A2}')", "a document grid: fill this across a block, then Run Selection"],
   ["The quote mark (”) on a cell", "the agent attached the passage its answer rests on; the inspector shows it, Show Source opens the document"],

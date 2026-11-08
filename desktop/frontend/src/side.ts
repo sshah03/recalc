@@ -10,7 +10,7 @@ import { board } from "./state.js";
 import * as api from "./tauri.js";
 import { DRIVER_ID, attachDriver, closeTerminal, driverViewOpen, showTerminal } from "./terminal.js";
 import type { Cell } from "./types.js";
-import { actorShort, agentProduct, API_PRICES, costLabel, elapsedLabel, errorMsg, firstLineOf, isRunnable, permissionAsk, permissionRisks, sessionWord, stateKind } from "./types.js";
+import { actorShort, agentChoice, agentProduct, API_PRICES, costLabel, elapsedLabel, errorMsg, firstLineOf, isRunnable, permissionAsk, permissionRisks, sessionWord, stateKind } from "./types.js";
 
 const $ = (id: string) => document.getElementById(id)!;
 
@@ -402,7 +402,7 @@ function renderDriver(box: HTMLElement) {
     for (const c of driverState!.choices) {
       const o = document.createElement("option");
       o.value = c;
-      o.textContent = agentName(c);
+      o.textContent = agentChoice(c);
       o.selected = c === current;
       pick.appendChild(o);
     }
