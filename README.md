@@ -49,23 +49,33 @@ In its current form, recalc gives you and your agents one shared grid. Every cel
 
 ## See it work
 
-**A tour of the app** (1:22). Every kind of cell, an agent column on Haiku, review and Needs You, the Driver, sheets and sharing.
+### A tour of the app
+
+(1:22) Every kind of cell, an agent column on Haiku, review and Needs You, the Driver, sheets and sharing.
 
 https://github.com/user-attachments/assets/72b60b54-946b-4236-acd5-4850befe0b27
 
-**Contract review** (1:40). Twelve public contracts and six questions: 72 cited answers, a wrong one caught from its own source, flagged, and fixed by re-running with the note.
+### Contract review
+
+(1:40) Twelve public contracts and six questions: 72 cited answers, a wrong one caught from its own source, flagged, and fixed by re-running with the note.
 
 https://github.com/user-attachments/assets/705e7993-eddb-477b-ae0f-c0442f809a3d
 
-**S-corp returns** (4:16). Five fictional clients' books carried onto the IRS's draft 2026 Form 1120-S: agents classify each account, formulas build and check each return, and an action fills the PDF only once the checks pass. Run it yourself with `recalc demo scorp`.
+### S-corp returns
+
+(4:16) Five fictional clients' books carried onto the IRS's draft 2026 Form 1120-S: agents classify each account, formulas build and check each return, and an action fills the PDF only once the checks pass. Run it yourself with `recalc demo scorp`.
 
 https://github.com/user-attachments/assets/f3d12576-151d-4f5b-a0ab-e836d094aeb4
 
-**Tying out a 10-K** (0:53). Sixteen figures pulled from a public annual report, each with the line it came from, and formulas that check they agree, down to a $14.4 million difference the notes explain.
+### Tying out a 10-K
+
+(0:53) Sixteen figures pulled from a public annual report, each with the line it came from, and formulas that check they agree, down to a $14.4 million difference the notes explain.
 
 https://github.com/user-attachments/assets/571af978-53cb-4d08-84ad-3d151bb19a89
 
-**A model benchmark** (2:37). Models predicting FDA decisions from dossiers frozen before each decision: add a new model as a contestant, score it against the others, then open one of its answers in Terminal and ask it why.
+### A model benchmark
+
+(2:37) Models predicting FDA decisions from dossiers frozen before each decision: add a new model as a contestant, score it against the others, then open one of its answers in Terminal and ask it why.
 
 https://github.com/user-attachments/assets/6208594e-8072-4a30-9dd7-fd4f22c50499
 
