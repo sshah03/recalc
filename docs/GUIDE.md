@@ -71,7 +71,7 @@ $ cargo test 2>&1           a command; its output is the value
 @claude('prompt', {refs})   an agent call
 ```
 
-The rule to remember: **`$` commands recompute on their own; `!` actions and `@` agents never do.** A cell that reads (`grep`, `wc`, a test run) is `$` and refreshes when its inputs change. A cell that changes something (a commit, a deploy, an agent) is `!` or `@` and runs only when you run it: Run (⌘↩), Run Selection (⇧⌘↩), or Run Column (⌥⌘↩). Running a selection skips cells you've verified and cells already running. Stop (⌘.) ends a run and keeps the cell's last value; Stop All Runs is ⇧⌘.
+The rule to remember: **`$` commands recompute on their own; `!` actions and `@` agents never do.** A cell that reads (`grep`, `wc`, a test run) is `$` and refreshes when its inputs change. A cell that changes something (a commit, a deploy, an agent) is `!` or `@` and runs only when you run it: Run (⌘↩), Run Selection (⇧⌘↩), or Run Column (⌥⌘↩). Running a selection runs only what's out of date: cells whose inputs changed, that never ran, or that failed. It skips cells that are current, verified, or already running, so after new data comes in, selecting the whole table re-runs just the rows it changed. When everything selected is current, Run Selection says so; run it again to re-run them anyway. Stop (⌘.) ends a run and keeps the cell's last value; Stop All Runs is ⇧⌘.
 
 ### References
 

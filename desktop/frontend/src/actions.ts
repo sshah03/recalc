@@ -214,7 +214,7 @@ export function initActions(ctx: ActionCtx) {
       menu: "Cell",
       label: "Run Selection",
       shortcut: "⇧⌘↩",
-      title: "Run every command, action, and agent cell in the selection; verified and running cells are skipped",
+      title: "Run what's out of date in the selection: cells whose inputs changed, that never ran, or that failed. Current, verified, and running cells are skipped",
       enabled: anyRunnable,
       run: ctx.runSelection,
     },

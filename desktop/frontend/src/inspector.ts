@@ -428,7 +428,7 @@ function renderBlock(title: HTMLElement, body: HTMLElement, r: [number, number, 
   const acts = document.createElement("div");
   acts.className = "acts";
   if (runnable > 0) {
-    acts.appendChild(button("Run selection", () => handlers.runSelection(), "Run every command, action, and agent cell here; verified and running cells are skipped (⇧⌘↩)"));
+    acts.appendChild(button("Run selection", () => handlers.runSelection(), "Run what's out of date here: cells whose inputs changed, that never ran, or that failed. Current, verified, and running cells are skipped (⇧⌘↩)"));
   }
   const allVerified = verified === cells.length && cells.length > 0;
   acts.appendChild(button(allVerified ? "Unverify all" : "Verify all", () => handlers.setMark(allVerified ? null : "verified"),
