@@ -4764,7 +4764,7 @@ fn a_move_sees_what_another_process_wrote_a_moment_ago() {
     window.set("A2", "one", Actor::Human).unwrap();
     window.set("B3", "= len({A2})", Actor::Human).unwrap();
     // `other` never pumped its watch: its mirror has neither cell.
-    assert!(other.cells.get("B3").is_none());
+    assert!(!other.cells.contains_key("B3"));
     other.insert(None, Axis::Rows, 2, 1, Actor::Cli).unwrap();
     let moved = other
         .store
