@@ -111,6 +111,49 @@ impl Engine {
         }
     }
 
+    /// Bring the mirror in line with the disk now, without waiting for the
+    /// watch: a move rewrites every cell from the mirror, so a write another
+    /// process made a moment ago would be lost.
+    pub(super) fn catch_up(&mut self) -> Result<()> {
+        self.adopt_sheets()?;
+        let mut names: BTreeSet<String> = self.cells.keys().cloned().collect();
+        let same =
+            |a: &Cell, b: &Cell| serde_json::to_value(a).ok() == serde_json::to_value(b).ok();
+        for disk in self.store.list()? {
+            if self.cells.get(&disk.name).is_some_and(|m| same(m, &disk)) {
+                names.remove(&disk.name);
+            } else {
+                names.insert(disk.name);
+            }
+        }
+        for name in names {
+            self.reconcile(&name)?;
+        }
+        Ok(())
+    }
+
+    /// An agent cell whose terminal session is live (shown in a window, or
+    /// carried on by tmux). Sessions are keyed by cell name, so a move would
+    /// leave one behind at an address that now holds another cell.
+    pub(super) fn live_session(&self) -> Option<String> {
+        let tmux = crate::session::available();
+        self.cells
+            .values()
+            .filter(|c| c.kind == CellKind::AgentCall)
+            .filter(|c| {
+                self.cells
+                    .get(&crate::model::status_name(&c.name))
+                    .is_some_and(|s| {
+                        matches!(s.value.as_str(), "running" | "waiting?" | "detached")
+                    })
+            })
+            // A status left behind by a session that died says nothing.
+            .find(|c| {
+                !tmux || crate::session::alive(&crate::session::name(&self.launch_dir, &c.name))
+            })
+            .map(|c| c.name.clone())
+    }
+
     /// Log a write another process made (an agent's MCP server, the command
     /// line) under who made it; a run's result is logged where it finishes.
     fn log_outside_write(&mut self, disk: &Cell) {

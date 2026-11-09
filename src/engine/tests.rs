@@ -4729,3 +4729,66 @@ async fn a_watch_of_several_globs_reruns_on_any_of_them() {
         other => panic!("expected an error, got {other:?}"),
     }
 }
+
+#[tokio::test]
+async fn undoing_a_row_delete_brings_an_agents_answer_back_current() {
+    let (_d, mut e) = engine_with_agents("[agents]\nfake = \"echo answered\"\n");
+    e.set("A2", "one", Actor::Human).unwrap();
+    e.set("A3", "two", Actor::Human).unwrap();
+    e.set("B3", "@fake('about {A3}')", Actor::Human).unwrap();
+    e.set("C2", "@fake('about {A3}')", Actor::Human).unwrap();
+    e.trigger("B3", Actor::Human).unwrap();
+    e.trigger("C2", Actor::Human).unwrap();
+    e.drain().await.unwrap();
+    assert_eq!(e.cells["B3"].state, CellState::Ok);
+    let removed = e.delete(None, Axis::Rows, 3, 1, Actor::Human).unwrap();
+    assert!(e.cells["C2"].source.as_deref().unwrap().contains("#REF!"));
+    e.undelete(None, Axis::Rows, 3, 1, &removed, Actor::Human)
+        .unwrap();
+    // The inputs came back as they were, so neither answer is out of date.
+    assert_eq!(value(&e, "B3"), "answered");
+    assert_eq!(e.cells["B3"].state, CellState::Ok);
+    assert_eq!(e.cells["C2"].source.as_deref(), Some("@fake('about {A3}')"));
+    assert_eq!(e.cells["C2"].state, CellState::Ok);
+    // A real change to the input still marks them.
+    e.set("A3", "three", Actor::Human).unwrap();
+    assert_eq!(e.cells["B3"].state, CellState::Stale);
+    assert_eq!(e.cells["C2"].state, CellState::Stale);
+}
+
+#[test]
+fn a_move_sees_what_another_process_wrote_a_moment_ago() {
+    let dir = tempfile::tempdir().unwrap();
+    let mut window = Engine::open(dir.path()).unwrap();
+    let mut other = Engine::open(dir.path()).unwrap();
+    window.set("A2", "one", Actor::Human).unwrap();
+    window.set("B3", "= len({A2})", Actor::Human).unwrap();
+    // `other` never pumped its watch: its mirror has neither cell.
+    assert!(other.cells.get("B3").is_none());
+    other.insert(None, Axis::Rows, 2, 1, Actor::Cli).unwrap();
+    let moved = other
+        .store
+        .get("B4")
+        .unwrap()
+        .expect("the cell moved, not lost");
+    assert_eq!(moved.source.as_deref(), Some("= len({A3})"));
+    assert_eq!(other.store.get("A3").unwrap().unwrap().value, "one");
+    assert!(other.store.get("B3").unwrap().is_none());
+}
+
+#[test]
+fn a_dead_sessions_status_doesnt_block_a_move() {
+    let (_d, mut e) = engine_with_agents("[agents]\nfake = \"echo answered\"\n");
+    e.set("B2", "@fake('x')", Actor::Human).unwrap();
+    e.set("B2_status", "ended", Actor::System).unwrap();
+    assert_eq!(e.live_session(), None);
+    e.insert(None, Axis::Rows, 1, 1, Actor::Human).unwrap();
+    assert!(e.cells.contains_key("B3"));
+    if !crate::session::available() {
+        // Without tmux nothing can vouch for the session, so the status stands.
+        e.set("B3_status", "running", Actor::System).unwrap();
+        assert_eq!(e.live_session().as_deref(), Some("B3"));
+        let err = e.insert(None, Axis::Rows, 1, 1, Actor::Human).unwrap_err();
+        assert!(err.to_string().contains("live session"), "{err}");
+    }
+}

@@ -203,7 +203,8 @@ impl Engine {
         out
     }
 
-    /// A moved cell's run would land at the old address; as with rows, wait.
+    /// A moved cell's run would land at the old address, and its live
+    /// session would be left there; as with rows, wait.
     fn refuse_while_running(&self, names: &[String], doing: &str) -> Result<()> {
         if let Some(busy) = names.iter().find(|n| {
             self.cells
@@ -211,6 +212,9 @@ impl Engine {
                 .is_some_and(|c| matches!(c.state, CellState::Computing | CellState::Queued))
         }) {
             bail!("{busy} is still running; stop it before {doing} its sheet");
+        }
+        if let Some(live) = self.live_session().filter(|l| names.contains(l)) {
+            bail!("{live} has a live session; end it before {doing} its sheet");
         }
         Ok(())
     }

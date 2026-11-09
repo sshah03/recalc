@@ -243,6 +243,18 @@ impl Engine {
             })
             .collect();
         let befores: Vec<String> = untouched.iter().map(|w| w.before.clone()).collect();
+        // What each agent or action cell coming back was, before the recompute
+        // below marks it out of date: its inputs come back as they were.
+        let mut were: Vec<(String, CellState)> = untouched
+            .iter()
+            .filter_map(|w| Some((w.before.clone(), self.cells.get(&w.after)?.state.clone())))
+            .collect();
+        were.extend(
+            removed
+                .cells
+                .iter()
+                .map(|c| (c.name.clone(), c.state.clone())),
+        );
         self.insert(sheet, axis, at, n, by)?;
         for w in untouched {
             let Some(mut cell) = self.cells.get(&w.before).cloned() else {
@@ -274,13 +286,24 @@ impl Engine {
         if !roots.is_empty() {
             self.recompute(roots)?;
         }
+        for (name, was) in were {
+            let Some(cell) = self.cells.get_mut(&name) else {
+                continue;
+            };
+            let held = matches!(cell.kind, CellKind::AgentCall | CellKind::Action);
+            if held && cell.state == CellState::Stale && was != CellState::Stale {
+                cell.state = was;
+                self.store.set_state(cell)?;
+                self.touched.insert(name);
+            }
+        }
         Ok(())
     }
 
     /// `cell_map` sends an index to its new one (None = removed); `corner_map`
     /// does the same for a range corner, given whether it is the far edge (see
-    /// `remap_refs`). Refused while anything runs, since a moved cell's result
-    /// would land at the wrong address.
+    /// `remap_refs`). Refused while anything runs or has a live session, since
+    /// a moved cell's result, or its session, would be left at the old address.
     pub(super) fn restructure(
         &mut self,
         sheet: Option<&str>,
@@ -289,6 +312,7 @@ impl Engine {
         cell_map: impl Fn(u32) -> Option<u32>,
         corner_map: impl Fn(u32, bool) -> u32,
     ) -> Result<Removed> {
+        self.catch_up()?;
         if let Some(busy) = self
             .cells
             .values()
@@ -298,6 +322,9 @@ impl Engine {
                 "{} is still running; stop it before moving rows or columns",
                 busy.name
             );
+        }
+        if let Some(live) = self.live_session() {
+            bail!("{live} has a live session; end it before moving rows or columns");
         }
         let map_coord = |c: u32, r: u32| -> Option<(u32, u32)> {
             match axis {
